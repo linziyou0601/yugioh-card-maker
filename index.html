@@ -566,10 +566,12 @@
 		});
 		//切換為連結怪獸時
 		$('#cardSubType')[0].addEventListener("input", function(){
-			if($('#cardType').val()=="monster" && $('#cardSubType').val()!="Link"){
-				$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
-			}else{
-				$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
+			if($('#cardType').val()=="monster"){
+				if($('#cardSubType').val()!="Link"){
+					$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
+				}else{
+					$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
+				}
 			}
 		});
 		//切換靈擺時
