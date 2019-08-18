@@ -259,6 +259,7 @@
 								<textarea type="text" class="form-control" id="cardInfo">這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。 </textarea>
 							</div>
 							<button type="button" class="my-2 btn btn-light" onClick="loadingCardContent()">產生</button>
+							<button type="button" class="my-2 btn btn-light" onClick="download_img()">下載</button>
 						</form>
 					</div>
 				</div>
@@ -514,6 +515,7 @@
 			}
 		}
 		
+		//字體效果
 		function rareColor(lv){
 			switch(lv) {
 				case "0":
@@ -550,7 +552,6 @@
 			"Spell": [["Normal","通常"], ["Continuous","永續"], ["Field","場地"], ["Equip","裝備"], ["Quick","速攻"], ["Ritual","儀式"]],
 			"Trap": [["Normal","通常"], ["Continuous","永續"], ["Counter","反擊"]]
 		}
-		
 		//切換卡片種類時
 		$('#cardType')[0].addEventListener("input", function(){
 			if($('#cardType').val()!="monster"){
@@ -563,7 +564,6 @@
 				str += "<option value='"+optType[$('#cardType').val()][i][0]+"'"+(i==0?" selected":"")+">"+optType[$('#cardType').val()][i][1]+"</option>";
 			$('#cardSubType').html(str);
 		});
-		
 		//切換為連結怪獸時
 		$('#cardSubType')[0].addEventListener("input", function(){
 			if($('#cardSubType').val()!="Link"){
@@ -572,7 +572,6 @@
 				$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
 			}
 		});
-		
 		//切換靈擺時
 		$('#Pendulum').change(function() {
 			if($('#Pendulum').prop('checked')){
@@ -581,12 +580,26 @@
 				$('#pform').hide();
 			}
 		})
-		
 		//上傳後顯示檔名
 		$('#cardImg').on('change',function(){
 			var fileName = ($('#cardImg').val())? $('#cardImg')[0].files[0].name.replace('C:\\fakepath\\', ""): "上傳圖片";
 			$('#cardImg').next('label').html(fileName);
 		});
+		//*********************//
+
+		//下載
+		function download_img() {
+			var MIME_TYPE = "image/jpeg";
+			var imgURL = canvas.toDataURL(MIME_TYPE);
+			console.log(imgURL);
+			var dlLink = document.createElement('a');
+			dlLink.download = 'YuGiOh.jpg';
+			dlLink.href = imgURL;
+			dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+			document.body.appendChild(dlLink);
+			dlLink.click();
+			document.body.removeChild(dlLink);
+		}
 	</script>
 </body>
 </html>
