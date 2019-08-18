@@ -274,7 +274,8 @@
 		
 		const chiType = {"Fusion":"融合", "Ritual":"儀式", "Synchro":"同步", "Xyz":"超量", "Link":"連結"};
 		var Effect=false, Pendulum=false, cardTitle="", cardAttr="", cardType="", cardSubType="", cardEffType="", cardThrType="", typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, pendulumInfoText="", infoText="", fontSize=28, fontSize2=22, titleColor="", Special="", cardImg="", rare=0;
-
+		
+		
 		$(function(){
 			if($('#cardSubType').val()!="Link"){
 				$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
@@ -287,11 +288,13 @@
 				$('#pform').hide();
 			}
 		})
+		$(window).on("load", function () {
+			loadingCardContent();
+		}); 
 		
 		// 已加載的圖片會放進imgs[]裡
 		var imgs=[];
 		var imagesOK=0;
-		$(window).load(function(){ loadingCardContent()})
 		function loadingCardContent(){
 			//----------------------------------//
 			//卡片資料
