@@ -291,7 +291,7 @@
 		// 已加載的圖片會放進imgs[]裡
 		var imgs=[];
 		var imagesOK=0;
-		loadingCardContent();
+		setTimeout(loadingCardContent, 200);
 		function loadingCardContent(){
 			//----------------------------------//
 			//卡片資料
@@ -355,7 +355,7 @@
 			imgs.push(new Image());
 			imgs[i].onload = function(){ 
 			  imagesOK++;
-			  if (imagesOK>=imageURLs.length ) setTimeout(callback, 500);
+			  if (imagesOK>=imageURLs.length ) setTimeout(callback, 200);
 			};
 			imgs[i].src = imageURLs[i];
 		  }      
