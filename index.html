@@ -423,7 +423,7 @@
 						ctx.drawImage(imgs[11], (cardSubType=="Xyz"? (122+(i-1)*63): (817-(i-1)*63)), (Pendulum?181:215), 58, 58);
 			}else{
 				ctx.fillText('【'+(cardType=="Spell"? "魔法": "陷阱")+'卡'+(cardSubType=='Normal'? "": "　")+'】', (cardSubType=='Normal'? (Pendulum?640:640): (Pendulum?590:590)), (Pendulum?260:260));
-				if(cardSubType!='Normal') ctx.drawImage(imgs[11], 810, 215, 58, 58);
+				if(cardSubType!='Normal') ctx.drawImage(imgs[11], 810, (Pendulum?181:215), 58, 58);
 			}
 			if(Pendulum){ctx.textAlign = "center";
 						 ctx.font = "55pt 'MatrixBoldSmallCaps', '華康隸書體'";
