@@ -196,8 +196,8 @@
 									</div>
 								</fieldset>
 							</div>
-							<div id="mtform3" class="form-row">
-								<div class="form-group col-4">
+							<div class="form-row">
+								<div id="mtatk" class="form-group col-4">
 									<label for="cardATK">攻擊力</label>
 									<input type="text" maxlength="6" class="form-control" id="cardATK" value="?">
 								</div>
@@ -554,9 +554,9 @@
 		//切換卡片種類時
 		$('#cardType')[0].addEventListener("input", function(){
 			if($('#cardType').val()!="monster"){
-				$('#mtform1').hide(); $('#mtform2').hide(); $('#mtform3').hide();
+				$('#mtform1').hide(); $('#mtform2').hide(); $('#mtatk').hide(); $('#mtdef').hide(); $('#mtlink').hide();
 			}else{
-				$('#mtform1').show(); $('#mtform2').show(); $('#mtform3').show(); $('#mtlink').hide(); $('#mtdef').show();
+				$('#mtform1').show(); $('#mtform2').show(); $('#mtatk').show(); $('#mtdef').show(); $('#mtlink').hide();
 			}
 			var str="";
 			for (var i=0; i<optType[$('#cardType').val()].length; i++)
