@@ -265,6 +265,31 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="modalLoading" tabindex="" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark">
+				<div class="modal-body text-center">
+					<span class="spinner-grow spinner-grow-sm text-success" role="status">
+						<span class="sr-only">Loading...</span>
+					</span>
+					<span class="spinner-grow spinner-grow-sm text-danger" role="status">
+						<span class="sr-only">Loading...</span>
+					</span>
+					<span class="spinner-grow spinner-grow-sm text-warning" role="status">
+						<span class="sr-only">Loading...</span>
+					</span>
+					<span class="spinner-grow spinner-grow-sm text-info" role="status">
+						<span class="sr-only">Loading...</span>
+					</span>
+					<span class="spinner-grow spinner-grow-sm text-white" role="status">
+						<span class="sr-only">Loading...</span>
+					</span>
+					<div><span class="text-light">載入中...</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 
 	<script>		
@@ -277,6 +302,7 @@
 		
 		
 		$(function(){
+			$('#modalLoading').modal('show');
 			if($('#cardSubType').val()!="Link"){
 				$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
 			}else{
@@ -289,6 +315,9 @@
 			}
 		})
 		$(window).on("load", function () {
+			setTimeout(function() {
+				$('#modalLoading').modal('hide');
+			}, 500);
 			loadingCardContent();
 		}); 
 		
