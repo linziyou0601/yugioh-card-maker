@@ -148,13 +148,13 @@
 										<input type="checkbox" data-toggle="toggle" data-width="100%" data-on="開" data-off="關" id="Pendulum" checked>
 									</div>
 								</div>
-								<div class="form-group col-4">
+								<div id="mtspec" class="form-group col-4">
 									<div class="form-check px-0">
 										<label for="Special">限特殊召喚</label><br>
 										<input type="checkbox" data-toggle="toggle" data-width="100%" data-on="是" data-off="否" id="Special" checked>
 									</div>
 								</div>
-								<div id="mtform2" class="form-group col-4">
+								<div id="mtlevel" class="form-group col-4">
 									<label for="cardLevel">等級</label>
 									<select id="cardLevel" class="form-control">
 										<option value="0">0</option>
@@ -192,7 +192,7 @@
 									</div>
 									<div class="form-group">
 										<label for="cardPendulumInfo">效果文字</label>
-										<textarea type="text" class="form-control" id="cardPendulumInfo">①：自己不是龍族怪獸不能靈擺召喚。這個效果不會被無效化。②：以自己墓地1隻龍族的融合．同步．超量怪獸為對象才能發動。這張卡破壞，那隻怪獸特殊召喚。</textarea>
+										<textarea type="text" class="form-control" id="cardPendulumInfo" rows="5">①：自己不是龍族怪獸不能靈擺召喚。這個效果不會被無效化。②：以自己墓地1隻龍族的融合．同步．超量怪獸為對象才能發動。這張卡破壞，那隻怪獸特殊召喚。</textarea>
 									</div>
 								</fieldset>
 							</div>
@@ -256,7 +256,7 @@
 							</div>
 							<div class="form-group">
 								<label for="cardInfo">卡片說明</label>
-								<textarea type="text" class="form-control" id="cardInfo">這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。 </textarea>
+								<textarea type="text" class="form-control" id="cardInfo" rows="5">這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。 </textarea>
 							</div>
 							<button type="button" class="my-2 btn btn-light" onClick="loadingCardContent()">產生</button>
 							<button type="button" class="my-2 btn btn-light" onClick="download_img()">下載</button>
@@ -303,17 +303,8 @@
 		
 		
 		$(function(){
-			$('#modalLoading').modal('show');
-			if($('#cardSubType').val()!="Link"){
-				$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
-			}else{
-				$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
-			}
-			if($('#Pendulum').prop('checked')){
-				$('#pform').show();
-			}else{
-				$('#pform').hide();
-			}
+			toggleLink();
+			togglePendulum();
 		})
 		$(window).on("load", function () {
 			setTimeout(function() {
@@ -555,9 +546,9 @@
 		//切換卡片種類時
 		$('#cardType')[0].addEventListener("input", function(){
 			if($('#cardType').val()!="monster"){
-				$('#mtform1').hide(); $('#mtform2').hide(); $('#mtatk').hide(); $('#mtdef').hide(); $('#mtlink').hide();
+				$('#mtform1').hide(); $('#mtspec').hide(); $('#mtlevel').hide(); $('#mtatk').hide(); $('#mtdef').hide(); $('#mtlink').hide();
 			}else{
-				$('#mtform1').show(); $('#mtform2').show(); $('#mtatk').show(); $('#mtdef').show(); $('#mtlink').hide();
+				$('#mtform1').show(); $('#mtspec').show(); $('#mtlevel').show(); $('#mtatk').show(); $('#mtdef').show(); $('#mtlink').hide();
 			}
 			var str="";
 			for (var i=0; i<optType[$('#cardType').val()].length; i++)
@@ -566,22 +557,25 @@
 		});
 		//切換為連結怪獸時
 		$('#cardSubType')[0].addEventListener("input", function(){
-			if($('#cardType').val()=="monster"){
-				if($('#cardSubType').val()!="Link"){
-					$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
-				}else{
-					$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
-				}
-			}
+			toggleLink()
 		});
 		//切換靈擺時
 		$('#Pendulum').change(function() {
-			if($('#Pendulum').prop('checked')){
-				$('#pform').show();
-			}else{
-				$('#pform').hide();
-			}
+			togglePendulum()
 		})
+		function toggleLink(){
+			if($('#cardType').val()=="monster"){
+				if($('#cardSubType').val()!="Link"){
+					$('#mtlink').hide(); $('#mtdef').show(); $('#mtlevel').show();
+				}else{
+					$('#mtdef').hide(); $('#mtlink').show(); $('#mtlevel').hide();
+				}
+			}
+		}
+		function togglePendulum(){
+			if($('#Pendulum').prop('checked')) $('#pform').show();
+			else $('#pform').hide();
+		}
 		//上傳後顯示檔名
 		$('#cardImg').on('change',function(){
 			var fileName = ($('#cardImg').val())? $('#cardImg')[0].files[0].name.replace('C:\\fakepath\\', ""): "上傳圖片";
