@@ -355,7 +355,7 @@
 			imgs.push(new Image());
 			imgs[i].onload = function(){ 
 			  imagesOK++;
-			  if (imagesOK>=imageURLs.length ) setTimeout(callback, 200);
+			  if (imagesOK>=imageURLs.length ) setTimeout(callback, 500);
 			};
 			imgs[i].src = imageURLs[i];
 		  }      
