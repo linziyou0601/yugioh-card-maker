@@ -566,7 +566,7 @@
 		});
 		//切換為連結怪獸時
 		$('#cardSubType')[0].addEventListener("input", function(){
-			if($('#cardSubType').val()!="Link"){
+			if($('#cardType').val()=="monster" && $('#cardSubType').val()!="Link"){
 				$('#mtlink').hide(); $('#mtdef').show(); $('#mtform2').show();
 			}else{
 				$('#mtdef').hide(); $('#mtlink').show(); $('#mtform2').hide();
