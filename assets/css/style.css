@@ -1,0 +1,50 @@
+/* font converted using font-converter.net. thank you! */
+@font-face {
+	font-family: "華康隸書體";
+	src:url("../fonts/華康隸書體.ttf") format("truetype");
+}
+@font-face {
+	font-family: "MatrixBoldSmallCaps";
+	src:url("../fonts/MatrixBoldSmallCaps.ttf") format("truetype");
+	font-weight: bold;
+}
+
+body{
+	background: url("../../image/background.jpg") no-repeat center center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.cardbg{
+	width: 100%;
+}
+
+.card{
+	background-color: rgba(203,203,203,.4);
+	border-radius: .5rem;
+}
+select, textarea, input, .custom-file-label{
+	background-color: rgba(84,84,84,.5) !important;
+	color: white !important;
+}
+#pform fieldset{
+	background-color: rgba(84,84,84,.2) !important;
+	border: 1px solid rgba(84,84,84,.4);
+	border-radius: .25rem;
+	box-shadow: 0 1rem 1rem rgba(239,239,239,.15) !important; 
+}
+.toggle.btn.btn-light{
+	background-color: rgba(0,0,0,0) !important;
+	border:1px solid #ced4da;
+}
+.toggle-off{
+	background-color: rgba(84,84,84,.5) !important;
+	color: white !important;
+}.toggle.btn.btn-primary{
+	background-color: rgba(0,0,0,0) !important;
+	border: 1px solid #ced4da;
+}
+.toggle-on{
+	background-color: rgba(32,32,32,.8) !important;
+	color: white !important;
+}
