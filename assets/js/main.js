@@ -164,21 +164,7 @@ function infoTextFill(){
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.font = fontSize + "pt " + fontName[Lang][2];
-    var lineWidth = 0 - ctx.measureText(infoText[0]).width; //目前佔用行寬
-    var fieldWidth = 823; //欄位寬度
-    var initHeight= 1100 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0); //文字距離圖片頂部高度
-    var lastSubStrIndex= 0; //每次擷取的子字串起始位置
-    for(let i=0; i<infoText.length; i++){ 
-        lineWidth += ctx.measureText(infoText[i]).width;
-        if(lineWidth>fieldWidth || infoText.substring(i, i+1)=='\n'){ // 
-            if(infoText.substring(i, i+1)=='\n') i++;
-            ctx.fillText(infoText.substring(lastSubStrIndex, i), 78, initHeight);//绘制截取部分
-            initHeight+=fontSize+langOffset[Lang]["lh"]; lineWidth=0; lastSubStrIndex=i;
-        } 
-        if(i==infoText.length-1){//若本行未超過，位已達最後一字，則直接填入
-            ctx.fillText(infoText.substring(lastSubStrIndex, i+1), 78, initHeight);
-        }
-    }
+    wrapText(infoText, 78, 1100 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 840, fontSize+langOffset[Lang]["lh"]);
 }
 
 //填入靈擺效果
@@ -186,21 +172,7 @@ function pendulumInfoTextFill(){
     ctx.textAlign = "left";	
     ctx.textBaseline = "top";
     ctx.font = fontSize2 + "pt " + fontName[Lang][2];
-    var lineWidth = 0 - ctx.measureText(pendulumInfoText[0]).width; //目前佔用行寬
-    var fieldWidth = 655; //欄位寬度
-    var initHeight= 920+langOffset[Lang]["oY"]; //文字距離圖片頂部高度
-    var lastSubStrIndex= 0; //每次擷取的子字串起始位置
-    for(let i=0; i<pendulumInfoText.length; i++){ 
-        lineWidth += ctx.measureText(pendulumInfoText[i]).width;
-        if(lineWidth>fieldWidth || pendulumInfoText.substring(i, i+1)=='\n'){ // 
-            if(pendulumInfoText.substring(i, i+1)=='\n') i++;
-            ctx.fillText(pendulumInfoText.substring(lastSubStrIndex, i), 160, initHeight);//绘制截取部分
-            initHeight+=fontSize2+langOffset[Lang]["lh"]; lineWidth=0; lastSubStrIndex=i;
-        } 
-        if(i==pendulumInfoText.length-1){//若本行未超過，位已達最後一字，則直接填入
-            ctx.fillText(pendulumInfoText.substring(lastSubStrIndex, i+1), 160, initHeight);
-        }
-    }
+    wrapText(pendulumInfoText, 160, 920+langOffset[Lang]["oY"], 655, fontSize2+langOffset[Lang]["lh"]);
 }
 
 //字體效果
@@ -320,3 +292,53 @@ function download_img() {
     dlLink.click();
     document.body.removeChild(dlLink);
 }
+
+
+//**********Canvas區塊文字***********//
+function wrapText(text, x, y, maxWidth, lineHeight) {
+    var lineWidth = 0 - ctx.measureText(text[0]).width; //目前佔用行寬
+    var fieldWidth = maxWidth; //欄位寬度
+    var initHeight= y; //文字距離圖片頂部高度
+    var lastSubStrIndex= 0; //每次擷取的子字串起始位置
+    for(let i=0; i<text.length; i++){ 
+        lineWidth += ctx.measureText(text[i]).width;
+        if(lineWidth>fieldWidth || text.substring(i, i+1)=='\n'){ // 
+            if(text.substring(i, i+1)=='\n') i++;
+            ctx.fillText(text.substring(lastSubStrIndex, i), x, initHeight);//绘制截取部分
+            initHeight+=lineHeight; lineWidth=0; lastSubStrIndex=i;
+        } 
+        if(i==text.length-1){//若本行未超過，位已達最後一字，則直接填入
+            ctx.fillText(text.substring(lastSubStrIndex, i+1), x, initHeight);
+        }
+    }
+};
+//**********手動換行***********//
+/* function wrapText(text, x, y, line_width, line_height)
+{
+    var line = '';
+    var paragraphs = text.split('\n');
+    for (var i = 0; i < paragraphs.length; i++)
+    {
+        var words = paragraphs[i].split(' ');
+        for (var n = 0; n < words.length; n++)
+        {
+            var testLine = line + words[n] + ' ';
+            var metrics = ctx.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > line_width && n > 0)
+            {
+                ctx.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += line_height;
+            }
+            else
+            {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, y);
+        y += line_height;
+        line = '';
+    }
+} */
+//*********************//
