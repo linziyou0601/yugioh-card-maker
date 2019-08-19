@@ -140,11 +140,13 @@ function imagesAreNowLoaded(){
                   ctx.font = "55pt 'MatrixBoldSmallCaps'";
                   ctx.fillText(blueSC, 106, 1040, 60); ctx.fillText(redSC, 895, 1040, 60);
                   pendulumInfoTextFill();}
+    //防偽貼            
+    if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
     //填入卡片說明
     infoTextFill();
 }
 
-//填入圖片
+//填入底圖、卡圖、屬性
 function drawCardImg(){
     var cX, cY, cW, cH;
     if(Pendulum){ cX=69; cY=255; cW=862; cH=647;}
@@ -155,7 +157,6 @@ function drawCardImg(){
     else ctx.drawImage(imgs[11], cX-((iW-cW)/2), cY, iW, cH);
     ctx.drawImage(imgs[9], 0, 0, 1000, 1450);
     ctx.drawImage(imgs[10], 840, 68, 90, 90);
-    if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
 }
 
 //填入卡片說明
