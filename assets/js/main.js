@@ -164,7 +164,7 @@ function infoTextFill(){
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.font = fontSize + "pt " + fontName[Lang][2];
-    wrapText(infoText, 78, 1100 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 840, fontSize+langOffset[Lang]["lh"]);
+    wrapText(infoText, 78, 1100 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 825, fontSize+langOffset[Lang]["lh"]);
 }
 
 //填入靈擺效果
