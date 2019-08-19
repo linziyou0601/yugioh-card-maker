@@ -22,16 +22,23 @@
 </head>
 
 <body class="white">
+	<span class="preloadfont" style="font-family: 'zh';">.</span>
+	<span class="preloadfont" style="font-family: 'MatrixBoldSmallCaps';">.</span>
+	<span class="preloadfont" style="font-family: 'jp';">.</span>
+	<span class="preloadfont" style="font-family: 'jp2';">.</span>
+	<span class="preloadfont" style="font-family: 'en';">.</span>
+	<span class="preloadfont" style="font-family: 'en2';">.</span>
+	<span class="preloadfont" style="font-family: 'en3';">.</span>
 	<div class="container-fluid">
 		<div class="row h-100 justify-content-center align-content-center">
 			<div class="col-10 mt-4 mb-2 text-center">
-				<h4 style="font-family: 'MatrixBoldSmallCaps'; line-height: 1.2rem;">Yu-Gi-Oh!　Card　Generator</h4>
-				<h1 style="font-family: '華康隸書體'; line-height: 2.1rem;">遊戲王卡製造機</h1>
+				<h4 style="font-family: 'en'; line-height: 1.2rem;">Yu-Gi-Oh!　Card　Generator</h4>
+				<h1 style="font-family: 'zh'; line-height: 2.1rem;">遊戲王卡製造機</h1>
 			</div>
 			<div class="col-12 col-sm-8 col-md-5 col-lg-4 my-2">
 				<div class="card shadow">
 					<div class="card-body">
-						<canvas id="yugiohcard" class="cardbg" style="font-family: '華康隸書體';"></canvas>
+						<canvas id="yugiohcard" class="cardbg"></canvas>
 					</div>
 				</div>
 			</div>
@@ -40,40 +47,57 @@
 					<div class="card-body">
 						<form name="cardData" id="cardData">
 							<div class="form-row">
-								<div class="form-group col-6">
+								<div id="mtCardLang" class="form-group col-3">
+									<label for="cardLang">卡片語言</label>
+									<select id="cardLang" class="form-control">
+										<option value="zh" selected>繁中</option>
+										<option value="jp">日文</option>
+										<option value="en">英文</option>
+									</select>
+								</div>
+								<div id="mtholo" class="form-group col-3">
+									<div class="form-check px-0">
+										<label>　</label><br>
+										<input type="checkbox" class="checkboxButton" id="holo" checked>
+										<label class="checkboxLabel" for="holo">防偽貼</label>
+									</div>
+								</div>
+								<div id="mtCardRare" class="form-group col-3">
+									<label for="cardRare">稀有</label>
+									<select id="cardRare" class="form-control">
+										<option value="0" selected>N</option>
+										<option value="1">R</option>
+										<option value="2">UR</option>
+									</select>
+								</div>
+								<div id="mtTitleColor" class="form-group col-3">
+									<label for="titleColor">標題顏色</label>
+									<input type="color" class="form-control" id="titleColor" >
+								</div>
+							</div>
+							<div id="mtCardTitle" class="form-row">
+								<div class="form-group col-12">
 									<label for="cardTitle">卡片名稱</label>
 									<input type="text" class="form-control" id="cardTitle" value="超天新龍 異色眼革命龍">
 								</div>
-								<div class="form-group col-3">
-									<label for="titleColor">顏色</label>
-									<input type="color" class="form-control" id="titleColor" >
-								</div>
-								<div class="form-group col-3">
-									<label for="cardRare">稀有</label>
-									<select id="cardRare" class="form-control">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-									</select>
-								</div>
 							</div>
-							<div class="form-group">
+							<div id="mtCardImg" class="form-group">
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="cardImg" required>
-									<label class="custom-file-label" for="cardImg" data-browse="瀏覽" accept="image/*">上傳圖片</label>
+									<label class="custom-file-label" for="cardImg" data-browse="✚" accept="image/*">上傳圖片</label>
 								</div>
 							</div>
-							<div class="form-row">
-								<div class="form-group col-6">
-									<label for="cardType">卡片</label>
+							<div id="areaCardType" class="form-row">
+								<div id="mtCardType" class="form-group col-6">
+									<label for="cardType">卡片類別</label>
 									<select id="cardType" class="form-control">
 										<option value="monster" selected>怪獸</option>
 										<option value="Spell">魔法</option>
 										<option value="Trap">陷阱</option>
 									</select>
 								</div>
-								<div class="form-group col-6">
-									<label for="cardSubType">類型</label>
+								<div id="mtCardSubType" class="form-group col-6">
+									<label for="cardSubType">子類別</label>
 									<select id="cardSubType" class="form-control">
 										<option value="Normal" selected>通常</option>
 										<option value="Fusion">融合</option>
@@ -81,11 +105,12 @@
 										<option value="Synchro">同步</option>
 										<option value="Xyz">超量</option>
 										<option value="Link">連結</option>
+										<option value="Token">衍生物</option>
 									</select>
 								</div>
 							</div>
-							<div id="mtform1" class="form-row">
-								<div class="form-group col-3">
+							<div id="areaMonsterAttr" class="form-row">
+								<div id="mtCardAttr" class="form-group col-3">
 									<label for="cardAttr">屬性</label>
 									<select id="cardAttr" class="form-control">
 										<option value="DIVINE">神</option>
@@ -97,64 +122,66 @@
 										<option value="DARK">闇</option>
 									</select>
 								</div>
-								<div class="form-group col-4">
+								<div id="mtEffType" class="form-group col-4">
 									<label for="cardEffType">效果</label>
 									<select id="cardEffType" class="form-control">
-										<option value="無">無</option>
-										<option value="" selected>一般</option>
-										<option value="卡通">卡通</option>
-										<option value="靈魂">靈魂</option>
-										<option value="聯合">聯合</option>
-										<option value="二重">二重</option>
-										<option value="反轉">反轉</option>
-										<option value="協調">協調</option>
+										<option value="None">無</option>
+										<option value="Normal" selected>一般</option>
+										<option value="0">卡通</option>
+										<option value="1">靈魂</option>
+										<option value="2">聯合</option>
+										<option value="3">二重</option>
+										<option value="4">反轉</option>
+										<option value="5">協調</option>
 									</select>
 								</div>
-								<div class="form-group col-5">
+								<div id="mtThrType" class="form-group col-5">
 									<label for="cardThrType">種族</label>
 									<select id="cardThrType" class="form-control">
-										<option value="惡魔">惡魔</option>
-										<option value="不死">不死</option>
-										<option value="海龍">海龍</option>
-										<option value="雷">雷</option>
-										<option value="岩石">岩石</option>
-										<option value="機械">機械</option>
-										<option value="恐龍">恐龍</option>
-										<option value="獸">獸</option>
-										<option value="昆蟲">昆蟲</option>
-										<option value="魚">魚</option>
-										<option value="植物">植物</option>
-										<option value="獸戰士">獸戰士</option>
-										<option value="戰士">戰士</option>
-										<option value="鳥獸">鳥獸</option>
-										<option value="天使">天使</option>
-										<option value="龍" selected>龍</option>
-										<option value="爬蟲類">爬蟲類</option>
-										<option value="水">水</option>
-										<option value="炎">炎</option>
-										<option value="魔法師">魔法師</option>
-										<option value="幻龍">幻龍</option>
-										<option value="網域">網域</option>
-										<option value="超能">超能</option>
-										<option value="幻神獸">幻神獸</option>
-										<option value="創造神">創造神</option>
+										<option value="0">惡魔</option>
+										<option value="1">不死</option>
+										<option value="2">海龍</option>
+										<option value="3">雷</option>
+										<option value="4">岩石</option>
+										<option value="5">機械</option>
+										<option value="6">恐龍</option>
+										<option value="7">獸</option>
+										<option value="8">昆蟲</option>
+										<option value="9">魚</option>
+										<option value="10">植物</option>
+										<option value="11">獸戰士</option>
+										<option value="12">戰士</option>
+										<option value="13">鳥獸</option>
+										<option value="14">天使</option>
+										<option value="15" selected>龍</option>
+										<option value="16">爬蟲類</option>
+										<option value="17">水</option>
+										<option value="18">炎</option>
+										<option value="19">魔法師</option>
+										<option value="20">幻龍</option>
+										<option value="21">網域</option>
+										<option value="22">超能</option>
+										<option value="23">幻神獸</option>
+										<option value="24">創造神</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-row">
-								<div class="form-group col-4">
+								<div id="mtPendulum" class="form-group col-4">
 									<div class="form-check px-0">
-										<label for="Pendulum">靈擺</label><br>
-										<input type="checkbox" data-toggle="toggle" data-width="100%" data-on="開" data-off="關" id="Pendulum" checked>
+										<label>　</label><br>
+										<input type="checkbox" class="checkboxButton" id="Pendulum" checked>
+										<label class="checkboxLabel" for="Pendulum">靈擺</label>
 									</div>
 								</div>
-								<div id="mtspec" class="form-group col-4">
+								<div id="mtSpecial" class="form-group col-4">
 									<div class="form-check px-0">
-										<label for="Special">限特殊召喚</label><br>
-										<input type="checkbox" data-toggle="toggle" data-width="100%" data-on="是" data-off="否" id="Special" checked>
+										<label>　</label><br>
+										<input type="checkbox" class="checkboxButton" id="Special" checked>
+										<label class="checkboxLabel" for="Special">特殊召喚</label>
 									</div>
 								</div>
-								<div id="mtlevel" class="form-group col-4">
+								<div id="mtCardLevel" class="form-group col-4">
 									<label for="cardLevel">等級</label>
 									<select id="cardLevel" class="form-control">
 										<option value="0">0</option>
@@ -173,17 +200,17 @@
 									</select>
 								</div>
 							</div>
-							<div id="pform" class="form-row mb-3" style="display: none;">
+							<div id="areaPendulum" class="form-row mb-3" style="display: none;">
 								<fieldset class="p-2 col-12 text-center">
 									<h4 class="text-light ">靈擺效果</h4>
 									<div class="form-row">
 										<div class="form-group col-4">
-											<label for="cardRED">紅刻度</label>
-											<input type="number" min="0" max="12" class="form-control" id="cardRED" value="12">
-										</div>
-										<div class="form-group col-4">
 											<label for="cardBLUE">藍刻度</label>
 											<input type="number" min="0" max="12" class="form-control" id="cardBLUE" value="12">
+										</div>
+										<div class="form-group col-4">
+											<label for="cardRED">紅刻度</label>
+											<input type="number" min="0" max="12" class="form-control" id="cardRED" value="12">
 										</div>
 										<div class="form-group col-4">
 											<label for="pendulumSize">文字大小</label>
@@ -197,56 +224,50 @@
 								</fieldset>
 							</div>
 							<div class="form-row">
-								<div id="mtatk" class="form-group col-4">
+								<div id="mtCardATK" class="form-group col-4">
 									<label for="cardATK">攻擊力</label>
 									<input type="text" maxlength="6" class="form-control" id="cardATK" value="?">
 								</div>
-								<div id="mtdef" class="form-group col-4">
+								<div id="mtCardDEF" class="form-group col-4">
 									<label for="cardDEF">守備力</label>
 									<input type="text" maxlength="6" class="form-control" id="cardDEF" value="?">
 								</div>
-								<div id="mtlink" class="form-group col-4" style="display: none;">
+								<div id="mtLink" class="form-group col-4" style="display: none;">
 									<label>連結</label>
 									<table>
-										<tr>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link1">
-												<label class="custom-control-label" for="link1"></label>
+										<tr><td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link1">
+												<label class="linkLabel" for="link1">◤</label>
 												</div></td>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link2">
-												<label class="custom-control-label" for="link2"></label>
+											<td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link2">
+												<label class="linkLabel" for="link2">▲</label>
 												</div></td>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link3">
-												<label class="custom-control-label" for="link3"></label>
-												</div></td>
-										</tr>
-										<tr>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link4">
-												<label class="custom-control-label" for="link4"></label>
+											<td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link3">
+												<label class="linkLabel" for="link3">◥</label>
+												</div></td></tr>
+										<tr><td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link4">
+												<label class="linkLabel" for="link4">◀</label>
 												</div></td>
 											<td></td>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link5">
-												<label class="custom-control-label" for="link5"></label>
+											<td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link5">
+												<label class="linkLabel" for="link5">▶</label>
+												</div></td></tr>
+										<tr><td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link6">
+												<label class="linkLabel" for="link6">◣</label>
 												</div></td>
-										</tr>
-										<tr>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link6">
-												<label class="custom-control-label" for="link6"></label>
+											<td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link7">
+												<label class="linkLabel" for="link7">▼</label>
 												</div></td>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link7">
-												<label class="custom-control-label" for="link7"></label>
-												</div></td>
-											<td><div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="link8">
-												<label class="custom-control-label" for="link8"></label>
-												</div></td>
-										</tr>
+											<td><div class="custom-checkbox">
+												<input type="checkbox" class="linkButton" id="link8">
+												<label class="linkLabel" for="link8">◢</label>
+												</div></td></tr>
 									</table>
 								</div>
 								<div class="form-group col-4">
@@ -256,10 +277,11 @@
 							</div>
 							<div class="form-group">
 								<label for="cardInfo">卡片說明</label>
-								<textarea type="text" class="form-control" id="cardInfo" rows="5">這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。 </textarea>
+								<textarea type="text" class="form-control" id="cardInfo" rows="5">這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。</textarea>
 							</div>
-							<button type="button" class="my-2 btn btn-light" onClick="loadingCardContent()">產生</button>
-							<button type="button" class="my-2 btn btn-light" onClick="download_img()">下載</button>
+							<button type="button" class="my-2 btn btn-info" onClick="loadingCardContent()">產生</button>
+							<button type="button" class="my-2 btn btn-success" onClick="download_img()">下載</button>
+							<label style="color: #CCC;">　每1.5秒自動更新</label>
 						</form>
 					</div>
 				</div>
@@ -271,332 +293,18 @@
 		<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 			<div class="modal-content bg-dark">
 				<div class="modal-body text-center">
-					<span class="spinner-grow spinner-grow-sm text-success" role="status">
-						<span class="sr-only">Loading...</span>
-					</span>
-					<span class="spinner-grow spinner-grow-sm text-danger" role="status">
-						<span class="sr-only">Loading...</span>
-					</span>
-					<span class="spinner-grow spinner-grow-sm text-warning" role="status">
-						<span class="sr-only">Loading...</span>
-					</span>
-					<span class="spinner-grow spinner-grow-sm text-info" role="status">
-						<span class="sr-only">Loading...</span>
-					</span>
-					<span class="spinner-grow spinner-grow-sm text-white" role="status">
-						<span class="sr-only">Loading...</span>
-					</span>
+					<span class="spinner-grow spinner-grow-sm text-success" role="status"><span class="sr-only">Loading...</span></span>
+					<span class="spinner-grow spinner-grow-sm text-danger" role="status"><span class="sr-only">Loading...</span></span>
+					<span class="spinner-grow spinner-grow-sm text-warning" role="status"><span class="sr-only">Loading...</span></span>
+					<span class="spinner-grow spinner-grow-sm text-info" role="status"><span class="sr-only">Loading...</span></span>
+					<span class="spinner-grow spinner-grow-sm text-white" role="status"><span class="sr-only">Loading...</span></span>
 					<div><span class="text-light">載入中...</span></div>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-
-	<script>		
-		var canvas = document.getElementById('yugiohcard'),
-			ctx = canvas.getContext('2d'),			
-			imageURLs=[];
-		
-		const chiType = {"Fusion":"融合", "Ritual":"儀式", "Synchro":"同步", "Xyz":"超量", "Link":"連結"};
-		var Effect=false, Pendulum=false, cardTitle="", cardAttr="", cardType="", cardSubType="", cardEffType="", cardThrType="", typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, pendulumInfoText="", infoText="", fontSize=28, fontSize2=22, titleColor="", Special="", cardImg="", rare=0;
-		
-		
-		$(function(){
-			$('#modalLoading').modal('show');
-			toggleLink();
-			togglePendulum();
-		})
-		$(window).on("load", function () {
-			setTimeout(function() {
-				$('#modalLoading').modal('hide');
-			}, 500);
-			loadingCardContent();
-		}); 
-		
-		// 已加載的圖片會放進imgs[]裡
-		var imgs=[];
-		var imagesOK=0;
-		function loadingCardContent(){
-			//----------------------------------//
-			//卡片資料
-			cardTitle = $('#cardTitle').val(); //卡片標題
-			cardImg = ($('#cardImg').val())? URL.createObjectURL($('#cardImg')[0].files[0]): ""; //卡片圖案
-			cardTitleColor = $('#titleColor').val(); //標題顏色
-			rare = $('#cardRare').val(); //標題顏色
-			cardAttr = ($('#cardType').val()=="monster"? $('#cardAttr').val(): $('#cardType').val());
-			cardType = $('#cardType').val(); //卡片類型
-			cardSubType = $('#cardSubType').val(); //次要種類
-				//怪獸卡//
-				cardThrType = $('#cardThrType').val(); //怪獸卡種族
-				cardEffType = $('#cardEffType').val(); //效果怪獸類型
-				Effect = (cardEffType=="無"? false: true); //怪獸卡種類
-				Pendulum = $('#Pendulum').prop('checked'); //怪獸卡種類
-				Special = $('#Special').prop('checked'); //限特殊召喚？
-				level = $('#cardLevel').val(); //怪獸卡等級
-				ATK = String($('#cardATK').val()); //怪獸卡ATK
-				DEF = String($('#cardDEF').val()); //怪獸卡DEF
-				typeText =  ((!Effect && cardSubType=="" && !Pendulum)? "／通常": "") +
-							(Special? "／特殊召喚": "") +
-							((cardEffType!="" && cardEffType!="無")? "／"+cardEffType: "") +
-							(cardSubType!="Normal"? "／"+chiType[cardSubType]: "") +
-							(Pendulum? "／靈擺": "") + (Effect? "／效果": "");
-				//---//
-					//靈擺卡//
-					redSC = $('#cardRED').val();
-					blueSC = $('#cardBLUE').val();
-					pendulumInfoText = $('#cardPendulumInfo').val();
-					fontSize2 = Number($('#pendulumSize').val());
-					//-----//
-					//連結卡//
-					if(cardSubType=="Link"){
-						var count=0;
-						for(var i=1; i<=8; i++) count += $('#link'+i).prop('checked');
-						DEF = String(count);
-					}
-					//-----//
-			infoText = $('#cardInfo').val(); //卡片說明
-			fontSize = Number($('#infoSize').val());
-			//----------------------------------//
-			cardURL = (cardType!="monster"? cardType: 
-					  ((cardSubType=="Normal")? (Effect)? "Effect": "Normal": cardSubType))
-					  + ((Pendulum)? "Pendulum": "");
-			imgs=[]; imageURLs=[];
-			for(var i=1; i<=8; i++)
-				imageURLs.push("level/LINK"+i+".png"); //link角
-			imageURLs.push("card/"+cardURL+".webp"); //卡片種類
-			imageURLs.push("attr/"+cardAttr+".webp"); //卡片屬性
-			imageURLs.push(cardImg==""? "image/default.PNG": cardImg); //卡片圖片
-			if(cardType=="monster" || cardSubType!="Normal")
-				imageURLs.push("level/" + (cardType!="monster"? cardSubType:
-										  (cardSubType=="Xyz"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
-			
-			startLoadingAllImages(imagesAreNowLoaded); //載入圖檔
-		}
-		
-		//載入圖片
-		function startLoadingAllImages(callback){
-		  for (var i=0; i<imageURLs.length; i++) {
-			imgs.push(new Image());
-			imgs[i].onload = function(){ 
-			  imagesOK++;
-			  if (imagesOK>=imageURLs.length ) setTimeout(callback, 200);
-			};
-			imgs[i].src = imageURLs[i];
-		  }      
-		}
-		
-		//所有圖片都載入完成
-		function imagesAreNowLoaded(){
-			canvas.width = 1000;
-			canvas.height = 1450;
-			drawCardImg()
-			
-			//卡片標題
-			ctx.font = "60pt '華康隸書體'";
-			ctx.fillStyle = rareColor(rare);
-			ctx.fillText(cardTitle, 100-(Pendulum||cardSubType=="Link"?20:0), 160-(Pendulum||cardSubType=="Link"?20:0), 680+(Pendulum||cardSubType=="Link"?70:0));
-			//其他資料
-			ctx.font = (cardType=="monster"?28:40) + "pt '華康隸書體'";
-			ctx.fillStyle = '#000';
-			if(cardType=="monster"){  //怪獸
-				ctx.fillText('【'+cardThrType+'族'+typeText+'】', 90-(Pendulum||cardSubType=="Link"?25:0), 1140-(Pendulum||cardSubType=="Link"?15:0));
-				ctx.font = "42pt 'MatrixBoldSmallCaps', '華康隸書體'";
-				if(!Pendulum && cardSubType!="Link") ctx.fillText('ATK\/\ \ \ \ \ \ \ \ \ \ DEF\/',518,1355);
-				ctx.textAlign = "right";
-				if(ATK.includes("∞") || DEF.includes("∞")) ctx.font = "Bold 34pt 'Times New Roman', '華康隸書體'";
-				ctx.fillText(ATK, 705+(Pendulum?13:cardSubType=="Link"?17:0), 1353, 100);
-				ctx.fillText(DEF, 908+(Pendulum&&cardSubType=="Link"?0:
-									   Pendulum?12:
-									   cardSubType=="Link"?5: 0), 1353-(Pendulum&&cardSubType=="Link"?3:0), 100);
-				ctx.textAlign = "left";
-				if(cardSubType!="Link")
-					for(let i=1; i<=level; i++)
-						ctx.drawImage(imgs[11], (cardSubType=="Xyz"? (122+(i-1)*63): (817-(i-1)*63)), (Pendulum?181:215), 58, 58);
-			}else{
-				ctx.fillText('【'+(cardType=="Spell"? "魔法": "陷阱")+'卡'+(cardSubType=='Normal'? "": "　")+'】', (cardSubType=='Normal'? (Pendulum?670:640): (Pendulum?620:590)), (Pendulum?225:260));
-				if(cardSubType!='Normal') ctx.drawImage(imgs[11], (Pendulum?840:810), (Pendulum?181:215), 58, 58);
-			}
-			if(Pendulum){ctx.textAlign = "center";
-						 ctx.font = "55pt 'MatrixBoldSmallCaps', '華康隸書體'";
-						 ctx.fillText(redSC, 102, 1040); ctx.fillText(blueSC, 895, 1040);
-						 pendulumInfoTextFill();}
-			var linkObj = { "Link":{
-							"X":[85,385,823,72,878,85,383,825], "Y":[230,217,230,528,528,965,1022,965],
-							"W":[93,235,93,51,55,93,235,93], "H":[93,51,93,230,230,93,51,93]},
-						 	"Pendulum":{
-							"X":[41,410,868,20,929,41,410,870], "Y":[230,211,226,717,715,1305,1362,1305],
-							"W":[90,180,90,52,52,90,180,90], "H":[90,51,90,174,174,90,51,90]} }
-			var linkStr = Pendulum?"Pendulum":"Link";
-			if(cardSubType=="Link"){
-						for(var i=1; i<=8; i++)
-							if($('#link'+i).prop('checked')) ctx.drawImage(imgs[i-1], linkObj[linkStr]["X"][i-1], linkObj[linkStr]["Y"][i-1], linkObj[linkStr]["W"][i-1], linkObj[linkStr]["H"][i-1]);
-					}
-			
-			infoTextFill((Pendulum||cardSubType=="Link"?78:101), (Pendulum||cardSubType=="Link"?1100:1115), (Pendulum||cardSubType=="Link"?820:770), (Pendulum?15:0));
-		}
-		
-		//填入圖片
-		function drawCardImg(){
-			var cX, cY, cW, cH, dX, dY, dW, dH;
-			if(Pendulum){
-				cX=69; cY=262; cW=862; cH=640;
-				dX=840; dY=68; dW=90; dH=90;
-			}else if(cardSubType!="Link"){
-				cX=144; cY=314; cW=720; cH=720;
-				dX=800; dY=80; dW=105; dH=105;
-			}else{
-				cX=123; cY=268; cW=754; cH=754;
-				dX=840; dY=68; dW=90; dH=90;
-			}
-			iW = imgs[10].width/imgs[10].height*cH;
-			iH = imgs[10].height/imgs[10].width*cW;
-			if(imgs[10].width<=imgs[10].height) ctx.drawImage(imgs[10], cX, cY-((iH-cH)/2), cW, iH);
-			else ctx.drawImage(imgs[10], cX-((iW-cW)/2), cY, iW, cH);
-			ctx.drawImage(imgs[8], 0, 0, 1000, 1450);
-			ctx.drawImage(imgs[9], dX, dY, dW, dH);
-		}
-		
-		//填入卡片說明
-		function infoTextFill(left, init, fieldW, offset){
-			ctx.textAlign = "left";
-			ctx.textBaseline = "top";
-			//文字與ATK.DEF分隔線
-			if(cardType=="monster" && cardSubType!="Link"){
-				ctx.beginPath();
-				ctx.moveTo(100-offset, 1315); ctx.lineTo(900+offset, 1315);
-				ctx.stroke();}
-			
-			ctx.font = fontSize + "pt '華康隸書體'";
-			var lineWidth = 0 - ctx.measureText(infoText[0]).width; //目前佔用行寬
-			var fieldWidth = fieldW; //欄位寬度
-			var initHeight= init + ((cardType=="monster")? 30: 0); //文字距離圖片頂部高度
-			var lastSubStrIndex= 0; //每次擷取的子字串起始位置
-			for(let i=0; i<infoText.length; i++){ 
-				lineWidth += ctx.measureText(infoText[i]).width;
-				if(lineWidth>fieldWidth || infoText.substring(i, i+1)=='\n'){ // 
-					if(infoText.substring(i, i+1)=='\n') i++;
-					ctx.fillText(infoText.substring(lastSubStrIndex, i), left, initHeight);//绘制截取部分
-					initHeight+=fontSize+7; lineWidth=0; lastSubStrIndex=i;
-				} 
-				if(i==infoText.length-1){//若本行未超過，位已達最後一字，則直接填入
-					ctx.fillText(infoText.substring(lastSubStrIndex, i+1), left, initHeight);
-				}
-			}
-		}
-		
-		//填入靈擺效果
-		function pendulumInfoTextFill(){
-			ctx.textAlign = "left";	
-			ctx.textBaseline = "top";
-			ctx.font = fontSize2 + "pt '華康隸書體'";
-			var lineWidth = 0 - ctx.measureText(pendulumInfoText[0]).width; //目前佔用行寬
-			var fieldWidth = 655; //欄位寬度
-			var initHeight= 920; //文字距離圖片頂部高度
-			var lastSubStrIndex= 0; //每次擷取的子字串起始位置
-			for(let i=0; i<pendulumInfoText.length; i++){ 
-				lineWidth += ctx.measureText(pendulumInfoText[i]).width;
-				if(lineWidth>fieldWidth || pendulumInfoText.substring(i, i+1)=='\n'){ // 
-					if(pendulumInfoText.substring(i, i+1)=='\n') i++;
-					ctx.fillText(pendulumInfoText.substring(lastSubStrIndex, i), 160, initHeight);//绘制截取部分
-					initHeight+=fontSize2+5; lineWidth=0; lastSubStrIndex=i;
-				} 
-				if(i==pendulumInfoText.length-1){//若本行未超過，位已達最後一字，則直接填入
-					ctx.fillText(pendulumInfoText.substring(lastSubStrIndex, i+1), 160, initHeight);
-				}
-			}
-		}
-		
-		//字體效果
-		function rareColor(lv){
-			switch(lv) {
-				case "0":
-					return cardTitleColor;
-					break;
-				case "1":
-					gradient = ctx.createLinearGradient(0, -1000, 800, 1000);
-					for(i=0; i<20; i++){
-						gradient.addColorStop(((4*i)+0)/83, "#baaa4b");
-						gradient.addColorStop(((4*i)+1)/83-0.01, "#605624");
-						gradient.addColorStop(((4*i)+2)/83+0.005, "#574c12");
-						gradient.addColorStop(((4*i)+3)/83, "#4a3e05");
-					}
-					return gradient;
-					break;	
-				case "2":
-					gradient = ctx.createLinearGradient(0, 0, 600, 0);
-					gradient.addColorStop("0", "#ffdabf");
-					gradient.addColorStop("0.14", "#fff6bf");
-					gradient.addColorStop("0.28", "#fffebf");
-					gradient.addColorStop("0.42", "#d8ffbf");
-					gradient.addColorStop("0.56", "#bfffd4");
-					gradient.addColorStop("0.7", "#bffdff");
-					gradient.addColorStop("0.84", "#bfe4ff");
-					gradient.addColorStop("1", "#bfc2ff");
-					return gradient;
-					break;
-			}
-		}
-		
-		//*********************//
-		const optType = {
-			"monster": [["Normal","通常"], ["Fusion","融合"], ["Ritual","儀式"], ["Synchro","同步"], ["Xyz","超量"], ["Link","連結"]],
-			"Spell": [["Normal","通常"], ["Continuous","永續"], ["Field","場地"], ["Equip","裝備"], ["Quick","速攻"], ["Ritual","儀式"]],
-			"Trap": [["Normal","通常"], ["Continuous","永續"], ["Counter","反擊"]]
-		}
-		//切換卡片種類時
-		$('#cardType')[0].addEventListener("input", function(){
-			if($('#cardType').val()!="monster"){
-				$('#mtform1').hide(); $('#mtspec').hide(); $('#mtlevel').hide(); $('#mtatk').hide(); $('#mtdef').hide(); $('#mtlink').hide();
-			}else{
-				$('#mtform1').show(); $('#mtspec').show(); $('#mtlevel').show(); $('#mtatk').show(); $('#mtdef').show(); $('#mtlink').hide();
-			}
-			var str="";
-			for (var i=0; i<optType[$('#cardType').val()].length; i++)
-				str += "<option value='"+optType[$('#cardType').val()][i][0]+"'"+(i==0?" selected":"")+">"+optType[$('#cardType').val()][i][1]+"</option>";
-			$('#cardSubType').html(str);
-		});
-		//切換為連結怪獸時
-		$('#cardSubType')[0].addEventListener("input", function(){
-			toggleLink()
-		});
-		//切換靈擺時
-		$('#Pendulum').change(function() {
-			togglePendulum()
-		})
-		function toggleLink(){
-			if($('#cardType').val()=="monster"){
-				if($('#cardSubType').val()!="Link"){
-					$('#mtlink').hide(); $('#mtdef').show(); $('#mtlevel').show();
-				}else{
-					$('#mtdef').hide(); $('#mtlink').show(); $('#mtlevel').hide();
-				}
-			}
-		}
-		function togglePendulum(){
-			if($('#Pendulum').prop('checked')) $('#pform').show();
-			else $('#pform').hide();
-		}
-		//上傳後顯示檔名
-		$('#cardImg').on('change',function(){
-			var fileName = ($('#cardImg').val())? $('#cardImg')[0].files[0].name.replace('C:\\fakepath\\', ""): "上傳圖片";
-			$('#cardImg').next('label').html(fileName);
-		});
-		//*********************//
-
-		//下載
-		function download_img() {
-			var MIME_TYPE = "image/jpeg";
-			var imgURL = canvas.toDataURL(MIME_TYPE);
-			console.log(imgURL);
-			var dlLink = document.createElement('a');
-			dlLink.download = 'YuGiOh.jpg';
-			dlLink.href = imgURL;
-			dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
-			document.body.appendChild(dlLink);
-			dlLink.click();
-			document.body.removeChild(dlLink);
-		}
-	</script>
+	<script src="assets/js/selectionObj.js"></script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>

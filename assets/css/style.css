@@ -1,50 +1,104 @@
 /* font converted using font-converter.net. thank you! */
+@import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
 @font-face {
-	font-family: "華康隸書體";
-	src:url("../fonts/華康隸書體.ttf") format("truetype");
+	font-family: "zh";
+	src:url("../fonts/zh.ttf") format("truetype");
 }
 @font-face {
 	font-family: "MatrixBoldSmallCaps";
 	src:url("../fonts/MatrixBoldSmallCaps.ttf") format("truetype");
 	font-weight: bold;
 }
-
-body{
-	background: url("../../image/background.jpg") no-repeat center center;
-	background-attachment: fixed;
-	background-size: cover;
+@font-face {
+	font-family: "jp";
+	src:url("../fonts/jp.ttf") format("truetype");
+}
+@font-face {
+	font-family: "jp2";
+	src:url("../fonts/jp2.otf") format("opentype");
+}
+@font-face {
+	font-family: "en";
+	src:url("../fonts/en.ttf") format("truetype");
+}
+@font-face {
+	font-family: "en2";
+	src:url("../fonts/en2.ttf") format("truetype");
+}
+@font-face {
+	font-family: "en3";
+	src:url("../fonts/en3.ttf") format("truetype");
 }
 
+.preloadfont {
+	font-family: YourFont;
+	opacity:0;
+	height:0;
+	width:0;
+	display:inline-block;
+}
+
+body{
+	background-color: #222;
+	/*background: url("../../image/background.jpg") no-repeat center center;
+	background-attachment: fixed;
+	background-size: cover;*/
+	font-family: 'Noto Sans TC', 'arial', "微軟正黑體";
+}
 .cardbg{
 	width: 100%;
 }
-
 .card{
-	background-color: rgba(203,203,203,.4);
+	background-color: transparent/*rgba(203,203,203,.4)*/;
 	border-radius: .5rem;
 }
+/*輸入區*/
 select, textarea, input, .custom-file-label{
-	background-color: rgba(84,84,84,.5) !important;
-	color: white !important;
+	background-color: #2f2f2f/*rgba(84,84,84,.5)*/ !important;
+	color: #CCC/*white*/ !important;
+	border: 0 !important;
 }
 #pform fieldset{
-	background-color: rgba(84,84,84,.2) !important;
-	border: 1px solid rgba(84,84,84,.4);
+	border: 2px solid rgba(84,84,84,.2);
 	border-radius: .25rem;
-	box-shadow: 0 1rem 1rem rgba(239,239,239,.15) !important; 
+	/*box-shadow: 0 1rem 1rem rgba(239,239,239,.15) !important;*/ 
 }
-.toggle.btn.btn-light{
-	background-color: rgba(0,0,0,0) !important;
-	border:1px solid #ced4da;
+.custom-file-label::after{
+	background-color: #3f3f3f !important;
+	color: #FFF;
 }
-.toggle-off{
-	background-color: rgba(84,84,84,.5) !important;
-	color: white !important;
-}.toggle.btn.btn-primary{
-	background-color: rgba(0,0,0,0) !important;
-	border: 1px solid #ced4da;
+/*CheckBox鈕*/
+.checkboxButton{
+	display: none;
 }
-.toggle-on{
-	background-color: rgba(32,32,32,.8) !important;
-	color: white !important;
+.checkboxButton + .checkboxLabel{
+	display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    color: #495057;
+    background-color: #2f2f2f;
+    border-radius: .25rem;
+}
+.checkboxButton:checked + .checkboxLabel{
+	color: #FFF;
+    background-color: #17a2b8;
+}
+/*連結方向鈕*/
+.linkButton{
+	display: none;
+}
+.linkButton + .linkLabel{
+	width: 1.7rem;
+    padding: .4rem .5rem;
+    color: #495057;
+    background-color: #2f2f2f;
+    border-radius: .25rem;
+    margin: 0;
+    font-size: 2pt;
+    text-align: center;
+}
+.linkButton:checked + .linkLabel{
+	color: #FFF;
+    background-color: #1a73e8;
 }
