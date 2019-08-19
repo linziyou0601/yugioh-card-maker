@@ -99,7 +99,6 @@ function imagesAreNowLoaded(){
     canvas.width = 1000;
     canvas.height = 1450;
     drawCardImg()
-    if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
     //卡片標題
     ctx.font = 57+langOffset[Lang]["tS"]+"pt " + fontName[Lang][0];
     ctx.fillStyle = rareColor(rare);
@@ -157,6 +156,7 @@ function drawCardImg(){
     else ctx.drawImage(imgs[11], cX-((iW-cW)/2), cY, iW, cH);
     ctx.drawImage(imgs[9], 0, 0, 1000, 1450);
     ctx.drawImage(imgs[10], 840, 68, 90, 90);
+    if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
 }
 
 //填入卡片說明
