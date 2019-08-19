@@ -2,10 +2,9 @@ var canvas = document.getElementById('yugiohcard'),
     ctx = canvas.getContext('2d'),			
     imageURLs=[];
 var imgs=[], imagesOK=0;// 已加載的圖片會放進imgs[]裡
-var Effect=false, Pendulum=false, holo=true, cardTitle="", cardAttr="", cardType="", cardSubType="", cardEffType="",
+var Effect=false, Pendulum=false, holo=true, Lang="zh", cardTitle="", cardAttr="", cardType="", cardSubType="", cardEffType="",
     cardThrType="", typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, pendulumInfoText="", infoText="",
     fontSize=28, fontSize2=22, titleColor="", Special="", cardImg="", rare=0;
-var LangInit = {"zh": false, "jp": false, "en": false}
 
 //載入網頁
 $(function(){
@@ -17,7 +16,7 @@ $(window).on("load", function () {
     setTimeout(function() {
         $('#modalLoading').modal('hide');
     }, 500);
-    languageInit("zh");
+    languageInit(Lang);
     setInterval(loadingCardContent, 1500);
 }); 
 
@@ -78,7 +77,7 @@ function loadingCardContent(){
     if(cardType=="monster" || cardSubType!="Normal")
         imageURLs.push("images/pic/" + (cardType!="monster"? cardSubType:
                                        (cardSubType=="Xyz"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
-
+    restoreData(Lang);
     startLoadingAllImages(imagesAreNowLoaded); //載入圖檔
 }
 
@@ -117,7 +116,7 @@ function imagesAreNowLoaded(){
         ctx.textAlign = "left";
         if(cardSubType!="Link"){ //非連結怪獸
             for(let i=1; i<=level; i++)
-                ctx.drawImage(imgs[12], (cardSubType=="Xyz"? (122+(i-1)*63): (817-(i-1)*63)), 181, 58, 58); //怪獸等級.階級
+                ctx.drawImage(imgs[12], (cardSubType=="Xyz"? (122+(i-1)*63): (820-(i-1)*63)), 181, 58, 58); //怪獸等級.階級
         }else{ //連結怪獸
             var linkStr = Pendulum? "Pendulum": "Link";
             for(var i=1; i<=8; i++)
@@ -207,30 +206,48 @@ function rareColor(lv){
 }
 
 //*********************//
+//儲存目前語言資料
+function restoreData(LN){
+    langString[LN]["Default"]["type"] = $('#cardType').val();
+    langString[LN]["Default"]["subType"] = $('#cardSubType').val();
+    langString[LN]["Default"]["attr"] = $('#cardAttr').val();
+    langString[LN]["Default"]["effType"] = $('#cardEffType').val();
+    langString[LN]["Default"]["thrType"] = $('#cardThrType').val();
+    langString[LN]["Default"]["pendulum"] = $('#Pendulum').prop('checked');
+    langString[LN]["Default"]["special"] = $('#Special').prop('checked');
+    langString[LN]["Default"]["level"] = $('#cardLevel').val();
+    langString[LN]["Default"]["blue"] = $('#cardBLUE').val();
+    langString[LN]["Default"]["red"] = $('#cardRED').val();
+    langString[LN]["Default"]["atk"] = $('#cardATK').val();
+    langString[LN]["Default"]["def"] = $('#cardDEF').val();
+    langString[LN]["Default"]["title"] = $('#cardTitle').val();
+    langString[LN]["Default"]["info"] = $('#cardInfo').val();
+    langString[LN]["Default"]["pInfo"] = $('#cardPendulumInfo').val();
+    langString[LN]["Default"]["size"] = $('#infoSize').val();
+    langString[LN]["Default"]["pSize"] = $('#pendulumSize').val();
+}
 //切換語言時
 function languageInit(LN){
-    if(!LangInit[LN]){
-        $('#cardType').val("monster");
-        $('#cardSubType').val("Normal");
-        $('#cardAttr').val("LIGHT");
-        $('#cardEffType').val("Normal");
-        $('#cardThrType').val("15");
-        $('#Pendulum').prop('checked',true);
-        $('#Special').prop('checked',true);
-        $('#cardBLUE').val("12");
-        $('#cardRED').val("12");
-        $('#cardATK').val("?");
-        $('#cardDEF').val("?");
-        $('#cardTitle').val(langString[LN]["Default"]["title"]);
-        $('#cardInfo').val(langString[LN]["Default"]["info"]);
-        $('#cardPendulumInfo').val(langString[LN]["Default"]["pInfo"]);
-        $('#infoSize').val(langString[LN]["Default"]["size"]);
-        $('#pendulumSize').val(langString[LN]["Default"]["pSize"]);
-        toggleCardType();
-        toggleLink();
-        togglePendulum();
-        LangInit[LN] = true;
-    }
+    $('#cardType').val(langString[LN]["Default"]["type"]); 
+    toggleCardType();
+    $('#cardSubType').val(langString[LN]["Default"]["subType"]); 
+    $('#cardAttr').val(langString[LN]["Default"]["attr"]); 
+    $('#cardEffType').val(langString[LN]["Default"]["effType"]); 
+    $('#cardThrType').val(langString[LN]["Default"]["thrType"]); 
+    $('#Pendulum').prop('checked', langString[LN]["Default"]["pendulum"]); 
+    $('#Special').prop('checked', langString[LN]["Default"]["special"]); 
+    $('#cardLevel').val(langString[LN]["Default"]["level"]); 
+    $('#cardBLUE').val(langString[LN]["Default"]["blue"]); 
+    $('#cardRED').val(langString[LN]["Default"]["red"]); 
+    $('#cardATK').val(langString[LN]["Default"]["atk"]); 
+    $('#cardDEF').val(langString[LN]["Default"]["def"]); 
+    $('#cardTitle').val(langString[LN]["Default"]["title"]); 
+    $('#cardInfo').val(langString[LN]["Default"]["info"]); 
+    $('#cardPendulumInfo').val(langString[LN]["Default"]["pInfo"]); 
+    $('#infoSize').val(langString[LN]["Default"]["size"]); 
+    $('#pendulumSize').val(langString[LN]["Default"]["pSize"]);
+    toggleLink();
+    togglePendulum();
 }
 //切換稀有度時
 function toggleCardRare(){
@@ -246,7 +263,7 @@ function toggleCardType(){
     }
     var str="";
     for (var i=0; i<optType[$('#cardType').val()].length; i++)
-        str += "<option value='"+optType[$('#cardType').val()][i][0]+"'"+(i==0?" selected":"")+">"+optType[$('#cardType').val()][i][1]+"</option>";
+        str += "<option value='"+optType[$('#cardType').val()][i][0]+"'>"+optType[$('#cardType').val()][i][1]+"</option>";
     $('#cardSubType').html(str);
 }
 //切換為連結怪獸時
