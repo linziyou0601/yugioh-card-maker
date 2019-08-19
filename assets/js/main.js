@@ -138,7 +138,7 @@ function imagesAreNowLoaded(){
     //若開啟靈擺
     if(Pendulum) {ctx.textAlign = "center";
                   ctx.font = "55pt 'MatrixBoldSmallCaps'";
-                  ctx.fillText(blueSC, 106, 1040, 60); ctx.fillText(redSC, 895, 1040, 60);
+                  ctx.fillText(blueSC, 103, 1040, 60); ctx.fillText(redSC, 895, 1040, 60);
                   pendulumInfoTextFill();}
     //防偽貼            
     if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
