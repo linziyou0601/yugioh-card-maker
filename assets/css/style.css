@@ -99,8 +99,8 @@ select, textarea, input, .custom-file-label{
 	color: #FFF;
     background-color: #17a2b8;
 }
-#holo + .checkboxLabel::after{ content: '關';}
-#holo:checked + .checkboxLabel::after{ content: '開';}
+#holo + .checkboxLabel::before{ content: '關';}
+#holo:checked + .checkboxLabel::before{ content: '開';}
 /*連結方向鈕*/
 .linkButton{ display: none;}
 .linkButton + .linkLabel{
