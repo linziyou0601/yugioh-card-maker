@@ -64,8 +64,7 @@ body{
 .cardbg{ width: 100%;}
 #cardCard{ width: 28vw; position: fixed; left: 5vw;}
 #dataCard{ width: 62vw; position: absolute; left: 34vw;}
-@media (max-width: 1200px){ #cardCard{ width: 30vw;} #dataCard{ width: 60vw; left: 36vw;}}
-@media (max-width: 960px) { #cardCard{ width: 40vw;} #dataCard{ width: 50vw; left: 46vw;}}
+@media (max-width: 960px) { #cardCard{ width: 35vw;} #dataCard{ width: 55vw; left: 41vw;}}
 @media (max-width: 768px) { #cardCard{ width: 60vw; position: static;} #dataCard{ width: 70vw; position: static;}}
 @media (max-width: 576px) { #cardCard, #dataCard{ width: 80vw;}}
 @media (max-width: 425px) { #cardCard, #dataCard{ width: 90vw;}}
