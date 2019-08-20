@@ -85,9 +85,7 @@ select, textarea, input, .custom-file-label{
 	color: #FFF;
 }
 /*CheckBox鈕*/
-.checkboxButton{
-	display: none;
-}
+.checkboxButton{ display: none;}
 .checkboxButton + .checkboxLabel{
 	display: block;
     width: 100%;
@@ -101,10 +99,10 @@ select, textarea, input, .custom-file-label{
 	color: #FFF;
     background-color: #17a2b8;
 }
+#holo + .checkboxLabel::after{ content: '關';}
+#holo:checked + .checkboxLabel::after{ content: '開';}
 /*連結方向鈕*/
-.linkButton{
-	display: none;
-}
+.linkButton{ display: none;}
 .linkButton + .linkLabel{
 	width: 1.7rem;
     padding: .4rem .5rem;
