@@ -13,15 +13,13 @@ $(function(){
     togglePendulum();
 })
 $(window).on("load", function () {
-    setTimeout(function() {
-        $('#modalLoading').modal('hide');
-    }, 500);
     languageInit(Lang);
     setInterval(loadingCardContent, 1500);
 }); 
 
 //載入卡片資料
 function loadingCardContent(){
+    setTimeout(function(){ $('#modalLoading').modal('hide');}, 500);
     //語言
     Lang = $('#cardLang').val();
     //----------------------------------//
