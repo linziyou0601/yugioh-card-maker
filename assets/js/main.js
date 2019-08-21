@@ -44,7 +44,7 @@ function loadingCardContent(){
         DEF = String($('#cardDEF').val()); //怪獸卡DEF
         typeText = langString[Lang]["Race"][cardRace] + //種族
                    (Special? langString[Lang]["Sl"]+langString[Lang]["Special"]: "") + //特殊召喚
-                   ((cardType2>"1" && cardType2!="7")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
+                   ((cardType2>"1")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
                    (cardEff1>"1"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
                    ((cardEff2>"1"&&cardEff1!=cardEff2)? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff2]: "") + //功能2(效果)
                    (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能3(靈擺有無)
