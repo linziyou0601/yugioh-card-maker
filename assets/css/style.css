@@ -29,6 +29,10 @@
 	font-family: "en3";
 	src:url("../fonts/en3.ttf") format("truetype");
 }
+@font-face {
+	font-family: "link";
+	src:url("../fonts/link.ttf") format("truetype");
+}
 
 .preloadfont {
 	font-family: YourFont;

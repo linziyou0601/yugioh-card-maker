@@ -55,7 +55,7 @@ function loadingCardContent(){
         pendulumInfoText = $('#cardPendulumInfo').val();
         fontSize2 = Number($('#pendulumSize').val());
         //連結卡//
-        if(cardType2=="Link"){
+        if(cardType2=="6"){
             var count=0;
             for(var i=1; i<=8; i++) count += $('#link'+i).prop('checked');
             DEF = String(count);
@@ -110,7 +110,8 @@ function imagesAreNowLoaded(){
         ctx.textAlign = "right";
         if(ATK.includes("∞") || DEF.includes("∞")) ctx.font = "Bold 34pt 'Times New Roman', " + fontName[Lang][2];
         ctx.fillText(ATK, 719+(Pendulum&&cardType2=="6"?5:0), 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸ATK
-        ctx.fillText(DEF, 920-(Pendulum&&cardType2=="6"?12:0), 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸DEF.LINK
+        if(cardType2=="6") ctx.font = "31pt 'link', 'MatrixBoldSmallCaps', " + fontName[Lang][2];
+        ctx.fillText(DEF, 920, 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸DEF.LINK
         ctx.textAlign = "left";
         if(cardType2!="6"){ //非連結怪獸
             for(let i=1; i<=level; i++)
