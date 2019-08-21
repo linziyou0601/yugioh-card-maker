@@ -71,7 +71,7 @@
 								</div>
 								<div id="mtTitleColor" class="form-group col-3">
 									<label for="titleColor">標題色</label>
-									<input type="color" class="form-control" id="titleColor" >
+									<input type="color" class="form-control" id="titleColor">
 								</div>
 							</div>
 							<div id="mtCardTitle" class="form-row">
@@ -86,30 +86,50 @@
 									<label class="custom-file-label" for="cardImg" data-browse="✚" accept="image/*">上傳圖片</label>
 								</div>
 							</div>
-							<div id="areaCardType" class="form-row">
-								<div id="mtCardType" class="form-group col-6">
-									<label for="cardType">卡片類別</label>
+							<div class="form-row">
+								<div id="mtCardType" class="form-group col-3">
+									<label for="cardType">卡種</label>
 									<select id="cardType" class="form-control">
 										<option value="monster" selected>怪獸</option>
 										<option value="Spell">魔法</option>
 										<option value="Trap">陷阱</option>
 									</select>
 								</div>
-								<div id="mtCardSubType" class="form-group col-6">
-									<label for="cardSubType">子類別</label>
-									<select id="cardSubType" class="form-control">
-										<option value="Normal" selected>通常</option>
-										<option value="Fusion">融合</option>
-										<option value="Ritual">儀式</option>
-										<option value="Synchro">同步</option>
-										<option value="Xyz">超量</option>
-										<option value="Link">連結</option>
-										<option value="Token">衍生物</option>
+								<div id="mtCardType2" class="form-group col-3">
+									<label for="cardType2">卡面</label>
+									<select id="cardType2" class="form-control">
+										<option value="0" selected>通常</option>
+										<option value="1">效果</option>
+										<option value="2">融合</option>
+										<option value="3">儀式</option>
+										<option value="4">同步</option>
+										<option value="5">超量</option>
+										<option value="6">連結</option>
+										<option value="7">衍生物</option>
+									</select>
+								</div>
+								<div id="mtMonsterCardEff1" class="form-group col-3">
+									<label for="cardEff1">效果</label>
+									<select id="cardEff1" class="form-control">
+										<option value="0" selected>一般</option>
+										<option value="1">卡通</option>
+										<option value="2">靈魂</option>
+										<option value="3">聯合</option>
+										<option value="4">二重</option>
+										<option value="5">反轉</option>
+										<option value="6">協調</option>
+									</select>
+								</div>
+								<div id="mtMonsterCardEff2" class="form-group col-3">
+									<label for="cardEff2">　</label>
+									<select id="cardEff2" class="form-control">
+										<option value="0" selected>效果</option>
+										<option value="1">無</option>
 									</select>
 								</div>
 							</div>
-							<div id="areaMonsterAttr" class="form-row">
-								<div id="mtCardAttr" class="form-group col-3">
+							<div class="form-row">
+								<div id="mtMonsterCardAttr" class="form-group col-6">
 									<label for="cardAttr">屬性</label>
 									<select id="cardAttr" class="form-control">
 										<option value="DIVINE">神</option>
@@ -121,22 +141,9 @@
 										<option value="DARK">闇</option>
 									</select>
 								</div>
-								<div id="mtEffType" class="form-group col-4">
-									<label for="cardEffType">效果</label>
-									<select id="cardEffType" class="form-control">
-										<option value="None">無</option>
-										<option value="Normal" selected>一般</option>
-										<option value="0">卡通</option>
-										<option value="1">靈魂</option>
-										<option value="2">聯合</option>
-										<option value="3">二重</option>
-										<option value="4">反轉</option>
-										<option value="5">協調</option>
-									</select>
-								</div>
-								<div id="mtThrType" class="form-group col-5">
-									<label for="cardThrType">種族</label>
-									<select id="cardThrType" class="form-control">
+								<div id="mtMonsterCardRace" class="form-group col-6">
+									<label for="cardRace">種族</label>
+									<select id="cardRace" class="form-control">
 										<option value="0">惡魔</option>
 										<option value="1">不死</option>
 										<option value="2">海龍</option>

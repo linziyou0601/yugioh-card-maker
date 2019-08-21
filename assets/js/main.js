@@ -2,9 +2,10 @@ var canvas = document.getElementById('yugiohcard'),
     ctx = canvas.getContext('2d'),			
     imageURLs=[];
 var imgs=[], imagesOK=0;// 已加載的圖片會放進imgs[]裡
-var Effect=false, Pendulum=false, holo=true, Lang="zh", cardTitle="", cardAttr="", cardType="", cardSubType="", cardEffType="",
-    cardThrType="", typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, pendulumInfoText="", infoText="",
-    fontSize=28, fontSize2=22, titleColor="", Special="", cardImg="", rare=0;
+var Lang="zh", holo=true, cardTitle="", cardAttr="", cardType="", cardType2="", cardEff1="", cardEff2="", cardRace="", 
+    Effect=false, Pendulum=false, Special=false, typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, 
+    pendulumInfoText="", infoText="", fontSize=28, fontSize2=22, titleColor="", cardImg="", cardRare=0;
+    
 
 //載入網頁
 $(function(){
@@ -26,34 +27,35 @@ function loadingCardContent(){
     //卡片資料
     cardTitle = $('#cardTitle').val(); //卡片標題
     cardImg = $('#cardImg').val()? URL.createObjectURL($('#cardImg')[0].files[0]): ""; //卡片圖案
-    cardTitleColor = $('#titleColor').val(); //標題顏色
-    rare = $('#cardRare').val(); //卡片稀有度
+    titleColor = $('#titleColor').val(); //標題顏色
+    cardRare = $('#cardRare').val(); //卡片稀有度
     holo = $('#holo').prop('checked'); //防偽貼
     cardAttr = $('#cardType').val()=="monster"? $('#cardAttr').val(): $('#cardType').val();
     cardType = $('#cardType').val(); //卡片類型
-    cardSubType = $('#cardSubType').val(); //子類別
+    cardType2 = $('#cardType2').val(); //子類別
         //怪獸卡//
-        cardEffType = $('#cardEffType').val(); //效果怪獸類型
-        cardThrType = $('#cardThrType').val(); //怪獸卡種族
-        Effect = cardEffType=="None"? false: true; //怪獸卡種類
+        cardEff1 = $('#cardEff1').val(); //效果怪獸類型1
+        cardEff2 = $('#cardEff2').val(); //效果怪獸類型2
+        cardRace = $('#cardRace').val(); //怪獸卡種族
+        Effect = cardType=="Effect"? true: false; //怪獸卡種類
         Pendulum = $('#Pendulum').prop('checked'); //怪獸卡種類
-        Special = $('#Special').prop('checked'); //限特殊召喚？
+        Special = $('#Special').prop('checked'); //限特殊召喚
         level = $('#cardLevel').val(); //怪獸卡等級
         ATK = String($('#cardATK').val()); //怪獸卡ATK
         DEF = String($('#cardDEF').val()); //怪獸卡DEF
-        typeText = langString[Lang]["thrType"][cardThrType] + //種族
+        typeText = langString[Lang]["Race"][cardRace] + //種族
                    (Special? langString[Lang]["Sl"]+langString[Lang]["Special"]: "") + //特殊召喚
-                   ((cardEffType!="Normal" && cardEffType!="None")? langString[Lang]["Sl"]+langString[Lang]["effType"][cardEffType]: "") + //功能1(效果)
-                   ((cardSubType!="Normal" && cardSubType!="Token")? langString[Lang]["Sl"]+langString[Lang]["subType"][cardSubType]: "") + //功能2(子類別)
-                   (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能3(靈擺有無)
-                   (Effect? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能4(效果有無)
+                   ((cardType2>"1" && cardType2!="7")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
+                   (cardEff1!="0"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
+                   (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能2(靈擺有無)
+                   (cardEff2=="0"? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能3(效果有無)
         //靈擺卡//
         redSC = $('#cardRED').val();
         blueSC = $('#cardBLUE').val();
         pendulumInfoText = $('#cardPendulumInfo').val();
         fontSize2 = Number($('#pendulumSize').val());
         //連結卡//
-        if(cardSubType=="Link"){
+        if(cardType2=="Link"){
             var count=0;
             for(var i=1; i<=8; i++) count += $('#link'+i).prop('checked');
             DEF = String(count);
@@ -62,9 +64,7 @@ function loadingCardContent(){
     infoText = $('#cardInfo').val(); //卡片說明
     fontSize = Number($('#infoSize').val());
     //----------------------------------//
-    cardURL = (cardType!="monster"? cardType: 
-                ((cardSubType=="Normal")? (Effect)? "Effect": "Normal": cardSubType))
-                + ((Pendulum)? "Pendulum": "");
+    cardURL = (cardType!="monster"? cardType: optMsType['monster'][cardType2][0]) + ((Pendulum)? "Pendulum": "");
     imgs=[]; imageURLs=[];
     for(var i=1; i<=8; i++)
         imageURLs.push("images/pic/LINK"+i+".png"); //link角
@@ -72,9 +72,9 @@ function loadingCardContent(){
     imageURLs.push("images/card/"+cardURL+".png"); //卡片種類
     imageURLs.push("images/attr/"+langString[Lang]["Attr"]+"/"+cardAttr+".webp"); //卡片屬性
     imageURLs.push(cardImg==""? "images/default.PNG": cardImg); //卡片圖片
-    if(cardType=="monster" || cardSubType!="Normal")
-        imageURLs.push("images/pic/" + (cardType!="monster"? cardSubType:
-                                       (cardSubType=="Xyz"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
+    if(cardType=="monster" || cardType2!="0")
+        imageURLs.push("images/pic/" + (cardType!="monster"? optMsType["monster"][cardType2][0]:
+                                       (cardType2=="5"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
     restoreData(Lang);
     startLoadingAllImages(imagesAreNowLoaded); //載入圖檔
 }
@@ -98,7 +98,7 @@ function imagesAreNowLoaded(){
     drawCardImg()
     //卡片標題
     ctx.font = 57+langOffset[Lang]["tS"]+"pt " + fontName[Lang][0];
-    ctx.fillStyle = rareColor(rare);
+    ctx.fillStyle = rareColor(cardRare);
     ctx.fillText(cardTitle, 77+langOffset[Lang]["tX"], 140+langOffset[Lang]["tY"], 750);
     removeShadow();
     //其他資料
@@ -109,12 +109,12 @@ function imagesAreNowLoaded(){
         ctx.font = "42pt 'MatrixBoldSmallCaps', " + fontName[Lang][2];
         ctx.textAlign = "right";
         if(ATK.includes("∞") || DEF.includes("∞")) ctx.font = "Bold 34pt 'Times New Roman', " + fontName[Lang][2];
-        ctx.fillText(ATK, 719+(Pendulum&&cardSubType=="Link"?5:0), 1355+(Pendulum&&cardSubType=="Link"?6:0), 100); //怪獸ATK
-        ctx.fillText(DEF, 920-(Pendulum&&cardSubType=="Link"?12:0), 1355+(Pendulum&&cardSubType=="Link"?6:0), 100); //怪獸DEF.LINK
+        ctx.fillText(ATK, 719+(Pendulum&&cardType2=="6"?5:0), 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸ATK
+        ctx.fillText(DEF, 920-(Pendulum&&cardType2=="6"?12:0), 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸DEF.LINK
         ctx.textAlign = "left";
-        if(cardSubType!="Link"){ //非連結怪獸
+        if(cardType2!="6"){ //非連結怪獸
             for(let i=1; i<=level; i++)
-                ctx.drawImage(imgs[12], (cardSubType=="Xyz"? (122+(i-1)*63): (820-(i-1)*63)), 181, 58, 58); //怪獸等級.階級
+                ctx.drawImage(imgs[12], (cardType2=="5"? (122+(i-1)*63): (820-(i-1)*63)), 181, 58, 58); //怪獸等級.階級
         }else{ //連結怪獸
             var linkStr = Pendulum? "Pendulum": "Link";
             for(var i=1; i<=8; i++)
@@ -129,9 +129,9 @@ function imagesAreNowLoaded(){
         ctx.textAlign = "right";
         ctx.fillText(langString[Lang]["Ql"] + 
                      (cardType=="Spell"? langString[Lang]["Spell"]: langString[Lang]["Trap"]) + 
-                     (cardSubType=='Normal'? "": langString[Lang]["Sp"]) + 
+                     (cardType2=='0'? "": langString[Lang]["Sp"]) + 
                      langString[Lang]["Qr"], 920+langOffset[Lang]["sX1"], 222+langOffset[Lang]["sY1"]); //魔罠卡
-        if(cardSubType!='Normal') ctx.drawImage(imgs[12], 820+langOffset[Lang]["sX2"], 178+langOffset[Lang]["sY2"], 58, 58); //魔罠子類別
+        if(cardType2!='0') ctx.drawImage(imgs[12], 820+langOffset[Lang]["sX2"], 178+langOffset[Lang]["sY2"], 58, 58); //魔罠子類別
     }
     //若開啟靈擺
     if(Pendulum) {ctx.textAlign = "center";
@@ -180,7 +180,7 @@ function removeShadow(){
 function rareColor(lv){
     switch(lv) {
         case "0":
-            return cardTitleColor;
+            return titleColor;
             break;
         case "1":
             gradient = ctx.createLinearGradient(0, 0, 600, 0);
@@ -208,10 +208,11 @@ function rareColor(lv){
 //儲存目前語言資料
 function restoreData(LN){
     langString[LN]["Default"]["type"] = $('#cardType').val();
-    langString[LN]["Default"]["subType"] = $('#cardSubType').val();
+    langString[LN]["Default"]["type2"] = $('#cardType2').val();
     langString[LN]["Default"]["attr"] = $('#cardAttr').val();
-    langString[LN]["Default"]["effType"] = $('#cardEffType').val();
-    langString[LN]["Default"]["thrType"] = $('#cardThrType').val();
+    langString[LN]["Default"]["eff1"] = $('#cardEff1').val();
+    langString[LN]["Default"]["eff2"] = $('#cardEff2').val();
+    langString[LN]["Default"]["race"] = $('#cardRace').val();
     langString[LN]["Default"]["pendulum"] = $('#Pendulum').prop('checked');
     langString[LN]["Default"]["special"] = $('#Special').prop('checked');
     langString[LN]["Default"]["level"] = $('#cardLevel').val();
@@ -229,10 +230,11 @@ function restoreData(LN){
 function languageInit(LN){
     $('#cardType').val(langString[LN]["Default"]["type"]); 
     toggleCardType();
-    $('#cardSubType').val(langString[LN]["Default"]["subType"]); 
+    $('#cardType2').val(langString[LN]["Default"]["type2"]); 
     $('#cardAttr').val(langString[LN]["Default"]["attr"]); 
-    $('#cardEffType').val(langString[LN]["Default"]["effType"]); 
-    $('#cardThrType').val(langString[LN]["Default"]["thrType"]); 
+    $('#cardEff1').val(langString[LN]["Default"]["eff1"]); 
+    $('#cardEff2').val(langString[LN]["Default"]["eff2"]); 
+    $('#cardRace').val(langString[LN]["Default"]["race"]); 
     $('#Pendulum').prop('checked', langString[LN]["Default"]["pendulum"]); 
     $('#Special').prop('checked', langString[LN]["Default"]["special"]); 
     $('#cardLevel').val(langString[LN]["Default"]["level"]); 
@@ -256,23 +258,34 @@ function toggleCardRare(){
 //切換卡片種類時
 function toggleCardType(){
     if($('#cardType').val()!="monster"){
-        $('#areaMonsterAttr').hide(); $('#mtSpecial').hide(); $('#mtCardLevel').hide(); $('#mtCardATK').hide(); $('#mtCardDEF').hide(); $('#mtLink').hide();
+        $("[id^='mtMonster']").hide(); $('#mtSpecial').hide(); $('#mtCardLevel').hide(); $('#mtCardATK').hide(); $('#mtCardDEF').hide(); $('#mtLink').hide();
     }else{
-        $('#areaMonsterAttr').show(); $('#mtSpecial').show(); $('#mtCardLevel').show(); $('#mtCardATK').show(); $('#mtCardDEF').show(); $('#mtLink').hide();
+        $("[id^='mtMonster']").show(); $('#mtSpecial').show(); $('#mtCardLevel').show(); $('#mtCardATK').show(); $('#mtCardDEF').show(); $('#mtLink').hide();
     }
     var str="";
-    for (var i=0; i<optType[$('#cardType').val()].length; i++)
-        str += "<option value='"+optType[$('#cardType').val()][i][0]+"'>"+optType[$('#cardType').val()][i][1]+"</option>";
-    $('#cardSubType').html(str);
+    for (var i=0; i<optMsType[$('#cardType').val()].length; i++)
+        str += "<option value='"+i+"'>"+optMsType[$('#cardType').val()][i][1]+"</option>";
+    $('#cardType2').html(str);
+    toogleEffect()
 }
 //切換為連結怪獸時
 function toggleLink(){
     if($('#cardType').val()=="monster"){
-        if($('#cardSubType').val()!="Link"){
+        if($('#cardType2').val()!="6"){
             $('#mtLink').hide(); $('#mtCardDEF').show(); $('#mtCardLevel').show();
         }else{
             $('#mtCardDEF').hide(); $('#mtLink').show(); $('#mtCardLevel').hide();
         }
+    }
+    toogleEffect()
+}
+//切換通常.效果怪獸時
+function toogleEffect(){
+    if($('#cardType').val()=="monster"){
+        var str="";
+        if($('#cardType2').val()!="0") str += "<option value='0'>效果</option>"; 
+        if($('#cardType2').val()!="1") str += "<option value='1'>無</option>";
+        $('#cardEff2').html(str);
     }
 }
 //切換靈擺時
@@ -290,7 +303,7 @@ function imgUploaded(){
 $('#cardLang')[0].addEventListener("input", function(){languageInit($('#cardLang').val());});
 $('#cardRare')[0].addEventListener("input", toggleCardRare);
 $('#cardType')[0].addEventListener("input", toggleCardType);
-$('#cardSubType')[0].addEventListener("input", toggleLink);
+$('#cardType2')[0].addEventListener("input", toggleLink);
 $('#Pendulum').change(togglePendulum);
 $('#cardImg').on('change', imgUploaded());
 //*********************//
