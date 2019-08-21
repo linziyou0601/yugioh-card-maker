@@ -106,7 +106,7 @@ function imagesAreNowLoaded(){
     ctx.fillStyle = '#000';
     if(cardType=="monster"){ //怪獸卡
         ctx.fillText(langString[Lang]["Ql"]+typeText+langString[Lang]["Qr"], 65+langOffset[Lang]["oX"], 1120+langOffset[Lang]["oY"], 750); //怪獸屬性
-        ctx.font = "42pt 'MatrixBoldSmallCaps', " + fontName[Lang][2];
+        ctx.font = "35pt 'MatrixBoldSmallCaps', " + fontName[Lang][2];
         ctx.textAlign = "right";
         if(ATK.includes("∞") || DEF.includes("∞")) ctx.font = "Bold 34pt 'Times New Roman', " + fontName[Lang][2];
         ctx.fillText(ATK, 719+(Pendulum&&cardType2=="6"?5:0), 1355+(Pendulum&&cardType2=="6"?6:0), 100); //怪獸ATK
@@ -137,7 +137,7 @@ function imagesAreNowLoaded(){
     //若開啟靈擺
     if(Pendulum) {ctx.textAlign = "center";
                   ctx.font = "55pt 'MatrixBoldSmallCaps'";
-                  ctx.fillText(blueSC, 103, 1040, 60); ctx.fillText(redSC, 895, 1040, 60);
+                  ctx.fillText(blueSC, 106-((cardType2>="6"||cardType!="monster")? 5: 0), 1040, 60); ctx.fillText(redSC, 895, 1040, 60);
                   pendulumInfoTextFill();}
     //防偽貼            
     if(holo) ctx.drawImage(imgs[8], 928, 1371, 44, 46);
@@ -163,7 +163,7 @@ function infoTextFill(){
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.font = fontSize + "pt " + fontName[Lang][2];
-    wrapText(infoText, 78, 1100 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 825, fontSize+langOffset[Lang]["lh"]);
+    wrapText(infoText, 78, 1095 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 825, fontSize+langOffset[Lang]["lh"]);
 }
 
 //填入靈擺效果
@@ -171,7 +171,7 @@ function pendulumInfoTextFill(){
     ctx.textAlign = "left";	
     ctx.textBaseline = "top";
     ctx.font = fontSize2 + "pt " + fontName[Lang][2];
-    wrapText(pendulumInfoText, 160, 920+langOffset[Lang]["oY"], 655, fontSize2+langOffset[Lang]["lh"]);
+    wrapText(pendulumInfoText, 160, 920+langOffset[Lang]["oY"], 660, fontSize2+langOffset[Lang]["lh"]);
 }
 
 //字體效果
@@ -200,7 +200,7 @@ function rareColor(lv){
             ctx.shadowBlur = 1;
             ctx.shadowOffsetX = 0.4;
             ctx.shadowOffsetY = 1.5;
-            return "#3b2f00";
+            return "#524100";//"#3b2f00";
             break;	
     }
 }
@@ -226,6 +226,11 @@ function restoreData(LN){
     langString[LN]["Default"]["pInfo"] = $('#cardPendulumInfo').val();
     langString[LN]["Default"]["size"] = $('#infoSize').val();
     langString[LN]["Default"]["pSize"] = $('#pendulumSize').val();
+    for(var i=0; i<9; i++)
+        langString[LN]["Default"]["link"+i] = $('#link'+i).prop('checked'); 
+    langString[LN]["Default"]["color"] = $('#titleColor').val();
+    langString[LN]["Default"]["rare"] = $('#cardRare').val();
+    langString[LN]["Default"]["holo"] = $('#holo').prop('checked');
 }
 //切換語言時
 function languageInit(LN){
@@ -248,8 +253,14 @@ function languageInit(LN){
     $('#cardPendulumInfo').val(langString[LN]["Default"]["pInfo"]); 
     $('#infoSize').val(langString[LN]["Default"]["size"]); 
     $('#pendulumSize').val(langString[LN]["Default"]["pSize"]);
+    for(var i=0; i<9; i++)
+        $('#link'+i).prop('checked', langString[LN]["Default"]["link"+i]); 
+    $('#titleColor').val(langString[LN]["Default"]["color"]);
+    $('#cardRare').val(langString[LN]["Default"]["rare"]);
+    $('#holo').prop('checked', langString[LN]["Default"]["holo"]);
     toggleLink();
     togglePendulum();
+    toggleCardRare();
 }
 //切換稀有度時
 function toggleCardRare(){
