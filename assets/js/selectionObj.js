@@ -12,7 +12,8 @@ const optMsType = {
                 ["Synchro","同步"], ["Xyz","超量"], ["Link","連結"], ["Token","衍生物"]],
     "Spell": [["Normal","通常"], ["Continuous","永續"], ["Field","場地"], ["Equip","裝備"], 
               ["Quick","速攻"], ["Ritual","儀式"]],
-    "Trap": [["Normal","通常"], ["Continuous","永續"], ["Counter","反擊"]]
+    "Trap": [["Normal","通常"], ["Continuous","永續"], ["Counter","反擊"]],
+    "Eff2": ["無","一般","卡通","靈魂","聯合","二重","反轉","協調"]
 }
 const langString = {
     "zh": { "Sp": '　',
@@ -23,7 +24,7 @@ const langString = {
             "Effect": '效果',
             "Pendulum": '靈擺',
             "Type2": {"Fusion": "融合", "Ritual": "儀式", "Synchro": "同步", "Xyz": "超量", "Link": "連結"},
-            "Eff": ["","卡通","靈魂","聯合","二重","反轉","協調"],
+            "Eff": ["","","卡通","靈魂","聯合","二重","反轉","協調"],
             "Race": ["惡魔族","不死族","海龍族","雷族","岩石族","機械族","恐龍族","獸族","昆蟲族","魚族","植物族","獸戰士族","戰士族","鳥獸族","天使族","龍族","爬蟲類族","水族","炎族","魔法師族","幻龍族","網域族","超能族","幻神獸族","創造神族"],
             "Spell": "魔法卡",
             "Trap": "陷阱卡",
@@ -34,7 +35,7 @@ const langString = {
                 "pInfo": "①：自己不是龍族怪獸不能靈擺召喚。這個效果不會被無效化。②：以自己墓地1隻龍族的融合．同步．超量怪獸為對象才能發動。這張卡破壞，那隻怪獸特殊召喚。",
                 "size": 20, "pSize": 22,
                 "type": "monster", "type2": "1",
-                "attr": "LIGHT", "eff1": "0", "eff2": "0", "race": "15",
+                "attr": "LIGHT", "eff1": "1", "eff2": "1", "race": "15",
                 "pendulum": true, "special": true, "level": "12",
                 "blue": "12", "red": "12", "atk": "?", "def": "?"
             }
@@ -47,7 +48,7 @@ const langString = {
             "Effect": '効果',
             "Pendulum": 'ペンデュラム',
             "Type2": {"Fusion": "融合", "Ritual": "儀式", "Synchro": "シンクロ", "Xyz": "エクシーズ", "Link": "リンク"},
-            "Eff": ["","トゥーン","スピリット","ユニオン","デュアル","リバース","チューナー"],
+            "Eff": ["","","トゥーン","スピリット","ユニオン","デュアル","リバース","チューナー"],
             "Race": ["悪魔族","アンデット族","海竜族","雷族","岩石族","機械族","恐竜族","獣族","昆虫族","魚族","植物族","獣戦士族","戦士族","鳥獣族","天使族","ドラゴン族","爬虫類族","水族","炎族","魔法使い族","幻竜族","サイバース族","サイキック族","幻神獣族","創造神族"],
             "Spell": "魔法カード",
             "Trap": "罠カード",
@@ -58,7 +59,7 @@ const langString = {
                 "pInfo": "①：自分はドラゴン族モンスターしかＰ召喚できない。この効果は無効化されない。②：自分の墓地のドラゴン族の融合・Ｓ・Ｘモンスター１体を対象として発動できる。このカードを破壊し、そのモンスターを特殊召喚する。",
                 "size": 17, "pSize": 19,
                 "type": "monster", "type2": "1",
-                "attr": "LIGHT", "eff1": "0", "eff2": "0", "race": "15",
+                "attr": "LIGHT", "eff1": "1", "eff2": "1", "race": "15",
                 "pendulum": true, "special": true, "level": "12",
                 "blue": "12", "red": "12", "atk": "?", "def": "?"
             }
@@ -71,7 +72,7 @@ const langString = {
             "Effect": 'Effect',
             "Pendulum": 'Pendulum',
             "Type2": {"Fusion": "Fusion", "Ritual": "Ritual", "Synchro": "Synchro", "Xyz": "Xyz", "Link": "Link"},
-            "Eff": ["","Toon","Spirit","Union","Gemini","Flip","Tuner"],
+            "Eff": ["","","Toon","Spirit","Union","Gemini","Flip","Tuner"],
             "Race": ["Fiend","Zombie","Sea Serpent","Thunder","Rock","Machine","Dinosaur","Beast","Insect","Fish","Plant","Beast-Warrior","Warrior","Winged Beast","Fairy","Dragon","Reptile","Aqua","Pyro","Spellcaster","Wyrm","Cyberse","Psychic","Divine-Beast","Creator God"],
             "Spell": "Spell Card",
             "Trap": "Trap Card",
@@ -82,7 +83,7 @@ const langString = {
                 "pInfo": "You cannot Pendulum Summon monsters, except Dragon monsters. This effect cannot be negated. You can target 1 Dragon Fusion, Synchro, or Xyz Monster in your GY; destroy this card, and if you do, Special Summon that monster.",
                 "size": 20, "pSize": 22,
                 "type": "monster", "type2": "1",
-                "attr": "LIGHT", "eff1": "0", "eff2": "0", "race": "15",
+                "attr": "LIGHT", "eff1": "1", "eff2": "1", "race": "15",
                 "pendulum": true, "special": true, "level": "12",
                 "blue": "12", "red": "12", "atk": "?", "def": "?"
             }

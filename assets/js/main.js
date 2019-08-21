@@ -3,7 +3,7 @@ var canvas = document.getElementById('yugiohcard'),
     imageURLs=[];
 var imgs=[], imagesOK=0;// 已加載的圖片會放進imgs[]裡
 var Lang="zh", holo=true, cardTitle="", cardAttr="", cardType="", cardType2="", cardEff1="", cardEff2="", cardRace="", 
-    Effect=false, Pendulum=false, Special=false, typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, 
+    Pendulum=false, Special=false, typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, 
     pendulumInfoText="", infoText="", fontSize=28, fontSize2=22, titleColor="", cardImg="", cardRare=0;
     
 
@@ -37,7 +37,6 @@ function loadingCardContent(){
         cardEff1 = $('#cardEff1').val(); //效果怪獸類型1
         cardEff2 = $('#cardEff2').val(); //效果怪獸類型2
         cardRace = $('#cardRace').val(); //怪獸卡種族
-        Effect = cardType=="Effect"? true: false; //怪獸卡種類
         Pendulum = $('#Pendulum').prop('checked'); //怪獸卡種類
         Special = $('#Special').prop('checked'); //限特殊召喚
         level = $('#cardLevel').val(); //怪獸卡等級
@@ -46,9 +45,10 @@ function loadingCardContent(){
         typeText = langString[Lang]["Race"][cardRace] + //種族
                    (Special? langString[Lang]["Sl"]+langString[Lang]["Special"]: "") + //特殊召喚
                    ((cardType2>"1" && cardType2!="7")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
-                   (cardEff1!="0"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
-                   (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能2(靈擺有無)
-                   (cardEff2=="0"? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能3(效果有無)
+                   (cardEff1>"1"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
+                   ((cardEff2>"1"&&cardEff1!=cardEff2)? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff2]: "") + //功能2(效果)
+                   (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能3(靈擺有無)
+                   ((cardEff2>="1"&&cardType2!="0")? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能4(效果有無)
         //靈擺卡//
         redSC = $('#cardRED').val();
         blueSC = $('#cardBLUE').val();
@@ -283,8 +283,9 @@ function toggleLink(){
 function toogleEffect(){
     if($('#cardType').val()=="monster"){
         var str="";
-        if($('#cardType2').val()!="0") str += "<option value='0'>效果</option>"; 
-        if($('#cardType2').val()!="1") str += "<option value='1'>無</option>";
+        for(var i=0; i< optMsType['Eff2'].length; i++)
+            if(!($('#cardType2').val()=="0"&&i==1 || $('#cardType2').val()=="1"&&i==0))
+                str += "<option value='"+i+"'>"+optMsType['Eff2'][i]+"</option>";
         $('#cardEff2').html(str);
     }
 }
