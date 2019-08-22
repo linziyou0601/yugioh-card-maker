@@ -323,16 +323,15 @@ $('#cardImg').on('change', imgUploaded());
 
 //下載
 function download_img() {
-    var MIME_TYPE = "image/jpeg";
-    var imgURL = canvas.toDataURL(MIME_TYPE);
-    console.log(imgURL);
-    var dlLink = document.createElement('a');
-    dlLink.download = 'YuGiOh.jpg';
-    dlLink.href = imgURL;
-    dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
-    document.body.appendChild(dlLink);
-    dlLink.click();
-    document.body.removeChild(dlLink);
+	if (canvas.msToBlob) { //for IE
+		var blob = canvas.msToBlob();
+		window.navigator.msSaveBlob(blob, 'YuGiOh.png');
+	} else {
+        var a = document.createElement('a');
+        a.href = canvas.toDataURL("image/jpeg");
+        a.download = 'YuGiOh.jpg';
+        a.click();
+	}
 }
 
 
