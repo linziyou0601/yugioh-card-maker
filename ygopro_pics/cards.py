@@ -136,11 +136,11 @@ with sqlite3.connect('cards.db') as conn:
             #--效果文字--#
             c.execute('SELECT name, desc FROM texts where id=' + str(k['id']))
             data2 = c.fetchall()
-            info = data2[0]['desc'].split("【怪獸效果】")[::-1]
-            k.update({"title": data2[0]['name'], "infoText": info[0].strip('\r\n').replace(r"\r\n", r"\n"), "pendulumText": info[1].strip('\r\n').replace(r"\r\n", r"\n") if len(info)==2 else ""})
+            info = [x.replace("\r\n", r"") for x in data2[0]['desc'].split("【怪獸效果】")[::-1]]
+            k.update({"title": data2[0]['name'], "infoText": info[0], "pendulumText": info[1] if len(info)==2 else ""})
             #--文字大小--#
-            infoLen = len(info[0])+info[0].count('\r\n')*4
-            pinfoLen = len(info[1])+info[1].count('\r\n')*4 if len(info)==2 else 0
+            infoLen = len(info[0])
+            pinfoLen = len(info[1]) if len(info)==2 else 0
             size = list(filter(lambda x: infoLen>=x[0], sizeList["minfo" if k["type"][0][0]=="monster" else "cinfo"]))[::-1][0][1]
             pSize = list(filter(lambda x: pinfoLen>=x[0], sizeList["pinfo"]))[::-1][0][1]
             color = "#FFFFFF" if (k["type"][0][0]!="monster" or (k["type"][0][0]=="monster" and (k["type"][0][1]=="5" or k["type"][0][1]=="6"))) else "#000000"

@@ -73,7 +73,7 @@ function loadingCardContent(){
     imageURLs.push("images/card/"+cardURL+".png"); //卡片種類
     imageURLs.push("images/attr/"+langString[Lang]["Attr"]+"/"+cardAttr+".webp"); //卡片屬性
     if(Lang=="zh" && isKey($('#cardKey').val())) imageURLs.push("ygopro_pics/pics/"+$('#cardKey').val()+".jpg"); //卡片圖片
-    else imageURLs.push(cardImg==""? "images/default.PNG": cardImg); //卡片圖片
+    else imageURLs.push(cardImg==""? "images/default.jpg": cardImg); //卡片圖片
     if(cardType=="monster" || cardType2!="0")
         imageURLs.push("images/pic/" + (cardType!="monster"? optMsType[cardType][cardType2][0]:
                                        (cardType2=="5"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
