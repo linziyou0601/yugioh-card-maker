@@ -1,32 +1,46 @@
-function download_allimg() {
+var keyname=[];
+$.getJSON("ygopro_pics/cardData.json", function(data){
+    keyname=Object.keys(data)
+});
+
+
+function download_ygoimg(id) {
     $.getJSON("ygopro_pics/cardData.json", function(data){
         // $.each(data, function(i, item){    
         //     alert(i);
         //     alert(item);
         // });
-        obj = data[27551]
-        langString["zh"]["Default"]["type"] = obj["type"][0][0];
-        langString["zh"]["Default"]["type2"] = obj["type"][0][1];
-        langString["zh"]["Default"]["attr"] = obj["attribute"];
-        langString["zh"]["Default"]["eff1"] = obj["type"][0][2];
-        langString["zh"]["Default"]["eff2"] = obj["type"][0][3];
-        langString["zh"]["Default"]["race"] = obj["race"];
-        langString["zh"]["Default"]["pendulum"] = obj["type"][0][4];
-        langString["zh"]["Default"]["special"] = obj["type"][0][5];
-        langString["zh"]["Default"]["level"] = obj["level"];
-        langString["zh"]["Default"]["blue"] = obj["blue"];
-        langString["zh"]["Default"]["red"] = obj["red"];
-        langString["zh"]["Default"]["atk"] = obj["atk"];
-        langString["zh"]["Default"]["def"] = obj["def"];
-        langString["zh"]["Default"]["title"] = obj["title"];
-        langString["zh"]["Default"]["info"] = obj["infoText"];
-        langString["zh"]["Default"]["pInfo"] = obj["pendulumText"];
-        langString["zh"]["Default"]["size"] = String(obj["size"]);
-        langString["zh"]["Default"]["pSize"] = obj["pSize"][0][1];
+        obj = data[id]
+        $('#cardType').val(obj["type"][0][0]);
+        toggleCardType();
+        $('#cardType2').val(obj["type"][0][1]);
+        $('#cardAttr').val(obj["attribute"]);
+        $('#cardEff1').val(obj["type"][0][2]);
+        $('#cardEff2').val(obj["type"][0][3]);
+        $('#cardRace').val(obj["race"]);
+        $('#Pendulum').prop('checked', obj["type"][0][4]);
+        $('#Special').prop('checked', obj["type"][0][5]);
+        $('#cardLevel').val(obj["level"]);
+        $('#cardBLUE').val(obj["blue"]);
+        $('#cardRED').val(obj["red"]);
+        $('#cardATK').val(obj["atk"]);
+        $('#cardDEF').val(obj["def"]);
+        $('#cardTitle').val(obj["title"]);
+        $('#cardInfo').val(obj["infoText"]);
+        $('#cardPendulumInfo').val(obj["pendulumText"]);
+        $('#infoSize').val(obj["size"]);
+        $('#pendulumSize').val(obj["pSize"]);
         for(var i=0; i<9; i++)
-            langString["zh"]["Default"]["link"+i] = obj["link"+i]; 
-        langString["zh"]["Default"]["color"] = obj["color"];
-        langString["zh"]["Default"]["rare"] = obj["rare"];
-        langString["zh"]["Default"]["holo"] = obj["holo"];
+            $('#link'+i).prop('checked', obj["link"+i]); 
+        $('#titleColor').val(obj["color"]);
+        $('#cardRare').val(obj["rare"]);
+        $('#holo').prop('checked', obj["holo"]);
+        toggleLink();
+        togglePendulum();
+        toggleCardRare();
     });
+}
+
+function isKey(id) {
+    return ($.inArray(id, keyname)==-1? false: true)
 }

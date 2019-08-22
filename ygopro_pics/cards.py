@@ -143,7 +143,7 @@ with sqlite3.connect('cards.db') as conn:
             pinfoLen = len(info[1])+info[1].count('\r\n')*4 if len(info)==2 else 0
             size = list(filter(lambda x: infoLen>=x[0], sizeList["minfo" if k["type"][0][0]=="monster" else "cinfo"]))[::-1][0][1]
             pSize = list(filter(lambda x: pinfoLen>=x[0], sizeList["pinfo"]))[::-1][0][1]
-            color = "#000000" if (k["type"][0][0]!="monster" or (k["type"][0][0]=="monster" and (k["type"][0][1]!="5" or k["type"][0][1]!="6"))) else "#FFFFFF"
+            color = "#FFFFFF" if (k["type"][0][0]!="monster" or (k["type"][0][0]=="monster" and (k["type"][0][1]=="5" or k["type"][0][1]=="6"))) else "#000000"
             k.update({"size": size, "pSize": pSize, "rare": 0, "holo": False, "color": color})
 
 data = list(filter(lambda x: x["id"] in exist, data))

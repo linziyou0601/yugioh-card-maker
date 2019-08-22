@@ -24,6 +24,7 @@ function loadingCardContent(){
     //語言
     Lang = $('#cardLang').val();
     //----------------------------------//
+    if(Lang=="zh" && isKey($('#cardKey').val())) download_ygoimg($('#cardKey').val())
     //卡片資料
     cardTitle = $('#cardTitle').val(); //卡片標題
     cardImg = $('#cardImg').val()? URL.createObjectURL($('#cardImg')[0].files[0]): ""; //卡片圖案
@@ -43,12 +44,12 @@ function loadingCardContent(){
         ATK = String($('#cardATK').val()); //怪獸卡ATK
         DEF = String($('#cardDEF').val()); //怪獸卡DEF
         typeText = langString[Lang]["Race"][cardRace] + //種族
-                   (Special? langString[Lang]["Sl"]+langString[Lang]["Special"]: "") + //特殊召喚
-                   ((cardType2>"1")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
-                   (cardEff1>"1"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
-                   ((cardEff2>"1"&&cardEff1!=cardEff2)? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff2]: "") + //功能2(效果)
-                   (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能3(靈擺有無)
-                   ((cardEff2>="1"&&cardType2!="0")? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能4(效果有無)
+                (Special? langString[Lang]["Sl"]+langString[Lang]["Special"]: "") + //特殊召喚
+                ((cardType2>"1")? langString[Lang]["Sl"]+langString[Lang]["Type2"][optMsType["monster"][cardType2][0]]: "") + //卡面種類
+                (cardEff1>"1"? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff1]: "") + //功能1(效果)
+                ((cardEff2>"1"&&cardEff1!=cardEff2)? langString[Lang]["Sl"]+langString[Lang]["Eff"][cardEff2]: "") + //功能2(效果)
+                (Pendulum? langString[Lang]["Sl"]+langString[Lang]["Pendulum"]: "") + //功能3(靈擺有無)
+                ((cardEff2>="1"&&cardType2!="0")? langString[Lang]["Sl"]+langString[Lang]["Effect"]: ""); //功能4(效果有無)
         //靈擺卡//
         redSC = $('#cardRED').val();
         blueSC = $('#cardBLUE').val();
@@ -71,9 +72,10 @@ function loadingCardContent(){
     imageURLs.push("images/pic/holo.png"); //防偽貼
     imageURLs.push("images/card/"+cardURL+".png"); //卡片種類
     imageURLs.push("images/attr/"+langString[Lang]["Attr"]+"/"+cardAttr+".webp"); //卡片屬性
-    imageURLs.push(cardImg==""? "images/default.PNG": cardImg); //卡片圖片
+    if(Lang=="zh" && isKey($('#cardKey').val())) imageURLs.push("ygopro_pics/pics/"+$('#cardKey').val()+".jpg"); //卡片圖片
+    else imageURLs.push(cardImg==""? "images/default.PNG": cardImg); //卡片圖片
     if(cardType=="monster" || cardType2!="0")
-        imageURLs.push("images/pic/" + (cardType!="monster"? optMsType["monster"][cardType2][0]:
+        imageURLs.push("images/pic/" + (cardType!="monster"? optMsType[cardType][cardType2][0]:
                                        (cardType2=="5"? "Rank": "Level")) + ".webp"); //等級.魔罠種類
     restoreData(Lang);
     startLoadingAllImages(imagesAreNowLoaded); //載入圖檔
@@ -234,6 +236,8 @@ function restoreData(LN){
 }
 //切換語言時
 function languageInit(LN){
+    if(LN=="zh") $("#mtCardKey").show();
+    else $("#mtCardKey").hide();
     $('#cardType').val(langString[LN]["Default"]["type"]); 
     toggleCardType();
     $('#cardType2').val(langString[LN]["Default"]["type2"]); 
@@ -313,10 +317,10 @@ function imgUploaded(){
 }
 //\\
 //\\
-$('#cardLang')[0].addEventListener("input", function(){languageInit($('#cardLang').val());});
-$('#cardRare')[0].addEventListener("input", toggleCardRare);
-$('#cardType')[0].addEventListener("input", toggleCardType);
-$('#cardType2')[0].addEventListener("input", toggleLink);
+$('#cardLang')[0].addEventListener("change", function(){languageInit($('#cardLang').val());});
+$('#cardRare')[0].addEventListener("change", toggleCardRare);
+$('#cardType')[0].addEventListener("change", toggleCardType);
+$('#cardType2')[0].addEventListener("change", toggleLink);
 $('#Pendulum').change(togglePendulum);
 $('#cardImg').on('change', imgUploaded());
 //*********************//
