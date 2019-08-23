@@ -154,7 +154,7 @@ function drawCardImg(){
     else{ cX=123; cY=268; cW=754; cH=754;}
     iW = imgs[11].width/imgs[11].height*cH;
     iH = imgs[11].height/imgs[11].width*cW;
-    if(imgs[11].width<=imgs[11].height) ctx.drawImage(imgs[11], cX, cY-((iH-cH)/2), cW, iH);
+    if(imgs[11].width <= imgs[11].height*(Pendulum? 1.33:1)) ctx.drawImage(imgs[11], cX, cY-((iH-cH)/2), cW, iH);
     else ctx.drawImage(imgs[11], cX-((iW-cW)/2), cY, iW, cH);
     ctx.drawImage(imgs[9], 0, 0, 1000, 1450);
     ctx.drawImage(imgs[10], 840, 68, 90, 90);
