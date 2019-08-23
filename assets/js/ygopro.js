@@ -40,43 +40,61 @@ function fill_ygoimg(id) {
     toggleCardRare();
 }
 
-
-
 function download_allimg(){
     var dt = new Date().toLocaleDateString('zh-TW', {timeZone: 'Asia/Taipei'}).split('/');
     var zip = new JSZip();
     var img  = zip.folder("pics");
-    var count = 0; 
+    var count=0, min=0, max=keyname.length; 
     dt = [dt[2],dt[0],dt[1]].join('_')
-    $("#prgText").html('　'); prgChange(-1); $('#modalProgress').modal('show');
+    Swal.mixin({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1', '2']
+    }).queue([
+        '從第幾張開始下載？',
+        '下載到第幾張為止？'
+    ]).then((result) => {
+        if(isNaN(result.value[0])) result.value[0]=0;
+        if(isNaN(result.value[1])) result.value[1]=keyname.length;
+        min = Math.max(Math.min(Number(result.value[0]), Number(result.value[1])), 1) - 1;
+        max = Math.min(Math.max(Number(result.value[0]), Number(result.value[1])), keyname.length) - 1;
+        count = min;
 
-    var interval = setInterval(function(){
-        if(count>=keyname.length){
-            clearInterval(interval);
-            $("#prgText").html('檔案壓縮中...');  //進度條Log
-            zip.generateAsync({type:"blob"})
-            .then(function(content) {
-                $("#prgText").html('壓縮完成！');  //進度條Log
-                setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
-                saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
-            });
-        }
-        else{       
-            $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
-            $('#cardKey').val(keyname[count])
-            loadingCardContent();
-            setTimeout(function(){
-                image = canvas.toDataURL("image/jpeg").split('base64,')[1]
-                img.file(keyname[count]+".jpg", image, {base64: true});                
-                $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
-                prgChange(count); //進度條
-                count++;
-            },800)
-        } 
-    }, 1100);
+        $("#prgText").html('　'); prgChange(count-min-1, max-min+1); $('#modalProgress').modal('show');
+        var interval = setInterval(function(){
+            if(count>max){
+                clearInterval(interval);
+                $("#prgText").html('檔案壓縮中...');  //進度條Log
+                zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
+                    Swal.fire({
+                        type: 'success',
+                        title: '檔案壓縮完成',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
+                });
+            }
+            else{  
+                prgChange(count-min, max-min+1); //進度條
+                $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
+                $('#cardKey').val(keyname[count])
+                loadingCardContent();
+                setTimeout(function(){
+                    image = canvas.toDataURL("image/jpeg").split('base64,')[1]
+                    img.file(keyname[count]+".jpg", image, {base64: true});                
+                    $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
+                    count++;
+                },800)
+            } 
+        }, 1100);
+    })
 }
 
-function prgChange(num){
-    $("#progress").css("width",((num+1)/keyname.length*100).toFixed(2)+"%");
-    $("#progress").html(((num+1)/keyname.length*100).toFixed(2)+"%");
+function prgChange(num,n){
+    $("#progress").css("width",((num+1)/n*100).toFixed(2)+"%");
+    $("#progress").html(((num+1)/n*100).toFixed(2)+"%");
 }
