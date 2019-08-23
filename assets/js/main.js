@@ -24,7 +24,7 @@ function loadingCardContent(){
     //語言
     Lang = $('#cardLang').val();
     //----------------------------------//
-    if(Lang=="zh" && isKey($('#cardKey').val())) download_ygoimg($('#cardKey').val())
+    if(Lang=="zh" && isKey($('#cardKey').val())) fill_ygoimg($('#cardKey').val())
     //卡片資料
     cardTitle = $('#cardTitle').val(); //卡片標題
     cardImg = $('#cardImg').val()? URL.createObjectURL($('#cardImg')[0].files[0]): ""; //卡片圖案
@@ -326,14 +326,14 @@ $('#cardImg').on('change', imgUploaded());
 //*********************//
 
 //下載
-function download_img() {
+function download_img(namd='YuGiOh') {
 	if (canvas.msToBlob) { //for IE
 		var blob = canvas.msToBlob();
-		window.navigator.msSaveBlob(blob, 'YuGiOh.png');
+		window.navigator.msSaveBlob(blob, namd+'.png');
 	} else {
         var a = document.createElement('a');
         a.href = canvas.toDataURL("image/jpeg");
-        a.download = 'YuGiOh.jpg';
+        a.download = name+'.jpg';
         a.click();
 	}
 }

@@ -13,11 +13,10 @@
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/bootstrap4-toggle.min.css">
 	<link rel="stylesheet" href="assets/css/colors.min.css">
-	<!--Sweet Alert 2-->
-	<script src="assets/js/sweetalert2.all.min.js"></script>
-	<script src="assets/js/polyfill.js"></script>
-	<!--Font Awesome-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<!--JS ZIP-->
+	<script src="assets/js/jszip.js"></script>
+	<script src="assets/js/FileSaver.js"></script>
+	<!--Custom Style-->
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -300,7 +299,7 @@
 							</div>
 							<button type="button" class="my-2 btn btn-info" onClick="loadingCardContent()">產生</button>
 							<button type="button" class="my-2 btn btn-success" onClick="download_img()">下載</button>
-							<button type="button" class="my-2 btn btn-danger" onClick="download_allimg()">下載所有卡片</button>
+							<button type="button" class="my-2 btn btn-danger" onClick="download_allimg()">下載所有ygopro卡片</button>
 							<label style="color: #CCC;">　每1.5秒自動更新</label>
 						</form>
 					</div>
@@ -319,6 +318,21 @@
 					<span class="spinner-grow spinner-grow-sm text-info" role="status"><span class="sr-only">Loading...</span></span>
 					<span class="spinner-grow spinner-grow-sm text-white" role="status"><span class="sr-only">Loading...</span></span>
 					<div><span class="text-light">載入中...</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalProgress" tabindex="" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark">
+				<div class="modal-body text-center">
+					<div class="progress">
+						<div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+							0.00%
+						</div>
+					</div>
+					<div id="prgText" class="mt-2" style="height: 40px;">　</div>
 				</div>
 			</div>
 		</div>

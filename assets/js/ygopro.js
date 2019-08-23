@@ -5,7 +5,11 @@ $.getJSON("ygopro_pics/cardData.json", function(jsonObj){
     keyname=Object.keys(data)
 });
 
-function download_ygoimg(id) {
+function isKey(id) {
+    return ($.inArray(id, keyname)==-1? false: true)
+}
+
+function fill_ygoimg(id) {
     obj = data[id]
     $('#cardType').val(obj["type"][0][0]);
     toggleCardType();
@@ -36,6 +40,41 @@ function download_ygoimg(id) {
     toggleCardRare();
 }
 
-function isKey(id) {
-    return ($.inArray(id, keyname)==-1? false: true)
+
+
+function download_allimg(){
+    var dt = new Date().toLocaleDateString('zh-TW', {timeZone: 'Asia/Taipei'}).split('/');
+    var zip = new JSZip();
+    var img  = zip.folder("pics");
+    var count = 0; 
+    dt = [str[2],str[0],str[1]].join('_')
+    $("#prgText").html('　'); prgChange(-1); $('#modalProgress').modal('show');
+
+    var interval = setInterval(function(){
+        if(count>=keyname.length){
+            clearInterval(interval);
+            setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
+            zip.generateAsync({type:"blob"})
+            .then(function(content) {
+                saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
+            });
+        }
+        else{       
+            $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
+            $('#cardKey').val(keyname[count])
+            loadingCardContent();
+            setTimeout(function(){
+                image = canvas.toDataURL("image/jpeg").split('base64,')[1]
+                img.file(keyname[count]+".jpg", image, {base64: true});                
+                $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
+                prgChange(count); //進度條
+                count++;
+            },500)
+        } 
+    }, 900);
+}
+
+function prgChange(num){
+    $("#progress").css("width",((num+1)/keyname.length*100).toFixed(2)+"%");
+    $("#progress").html(((num+1)/keyname.length*100).toFixed(2)+"%");
 }
