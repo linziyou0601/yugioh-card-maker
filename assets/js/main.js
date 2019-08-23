@@ -99,7 +99,7 @@ function imagesAreNowLoaded(){
     canvas.height = 1450;
     drawCardImg()
     //卡片標題
-    ctx.font = 57+langOffset[Lang]["tS"]+"pt " + fontName[Lang][0];
+    ctx.font = 57+langOffset[Lang]["tS"]+"pt " + [fontName[Lang][0],fontName[Lang][3],fontName[Lang][4],fontName[Lang][5]].join(', ');
     ctx.fillStyle = rareColor(cardRare);
     ctx.fillText(cardTitle, 77+langOffset[Lang]["tX"], 140+langOffset[Lang]["tY"], 750);
     removeShadow();
@@ -164,7 +164,7 @@ function drawCardImg(){
 function infoTextFill(){
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    ctx.font = fontSize + "pt " + fontName[Lang][2];
+    ctx.font = fontSize + "pt " + [fontName[Lang][2],fontName[Lang][3],fontName[Lang][4],fontName[Lang][5]].join(', ');
     wrapText(infoText, 78, 1095 + langOffset[Lang]["oY"] + ((cardType=="monster")? 30: 0), 825, fontSize+langOffset[Lang]["lh"]);
 }
 
@@ -172,7 +172,7 @@ function infoTextFill(){
 function pendulumInfoTextFill(){
     ctx.textAlign = "left";	
     ctx.textBaseline = "top";
-    ctx.font = fontSize2 + "pt " + fontName[Lang][2];
+    ctx.font = fontSize2 + "pt " + [fontName[Lang][2],fontName[Lang][3],fontName[Lang][4],fontName[Lang][5]].join(', ');
     wrapText(pendulumInfoText, 160, 920+langOffset[Lang]["oY"], 660, fontSize2+langOffset[Lang]["lh"]);
 }
 

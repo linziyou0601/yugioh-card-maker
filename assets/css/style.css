@@ -1,13 +1,17 @@
 /* font converted using font-converter.net. thank you! */
 @import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
 @font-face {
+	font-family: "MatrixBoldSmallCaps";
+	src:url("../fonts/MatrixBoldSmallCaps.ttf") format("truetype");
+	font-weight: bold;
+}
+@font-face {
 	font-family: "zh";
 	src:url("../fonts/zh.ttf") format("truetype");
 }
 @font-face {
-	font-family: "MatrixBoldSmallCaps";
-	src:url("../fonts/MatrixBoldSmallCaps.ttf") format("truetype");
-	font-weight: bold;
+	font-family: "cn";
+	src:url("../fonts/cn.ttf") format("truetype");
 }
 @font-face {
 	font-family: "jp";
