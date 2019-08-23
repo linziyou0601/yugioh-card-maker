@@ -80,17 +80,17 @@ function download_allimg(){
             }
             else{  
                 prgChange(count-min, max-min+1); //進度條
-                $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
+                $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
                 $('#cardKey').val(keyname[count])
                 loadingCardContent();
                 setTimeout(function(){
                     image = canvas.toDataURL("image/jpeg").split('base64,')[1]
                     img.file(keyname[count]+".jpg", image, {base64: true});                
-                    $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
+                    $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
                     count++;
-                },800)
+                },900)
             } 
-        }, 1100);
+        }, 1200);
     })
 }
 
