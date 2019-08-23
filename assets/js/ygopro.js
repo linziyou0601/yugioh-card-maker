@@ -71,7 +71,7 @@ function download_allimg(){
                 count++;
             },800)
         } 
-    }, 1200);
+    }, 1000);
 }
 
 function prgChange(num){
