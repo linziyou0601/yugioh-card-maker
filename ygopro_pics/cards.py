@@ -137,7 +137,7 @@ with sqlite3.connect('cards.db') as conn:
             c.execute('SELECT name, desc FROM texts where id=' + str(k['id']))
             data2 = c.fetchall()
             info = [x.replace("\r\n", r"") for x in data2[0]['desc'].split("【怪獸效果】")[::-1]]
-            k.update({"title": data2[0]['name'], "infoText": info[0], "pendulumText": info[1] if len(info)==2 else ""})
+            k.update({"title": data2[0]['name'].replace("﹒","．"), "infoText": info[0], "pendulumText": info[1] if len(info)==2 else ""})
             #--文字大小--#
             infoLen = len(info[0])
             pinfoLen = len(info[1]) if len(info)==2 else 0
