@@ -69,9 +69,9 @@ function download_allimg(){
                 $("#prgText").html((count+1) + ': ' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
                 prgChange(count); //進度條
                 count++;
-            },500)
+            },800)
         } 
-    }, 900);
+    }, 1200);
 }
 
 function prgChange(num){
