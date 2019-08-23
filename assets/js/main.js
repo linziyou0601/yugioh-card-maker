@@ -326,14 +326,14 @@ $('#cardImg').on('change', imgUploaded());
 //*********************//
 
 //下載
-function download_img(namd='YuGiOh') {
+function download_img() {
 	if (canvas.msToBlob) { //for IE
 		var blob = canvas.msToBlob();
-		window.navigator.msSaveBlob(blob, namd+'.png');
+		window.navigator.msSaveBlob(blob, 'YuGiOh.png');
 	} else {
         var a = document.createElement('a');
         a.href = canvas.toDataURL("image/jpeg");
-        a.download = name+'.jpg';
+        a.download = 'YuGiOh.jpg';
         a.click();
 	}
 }
