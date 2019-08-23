@@ -53,9 +53,11 @@ function download_allimg(){
     var interval = setInterval(function(){
         if(count>=keyname.length){
             clearInterval(interval);
-            setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
+            $("#prgText").html('檔案壓縮中...');  //進度條Log
             zip.generateAsync({type:"blob"})
             .then(function(content) {
+                $("#prgText").html('壓縮完成！');  //進度條Log
+                setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
                 saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
             });
         }
@@ -71,7 +73,7 @@ function download_allimg(){
                 count++;
             },800)
         } 
-    }, 1200);
+    }, 1100);
 }
 
 function prgChange(num){
