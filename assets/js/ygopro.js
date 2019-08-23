@@ -47,7 +47,7 @@ function download_allimg(){
     var zip = new JSZip();
     var img  = zip.folder("pics");
     var count = 0; 
-    dt = [str[2],str[0],str[1]].join('_')
+    dt = [dt[2],dt[0],dt[1]].join('_')
     $("#prgText").html('　'); prgChange(-1); $('#modalProgress').modal('show');
 
     var interval = setInterval(function(){
