@@ -138,10 +138,12 @@ function imagesAreNowLoaded(){
     }
     //若有卡片密碼
     if(Lang=="zh" && isKey($('#cardKey').val())){
+        ctx.fillStyle = (cardType=="monster"&&cardType2=="5")? '#FFF': '#000';
         ctx.font = "22pt 'cardkey','MatrixBoldSmallCaps', " + fontName[Lang][2];
         ctx.textAlign = "left";
         ctx.fillText(paddingLeft($('#cardKey').val(), 8), 54, 1405); //卡片密碼
     }
+    ctx.fillStyle = '#000';
     //若開啟靈擺
     if(Pendulum) {ctx.textAlign = "center";
                   ctx.font = "55pt 'MatrixBoldSmallCaps'";
