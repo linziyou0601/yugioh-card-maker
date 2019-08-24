@@ -37,6 +37,11 @@
 	font-family: "link";
 	src:url("../fonts/link.ttf") format("truetype");
 }
+@font-face {
+	font-family: "cardkey";
+	src:url("../fonts/cardkey.ttf") format("truetype");
+	font-weight: bold;
+}
 
 .preloadfont {
 	font-family: YourFont;

@@ -136,6 +136,12 @@ function imagesAreNowLoaded(){
                      langString[Lang]["Qr"], 920+langOffset[Lang]["sX1"], 222+langOffset[Lang]["sY1"]); //魔罠卡
         if(cardType2!='0') ctx.drawImage(imgs[12], 820+langOffset[Lang]["sX2"], 178+langOffset[Lang]["sY2"], 58, 58); //魔罠子類別
     }
+    //若有卡片密碼
+    if(Lang=="zh" && isKey($('#cardKey').val())){
+        ctx.font = "22pt 'cardkey','MatrixBoldSmallCaps', " + fontName[Lang][2];
+        ctx.textAlign = "left";
+        ctx.fillText(paddingLeft($('#cardKey').val(), 8), 54, 1405); //卡片密碼
+    }
     //若開啟靈擺
     if(Pendulum) {ctx.textAlign = "center";
                   ctx.font = "55pt 'MatrixBoldSmallCaps'";
@@ -205,6 +211,11 @@ function rareColor(lv){
             return "#524100";//"#3b2f00";
             break;	
     }
+}
+
+//字串左邊補零
+function paddingLeft(str, lenght){
+	return (str.length >= lenght)? str: paddingLeft("0" +str,lenght);
 }
 
 //*********************//
