@@ -88,9 +88,9 @@ function download_allimg(){
                     img.file(keyname[count]+".jpg", image, {base64: true});                
                     $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
                     count++;
-                },900)
+                },1100)
             } 
-        }, 1200);
+        }, 1500);
     })
 }
 
