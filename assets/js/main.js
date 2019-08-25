@@ -2,6 +2,7 @@ var canvas = document.getElementById('yugiohcard'),
     ctx = canvas.getContext('2d'),			
     imageURLs=[];
 var imgs=[], imagesOK=0;// 已加載的圖片會放進imgs[]裡
+var autoGenInterval; //自動執行
 var Lang="zh", holo=true, cardTitle="", cardAttr="", cardType="", cardType2="", cardEff1="", cardEff2="", cardRace="", 
     Pendulum=false, Special=false, typeText="", level=0, ATK="?", DEF="?", redSC=1, blueSC=12, 
     pendulumInfoText="", infoText="", fontSize=28, fontSize2=22, titleColor="", cardImg="", cardRare=0;
@@ -15,7 +16,7 @@ $(function(){
 })
 $(window).on("load", function () {
     languageInit(Lang);
-    setInterval(loadingCardContent, 1500);
+    autoGenInterval = setInterval(loadingCardContent, 1500);
 }); 
 
 //載入卡片資料
