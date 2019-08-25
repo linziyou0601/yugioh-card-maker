@@ -78,7 +78,7 @@ function download_allimg(){
                 loadingCardContent();
                 count++;
             } 
-        }, 150);
+        }, 200);
 
         //讀完再開始繪製
         setTimeout(function(){
@@ -118,11 +118,11 @@ function download_allimg(){
                             else console.log('%c[' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: green') //console Log
                             /*----------*/
                             count++;
-                        },1000)
+                        },850)
                     } 
                 }, 1500);
             },
-            155*(max-min+1)+5000
+            215*(max-min+1)+5000
         )
     })
 }
