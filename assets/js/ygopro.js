@@ -63,67 +63,45 @@ function download_allimg(){
         clearInterval(autoGenInterval);
 
         $("#prgText").html('　'); prgChange(count-min-1, max-min+1); $('#modalProgress').modal('show');
-        //先讀取一次圖檔
-        var preimage = setInterval(function(){
+        
+        var interval = setInterval(function(){
             if(count>max){
-                clearInterval(preimage); $("#prgText").html('等待繪製中...');  //進度條Log
+                clearInterval(interval);
+                autoGenInterval = setInterval(loadingCardContent, 1500);
+                $("#prgText").html('檔案壓縮中...');  //進度條Log
+                zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
+                    Swal.fire({
+                        type: 'success',
+                        title: '檔案壓縮完成',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
+                });
             }
-            else{
-                /*記錄快取狀況*/
-                console.log('[' + (count-min+1) + '/' + (max-min+1) + '] caching '+keyname[count]) //console Log
+            else{ 
+                var countDraw = count //Log用，對照zip時的id
+                /*記錄繪圖狀況*/
+                console.log('[' + (count-min+1) + '/' + (max-min+1) + '] drawing '+keyname[count]) //console Log
                 /*----------*/
                 prgChange(count-min, max-min+1); //進度條
-                $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 快取中');  //進度條Log
+                $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
                 $('#cardKey').val(keyname[count])
                 loadingCardContent();
-                count++;
+                setTimeout(function(){
+                    image = canvas.toDataURL("image/jpeg").split('base64,')[1]
+                    img.file(keyname[count]+".jpg", image, {base64: true});
+                    $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
+                    /*記錄存檔狀況*/
+                    if(countDraw!=count) console.error('%c[error][' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: red') //console Log 
+                    else console.log('%c[' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: green') //console Log
+                    /*----------*/
+                    count++;
+                },800)
             } 
-        }, 150);
-
-        //讀完再開始繪製
-        setTimeout(function(){
-                count=min; $("#prgText").html('　'); prgChange(count-min-1, max-min+1);
-                var interval = setInterval(function(){
-                    if(count>max){
-                        clearInterval(interval);
-                        autoGenInterval = setInterval(loadingCardContent, 1500);
-                        $("#prgText").html('檔案壓縮中...');  //進度條Log
-                        zip.generateAsync({type:"blob"})
-                        .then(function(content) {
-                            setTimeout(function(){ $('#modalProgress').modal('hide');}, 500); //進度條
-                            Swal.fire({
-                                type: 'success',
-                                title: '檔案壓縮完成',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            saveAs(content, "ygoproPics_ZHTW_" + dt + ".zip");
-                        });
-                    }
-                    else{ 
-                        var countDraw = count //Log用，對照zip時的id
-                        /*記錄繪圖狀況*/
-                        console.log('[' + (count-min+1) + '/' + (max-min+1) + '] drawing '+keyname[count]) //console Log
-                        /*----------*/
-                        prgChange(count-min, max-min+1); //進度條
-                        $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
-                        $('#cardKey').val(keyname[count])
-                        loadingCardContent();
-                        setTimeout(function(){
-                            image = canvas.toDataURL("image/jpeg").split('base64,')[1]
-                            img.file(keyname[count]+".jpg", image, {base64: true});
-                            $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
-                            /*記錄存檔狀況*/
-                            if(countDraw!=count) console.error('%c[error][' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: red') //console Log 
-                            else console.log('%c[' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: green') //console Log
-                            /*----------*/
-                            count++;
-                        },1000)
-                    } 
-                }, 1500);
-            },
-            180*(max-min+1)+10000
-        )
+        }, 1200);
     })
 }
 
