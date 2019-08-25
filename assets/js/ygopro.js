@@ -69,13 +69,16 @@ function download_allimg(){
                 clearInterval(preimage); $("#prgText").html('等待繪製中...');  //進度條Log
             }
             else{
+                /*記錄快取狀況*/
+                console.log('[' + (count-min+1) + '/' + (max-min+1) + '] caching '+keyname[count]) //console Log
+                /*----------*/
                 prgChange(count-min, max-min+1); //進度條
                 $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 快取中');  //進度條Log
                 $('#cardKey').val(keyname[count])
                 loadingCardContent();
                 count++;
             } 
-        }, 100);
+        }, 150);
 
         //讀完再開始繪製
         setTimeout(function(){
@@ -98,20 +101,29 @@ function download_allimg(){
                         });
                     }
                     else{ 
+                        var countDraw = count //Log用，對照zip時的id
+                        /*記錄繪圖狀況*/
+                        console.log('[' + (count-min+1) + '/' + (max-min+1) + '] drawing '+keyname[count]) //console Log
+                        /*----------*/
                         prgChange(count-min, max-min+1); //進度條
                         $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
                         $('#cardKey').val(keyname[count])
                         loadingCardContent();
+                        var countFile = count //Log用，對照draw時的id
                         setTimeout(function(){
                             image = canvas.toDataURL("image/jpeg").split('base64,')[1]
-                            img.file(keyname[count]+".jpg", image, {base64: true});                
-                            $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
-                            count++;
-                        },1200)
+                            img.file(keyname[countFile]+".jpg", image, {base64: true});
+                            $("#prgText").html((countFile-min+1) + '/' + (max-min+1) + '<br>' + keyname[countFile] + ' "' + data[keyname[countFile]]['title'] + '" 已存檔'); //進度條Log
+                            /*記錄存檔狀況*/
+                            if(countDraw!=countFile) console.error('%c[error][' + (countFile-min+1) + '/' + (max-min+1) + '] ziping '+keyname[countFile], 'color: red') //console Log 
+                            else console.log('%c[' + (countFile-min+1) + '/' + (max-min+1) + '] ziping '+keyname[countFile], 'color: green') //console Log
+                            /*----------*/
+                        },1000)
+                        count++;
                     } 
                 }, 1500);
             },
-            110*(max-min+1)+500
+            155*(max-min+1)+5000
         )
     })
 }
