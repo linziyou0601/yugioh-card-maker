@@ -52,7 +52,7 @@ function download_allimg(){
         showCancelButton: true,
         progressSteps: ['1', '2']
     }).queue([
-        {title: '從第幾張開始下載？', text: '依卡片密碼順序排序'},
+        {title: '從第幾張開始下載？', text: '依卡片密碼順序排序（資料自ygopro提取）'},
         {title: '下載到第幾張為止？', text: '最大值'+keyname.length+'張'}
     ]).then((result) => {
         if(isNaN(result.value[0])) result.value[0]=0;
