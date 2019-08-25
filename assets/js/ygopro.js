@@ -111,7 +111,7 @@ function download_allimg(){
                     } 
                 }, 1500);
             },
-            150*(max-min+1)+500
+            110*(max-min+1)+500
         )
     })
 }
