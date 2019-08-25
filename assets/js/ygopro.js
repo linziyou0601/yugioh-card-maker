@@ -109,17 +109,16 @@ function download_allimg(){
                         $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 繪製中');  //進度條Log
                         $('#cardKey').val(keyname[count])
                         loadingCardContent();
-                        var countFile = count //Log用，對照draw時的id
                         setTimeout(function(){
                             image = canvas.toDataURL("image/jpeg").split('base64,')[1]
-                            img.file(keyname[countFile]+".jpg", image, {base64: true});
-                            $("#prgText").html((countFile-min+1) + '/' + (max-min+1) + '<br>' + keyname[countFile] + ' "' + data[keyname[countFile]]['title'] + '" 已存檔'); //進度條Log
+                            img.file(keyname[count]+".jpg", image, {base64: true});
+                            $("#prgText").html((count-min+1) + '/' + (max-min+1) + '<br>' + keyname[count] + ' "' + data[keyname[count]]['title'] + '" 已存檔'); //進度條Log
                             /*記錄存檔狀況*/
-                            if(countDraw!=countFile) console.error('%c[error][' + (countFile-min+1) + '/' + (max-min+1) + '] ziping '+keyname[countFile], 'color: red') //console Log 
-                            else console.log('%c[' + (countFile-min+1) + '/' + (max-min+1) + '] ziping '+keyname[countFile], 'color: green') //console Log
+                            if(countDraw!=count) console.error('%c[error][' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: red') //console Log 
+                            else console.log('%c[' + (count-min+1) + '/' + (max-min+1) + '] ziping '+keyname[count], 'color: green') //console Log
                             /*----------*/
+                            count++;
                         },1000)
-                        count++;
                     } 
                 }, 1500);
             },
