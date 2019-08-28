@@ -14,6 +14,7 @@ function fill_ygoimg(id) {
     $('#cardType').val(obj["type"][0][0]);
     toggleCardType();
     $('#cardType2').val(obj["type"][0][1]);
+    toggleLink();
     $('#cardAttr').val(obj["attribute"]);
     $('#cardEff1').val(obj["type"][0][2]);
     $('#cardEff2').val(obj["type"][0][3]);
@@ -35,7 +36,6 @@ function fill_ygoimg(id) {
     $('#titleColor').val(obj["color"]);
     $('#cardRare').val(obj["rare"]);
     $('#holo').prop('checked', obj["holo"]);
-    toggleLink();
     togglePendulum();
     toggleCardRare();
 }

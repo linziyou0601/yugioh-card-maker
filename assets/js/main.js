@@ -255,6 +255,7 @@ function languageInit(LN){
     $('#cardType').val(langString[LN]["Default"]["type"]); 
     toggleCardType();
     $('#cardType2').val(langString[LN]["Default"]["type2"]); 
+    toggleLink();
     $('#cardAttr').val(langString[LN]["Default"]["attr"]); 
     $('#cardEff1').val(langString[LN]["Default"]["eff1"]); 
     $('#cardEff2').val(langString[LN]["Default"]["eff2"]); 
@@ -276,7 +277,6 @@ function languageInit(LN){
     $('#titleColor').val(langString[LN]["Default"]["color"]);
     $('#cardRare').val(langString[LN]["Default"]["rare"]);
     $('#holo').prop('checked', langString[LN]["Default"]["holo"]);
-    toggleLink();
     togglePendulum();
     toggleCardRare();
 }
