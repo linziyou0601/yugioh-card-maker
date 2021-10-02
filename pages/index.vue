@@ -554,7 +554,6 @@ export default {
       ctx.fillStyle = '#000';
       if (this.cardType==="Monster") { // 怪獸卡
         // 怪獸屬性文字
-        console.log(this.cardFace);
         const typeText = langStr.Race[this.cardRace] +                                                          // 種族
         (this.Special? langStr.Sl + langStr.Special: "") +                                                      // 特殊召喚
         (this.cardFace!=="Normal" && this.cardFace!=="Effect"? langStr.Sl + langStr.Face[this.cardFace]: "") +  // 卡面種類
@@ -661,22 +660,16 @@ export default {
       const fieldWidth = maxWidth;                        // 欄位寬度
       let initHeight = y;                                 // 文字距離圖片頂部高度
       let lastSubStrIndex = 0;                            // 每次擷取的子字串起始位置
-      console.log(lineHeight)
-      console.log(initHeight)
       for(let i=0; i<text.length; i++){ 
         lineWidth += ctx.measureText(text[i]).width;
         if(lineWidth>fieldWidth || text.substring(i, i+1)==='\n') {
           if(text.substring(i, i+1)==='\n') i++;
-          console.log(text.substring(lastSubStrIndex, i))
-          console.log("A " + initHeight)
           ctx.fillText(text.substring(lastSubStrIndex, i), x, initHeight);
           initHeight+=lineHeight
           lineWidth=0
           lastSubStrIndex=i;
         } 
         if(i===text.length-1){   // 若本行未超過，位已達最後一字，則直接填入
-          console.log(text.substring(lastSubStrIndex, i+1))
-          console.log("B " + initHeight)
           ctx.fillText(text.substring(lastSubStrIndex, i+1), x, initHeight);
         }
       }
@@ -763,44 +756,44 @@ export default {
 @import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
 @font-face {
 	font-family: "MatrixBoldSmallCaps";
-	src:url("/fonts/MatrixBoldSmallCaps.ttf") format("truetype");
+	src:url("~static/fonts/MatrixBoldSmallCaps.ttf") format("truetype");
 	font-weight: bold;
 }
 @font-face {
 	font-family: "zh";
-	src:url("/fonts/zh.ttf") format("truetype");
+	src:url("~static/fonts/zh.ttf") format("truetype");
 }
 @font-face {
 	font-family: "cn";
-	src:url("/fonts/cn.ttf") format("truetype");
+	src:url("~static/fonts/cn.ttf") format("truetype");
 }
 @font-face {
 	font-family: "jp";
-	src:url("/fonts/jp.ttf") format("truetype");
+	src:url("~static/fonts/jp.ttf") format("truetype");
 }
 @font-face {
 	font-family: "jp2";
-	src:url("/fonts/jp2.otf") format("opentype");
+	src:url("~static/fonts/jp2.otf") format("opentype");
 }
 @font-face {
 	font-family: "en";
-	src:url("/fonts/en.ttf") format("truetype");
+	src:url("~static/fonts/en.ttf") format("truetype");
 }
 @font-face {
 	font-family: "en2";
-	src:url("/fonts/en2.ttf") format("truetype");
+	src:url("~static/fonts/en2.ttf") format("truetype");
 }
 @font-face {
 	font-family: "en3";
-	src:url("/fonts/en3.ttf") format("truetype");
+	src:url("~static/fonts/en3.ttf") format("truetype");
 }
 @font-face {
 	font-family: "link";
-	src:url("/fonts/link.ttf") format("truetype");
+	src:url("~static/fonts/link.ttf") format("truetype");
 }
 @font-face {
 	font-family: "cardkey";
-	src:url("/fonts/cardkey.ttf") format("truetype");
+	src:url("~static/fonts/cardkey.ttf") format("truetype");
 	font-weight: bold;
 }
 
