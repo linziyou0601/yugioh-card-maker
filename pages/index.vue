@@ -1,5 +1,16 @@
 <template>
   <div id="app">
+    <span class="preloadfont" style="font-family: 'zh';">.</span>
+    <span class="preloadfont" style="font-family: 'cn';">.</span>
+    <span class="preloadfont" style="font-family: 'MatrixBoldSmallCaps';">.</span>
+    <span class="preloadfont" style="font-family: 'jp';">.</span>
+    <span class="preloadfont" style="font-family: 'jp2';">.</span>
+    <span class="preloadfont" style="font-family: 'en';">.</span>
+    <span class="preloadfont" style="font-family: 'en2';">.</span>
+    <span class="preloadfont" style="font-family: 'en3';">.</span>
+    <span class="preloadfont" style="font-family: 'link';">.</span>
+    <span class="preloadfont" style="font-family: 'cardkey';">.</span>
+
     <!-- 標題區 -->
     <header>
       <b-navbar type="dark" fixed="top">
@@ -441,18 +452,18 @@ export default {
     drawCard () {
       const cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null;
       this.imgs = {
-        template: `/images/card/${this.cardTemplateText}.png`,
-        holo: "/images/pic/holo.png",
-        link1: "/images/pic/LINK1.png", link2: "/images/pic/LINK2.png",
-        link3: "/images/pic/LINK3.png", link4: "/images/pic/LINK4.png",
-        link6: "/images/pic/LINK6.png", link7: "/images/pic/LINK7.png",
-        link8: "/images/pic/LINK8.png", link9: "/images/pic/LINK9.png",
-        attr: `/images/attr/${this.langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp`,
-        photo: cardImgUrl || "/images/default.jpg",
+        template: `images/card/${this.cardTemplateText}.png`,
+        holo: "images/pic/holo.png",
+        link1: "images/pic/LINK1.png", link2: "images/pic/LINK2.png",
+        link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
+        link6: "images/pic/LINK6.png", link7: "images/pic/LINK7.png",
+        link8: "images/pic/LINK8.png", link9: "images/pic/LINK9.png",
+        attr: `images/attr/${this.langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp`,
+        photo: cardImgUrl || "images/default.jpg",
         levelOrFace: (
           this.cardType!=="Monster" && this.cardFace!=="Normal" ?
-          `/images/pic/${this.cardFace}.webp` :
-          `/images/pic/${this.isXyzMonster ? 'Rank' : 'Level'}.webp`
+          `images/pic/${this.cardFace}.webp` :
+          `images/pic/${this.isXyzMonster ? 'Rank' : 'Level'}.webp`
         ),
       }
       this.drawCardLoadingImages(this.drawCardProcess) // 載入卡圖後，繪製卡片內容
@@ -795,6 +806,14 @@ export default {
 	font-family: "cardkey";
 	src:url("~static/fonts/cardkey.ttf") format("truetype");
 	font-weight: bold;
+}
+
+.preloadfont {
+	font-family: YourFont;
+	opacity:0;
+	height:0;
+	width:0;
+	display:inline-block;
 }
 
 :root {
