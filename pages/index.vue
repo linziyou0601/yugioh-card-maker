@@ -122,9 +122,25 @@
                 </b-col>
 
                 <!-- 種族 -->
-                <b-col cols="6" class="px-2">
-                  <label>種族</label>
+                <b-col cols="3" class="px-2" v-show="cardType==='Monster'">
+                  <div class="form-check px-0">
+                    <label>種族</label>
+                    <b-form-checkbox 
+                      v-model="cardCustomRaceEnabled" 
+                      :class="{'checkbox-wrap': true, 'active': cardCustomRaceEnabled}" 
+                      button
+                    >自定義</b-form-checkbox>
+                  </div>
+                </b-col>
+                <!-- 種族 - 種族選擇 -->
+                <b-col cols="3" class="px-2" v-show="!cardCustomRaceEnabled">
+                  <label>&emsp;</label>
                   <b-form-select v-model="cardRace" :options="cardRaceOpts"></b-form-select>
+                </b-col>
+                <!-- 種族 - 自訂輸入 -->
+                <b-col cols="3" class="px-2" v-show="cardCustomRaceEnabled">
+                  <label>&emsp;</label>
+                  <b-form-input v-model="cardCustomRace" type="text" maxlength="8" placeholder="請輸入種族"></b-form-input>
                 </b-col>
               </b-row>
 
@@ -364,6 +380,8 @@ export default {
         { value: 'DARK', text: '闇' },
       ],
 
+      cardCustomRaceEnabled: false,
+      cardCustomRace: '',
       cardRace: '15',
       cardRaceOpts: [
         { value: '0', text: '惡魔' },
@@ -586,7 +604,7 @@ export default {
       ctx.fillStyle = '#000';
       if (this.cardType==="Monster") { // 怪獸卡
         // 怪獸屬性文字
-        const typeText = langStr.Race[this.cardRace] +                                                          // 種族
+        const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +      // 種族
         (this.Special? langStr.Sl + langStr.Special: "") +                                                      // 特殊召喚
         (this.cardFace!=="Normal" && this.cardFace!=="Effect"? langStr.Sl + langStr.Face[this.cardFace]: "") +  // 卡面種類
         (this.cardEff1>"1"? langStr.Sl + langStr.Eff[this.cardEff1]: "") +                                      // 功能1(效果)
@@ -735,6 +753,8 @@ export default {
       this.cardAttr = "LIGHT"
       this.cardEff1 = "1"
       this.cardEff2 = "0"
+      this.cardCustomRaceEnabled = false
+      this.cardCustomRace = ""
       this.cardRace = "15"
       this.Pendulum = true
       this.Special = true
