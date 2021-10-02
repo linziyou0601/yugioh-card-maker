@@ -28,6 +28,20 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
+    ],
+    script: [
+      {
+        hid: 'gtm-script2',
+        innerHTML: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-0E5HQXQF08');
+        `,
+        type: 'text/javascript',
+        charset: 'utf-8'
+      }
     ]
   },
 
@@ -57,6 +71,7 @@ export default {
     '@nuxtjs/axios',
 
     'nuxt-fontawesome',
+    '@nuxtjs/google-gtag',
   ],
 
   fontawesome: {
@@ -80,6 +95,16 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  'google-gtag':{
+    id: 'G-0E5HQXQF08',
+    config:{
+      anonymize_ip: true, 
+      send_page_view: false,
+    },
+    debug: true,
+    disableAutoPageTrack: false
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
