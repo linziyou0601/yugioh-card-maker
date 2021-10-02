@@ -31,6 +31,11 @@ export default {
     ],
     script: [
       {
+        hid: 'gtm-script1',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-0E5HQXQF08',
+        defer: true
+      },
+      {
         hid: 'gtm-script2',
         innerHTML: `
           window.dataLayer = window.dataLayer || [];
@@ -43,7 +48,6 @@ export default {
         charset: 'utf-8'
       },
       {
-        hid: 'gtm-script1',
         src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
         'data-ad-client': 'ca-pub-7536040795321095',
         async: true
