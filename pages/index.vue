@@ -1,16 +1,5 @@
 <template>
   <div id="app">
-    <span class="preloadfont" style="font-family: 'zh';">.</span>
-    <span class="preloadfont" style="font-family: 'cn';">.</span>
-    <span class="preloadfont" style="font-family: 'MatrixBoldSmallCaps';">.</span>
-    <span class="preloadfont" style="font-family: 'jp';">.</span>
-    <span class="preloadfont" style="font-family: 'jp2';">.</span>
-    <span class="preloadfont" style="font-family: 'en';">.</span>
-    <span class="preloadfont" style="font-family: 'en2';">.</span>
-    <span class="preloadfont" style="font-family: 'en3';">.</span>
-    <span class="preloadfont" style="font-family: 'link';">.</span>
-    <span class="preloadfont" style="font-family: 'cardkey';">.</span>
-
     <!-- 標題區 -->
     <header>
       <b-navbar type="dark" fixed="top">
