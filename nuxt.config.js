@@ -41,7 +41,13 @@ export default {
         `,
         type: 'text/javascript',
         charset: 'utf-8'
-      }
+      },
+      {
+        hid: 'gtm-script1',
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+        'data-ad-client': 'ca-pub-7536040795321095',
+        async: true
+      },
     ]
   },
 
