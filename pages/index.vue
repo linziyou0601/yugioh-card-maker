@@ -809,16 +809,16 @@ export default {
 }
 
 body{
-  background: url("/Screentone.png") round,
+  background: url("~static/Screentone.png") round,
               -webkit-linear-gradient(to bottom right, #000000BB, #66666699, #000000BB),
               -webkit-linear-gradient(to bottom left, #111111BB, #11111199, #111111BB);
-  background: url("/Screentone.png") round,
+  background: url("~static/Screentone.png") round,
               -moz-linear-gradient(to bottom right, #000000BB, #66666699, #000000BB),
               -moz-linear-gradient(to bottom left, #111111BB, #11111199, #111111BB);
-  background: url("/Screentone.png") round,
+  background: url("~static/Screentone.png") round,
               -o-linear-gradient(to bottom right, #000000BB, #66666699, #000000BB),
               -o-linear-gradient(to bottom left, #111111BB, #11111199, #111111BB);
-  background: url("/Screentone.png") round,
+  background: url("~static/Screentone.png") round,
               linear-gradient(to bottom right, #000000BB, #66666699, #000000BB),
               linear-gradient(to bottom left, #111111BB, #11111199, #111111BB);
   background-blend-mode: multiply;
