@@ -21,7 +21,7 @@
     </header>
 
     <!-- 主內容區 -->
-    <main class="container-fluid my-5 h-100 p-5">
+    <main class="container-fluid mt-5 mb-3 h-100 p-5">
       <b-row class="h-100 justify-content-center align-content-center">
 
         <!-- 卡片繪製區 -->
@@ -253,7 +253,7 @@
               <!-- 按鈕區 -->
               <b-row class="my-3">
                 <b-col class="px-2">
-                  <button type="button" class="my-2 btn btn-info" @click="drawCard">產生</button>&emsp;
+                  <button type="button" class="my-2 btn btn-info" @click="doDrawCard">產生</button>&emsp;
                   <button type="button" class="my-2 btn btn-success" @click="download_img">下載</button>
                   <label style="color: #CCC;">&emsp;每1.5秒自動更新</label>
                 </b-col>
@@ -266,10 +266,32 @@
         </b-col>
       </b-row>
     </main>
+
+    <!-- 頁尾區 -->
+    <footer class="container-fluid mb-5 px-5">
+      <b-row class="justify-content-center align-content-center">
+        <b-col id="footer-panel" cols="12">
+          <div class="card-body text-center">
+            <a
+              class="text-white"
+              href="https://github.com/linziyou0601/yugioh-card-maker"
+              data-size="large"
+              aria-label="Star linziyou0601/yugioh-card-maker on GitHub"
+              style="text-decoration: none;"
+            >
+              <fa :icon="['fab', 'github']" /> GitHub
+            </a>
+          </div>
+        </b-col>
+      </b-row>
+    </footer>
+
+    <LoadingDialog />
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import langMeta from '../static/lang_meta.json'
 export default {
   data() {
@@ -442,12 +464,20 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.fireLoadingDialog()
     setInterval(this.drawCard, 1500)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
+    ...mapMutations(['fireLoadingDialog', 'closeLoadingDialog']),
+
+    doDrawCard() {
+      this.fireLoadingDialog()
+      this.drawCard()
+    },
+
     // 卡片繪製 - 繪製前準備
     drawCard () {
       const cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null;
@@ -521,6 +551,8 @@ export default {
 
       // 卡片說明
       this.drawCardInfoText(ctx, offset, fontName);
+      
+      this.closeLoadingDialog()
     },
 
     // 主要繪製流程 - 底圖

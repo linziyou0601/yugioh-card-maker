@@ -23,8 +23,13 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { hid: 'description', name: 'description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
+      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'og:type', name: 'og:type', content: 'website' },
+      { hid: 'og:title', name: 'og:title', content: '遊戲王 卡片製造機' },
+      { hid: 'og:description', name: 'og:description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
+      { hid: 'og:site_name', name: 'og:site_name', content: '遊戲王 卡片製造機' },
+      { hid: 'keywords', name: 'keywords', content: '遊戲王,卡片,梗圖,產生器' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
@@ -46,11 +51,6 @@ export default {
         `,
         type: 'text/javascript',
         charset: 'utf-8'
-      },
-      {
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-        'data-ad-client': 'ca-pub-7536040795321095',
-        async: true
       },
     ]
   },
@@ -81,7 +81,6 @@ export default {
     '@nuxtjs/axios',
 
     'nuxt-fontawesome',
-    '@nuxtjs/google-gtag',
   ],
 
   fontawesome: {
@@ -105,16 +104,6 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
-
-  'google-gtag':{
-    id: 'G-0E5HQXQF08',
-    config:{
-      anonymize_ip: true, 
-      send_page_view: false,
-    },
-    debug: true,
-    disableAutoPageTrack: false
-  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
