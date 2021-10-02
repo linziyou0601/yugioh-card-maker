@@ -872,6 +872,10 @@ select, textarea, input, .custom-file-label{
 .custom-select {
   background-image: var(--chevron-down-svg-path);
 }
+select option {
+  background: #666666;
+  color: #fff;
+}
 
 .checkbox-wrap {
   width: 100%;
