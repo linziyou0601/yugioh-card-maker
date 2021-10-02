@@ -10,13 +10,13 @@
     </header>
 
     <!-- 主內容區 -->
-    <main class="container-fluid mt-5 mb-3 h-100 p-5">
+    <main class="container-fluid mt-5 mb-3 h-100 py-3 py-md-5 px-0 px-md-5">
       <b-row class="h-100 justify-content-center align-content-center">
 
         <!-- 卡片繪製區 -->
         <b-col id="card-panel" cols="12" md="6" lg="4">
-          <div :class="{'sticky-top': true, 'pt-5': pageScrolling > 10}">
-            <div :class="{'pt-5': pageScrolling > 10}">
+          <div :class="{'padding-transition': true, 'sticky-top': true, 'pt-5': pageScrolling > 10}">
+            <div :class="{'padding-transition': true, 'pt-5': pageScrolling > 10}">
               <div class="panel-bg shadow p-3">
                 <div 
                   ref="yugiohcard-wrap"
@@ -33,7 +33,7 @@
         </b-col>
 
         <!-- 卡片資料區 -->
-        <b-col id="data-panel" cols="12" md="6" lg="8" class="mt-5 mt-md-0">
+        <b-col id="data-panel" cols="12" md="6" lg="8" class="mt-3 mt-sm-5 mt-md-0">
           <div class="panel-bg shadow p-3">
             <div class="card-body">
               <!-- 語言、防偽、稀有、顏色 -->
@@ -257,7 +257,7 @@
     </main>
 
     <!-- 頁尾區 -->
-    <footer class="container-fluid mb-5 px-5">
+    <footer class="container-fluid mb-5 px-0 px-md-5">
       <b-row class="justify-content-center align-content-center">
         <b-col id="footer-panel" cols="12">
           <div class="card-body text-center">
@@ -870,6 +870,10 @@ nav {
 	background-color: #5555556A;
   border-radius: 1rem;
   color: #FFF;
+}
+
+.padding-transition {
+  transition: all .5s linear;
 }
 
 #yugiohcard-wrap {
