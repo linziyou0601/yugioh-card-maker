@@ -319,8 +319,6 @@ import ygoproData from '../static/ygo/card_data.json'
 export default {
   data() {
     return {
-      langMeta,
-      ygoproData,
       pageScrolling: 0,
 
       cardLang: 'zh',
@@ -527,7 +525,7 @@ export default {
         link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
         link6: "images/pic/LINK6.png", link7: "images/pic/LINK7.png",
         link8: "images/pic/LINK8.png", link9: "images/pic/LINK9.png",
-        attr: `images/attr/${this.langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp`,
+        attr: `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp`,
         photo: cardImgUrl || "images/default.jpg",
         levelOrFace: (
           this.cardType!=="Monster" && this.cardFace!=="Normal" ?
@@ -560,7 +558,7 @@ export default {
       canvas.width = 1000
       canvas.height = 1450
 
-      const langStr = this.langMeta[this.cardLang]
+      const langStr = langMeta[this.cardLang]
       const offset = langStr.offset
       const fontName = langStr.fontName
 
@@ -774,7 +772,7 @@ export default {
 
     // 載入預設
     load_default_data () {
-      const data = this.langMeta[this.cardLang].Default
+      const data = langMeta[this.cardLang].Default
       this.holo = true
       this.cardRare = "0"
       this.titleColor = "#000000"
