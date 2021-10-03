@@ -4,17 +4,17 @@
     <header>
       <b-navbar type="dark" fixed="top">
         <div class="text-center text-white mx-auto">
-          遊戲王卡片製造機 -yugioh card maker
+          遊戲王卡片製造機<br/>yugioh card makers
         </div>
       </b-navbar>
     </header>
 
     <!-- 主內容區 -->
-    <main class="container-fluid mt-5 mb-3 h-100 py-3 py-md-5 px-0 px-md-5">
+    <main class="container-fluid mt-5 mb-3 h-100 py-3 py-md-5 px-0 px-sm-5">
       <b-row class="h-100 justify-content-center align-content-center">
 
         <!-- 卡片繪製區 -->
-        <b-col id="card-panel" cols="12" md="6" lg="4">
+        <b-col id="card-panel" cols="12" md="6" lg="4" class="mt-3 mt-sm-5 mt-md-0">
           <div :class="{'padding-transition': true, 'sticky-top': true, 'pt-5': pageScrolling > 10}">
             <div :class="{'padding-transition': true, 'pt-5': pageScrolling > 10}">
               <div class="panel-bg shadow p-3">
@@ -39,12 +39,12 @@
               <!-- 語言、防偽、稀有、顏色 -->
               <b-row class="mb-3">
                 <!-- 語言 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <label>語言</label>
                   <b-form-select v-model="cardLang" :options="cardLangOpts"></b-form-select>
                 </b-col>
                 <!-- 防偽貼 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <div class="form-check px-0">
                     <label>防偽貼</label>
                     <b-form-checkbox 
@@ -55,14 +55,32 @@
                   </div>
                 </b-col>
                 <!-- 防偽貼 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <label>稀有</label>
                   <b-form-select v-model="cardRare" :options="cardRareOpts"></b-form-select>
                 </b-col>
                 <!-- 卡名色 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <label>標題色</label>
                   <b-form-input v-model="titleColor" type="color"></b-form-input>
+                </b-col>
+              </b-row>
+
+              <!-- 卡片密碼 -->
+              <b-row class="my-3">
+                <b-col cols="6" lg="4" class="px-2">
+                  <div class="form-check px-0">
+                    <label>卡片密碼</label>
+                    <b-form-checkbox 
+                      v-model="cardLoadYgoProEnabled" 
+                      :class="{'checkbox-wrap': true, 'active': cardLoadYgoProEnabled}" 
+                      button
+                    >自動填入資料</b-form-checkbox>
+                  </div>
+                </b-col>
+                <b-col cols="6" lg="8" class="px-2">
+                  <label><small>僅有2019/09前的資料</small></label>
+                  <b-form-input v-model="cardKey" type="number" maxlength="8" placeholder="請輸入卡片密碼"></b-form-input>
                 </b-col>
               </b-row>
 
@@ -91,23 +109,23 @@
               <!-- 卡種、卡面、效果 -->
               <b-row class="my-3">
                 <!-- 卡種 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <label>卡種</label>
                   <b-form-select v-model="cardType" :options="cardTypeOpts"></b-form-select>
                 </b-col>
 
                 <!-- 卡面 -->
-                <b-col cols="3" class="px-2">
+                <b-col cols="6" lg="3" class="px-2">
                   <label>卡面</label>
                   <b-form-select v-model="cardFace" :options="cardFaceOpts[cardType]"></b-form-select>
                 </b-col>
 
                 <!-- 效果 -->
-                <b-col cols="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
                   <label>效果</label>
                   <b-form-select v-model="cardEff1" :options="cardEff1Opts"></b-form-select>
                 </b-col>
-                <b-col cols="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
                   <label>&emsp;</label>
                   <b-form-select v-model="cardEff2" :options="cardEff2Opts"></b-form-select>
                 </b-col>
@@ -116,13 +134,13 @@
               <!-- 屬性、種族 -->
               <b-row class="my-3" v-show="cardType==='Monster'">
                 <!-- 屬性 -->
-                <b-col cols="6" class="px-2">
+                <b-col cols="12" lg="6" class="px-2">
                   <label>屬性</label>
                   <b-form-select v-model="cardAttr" :options="cardAttrOpts"></b-form-select>
                 </b-col>
 
                 <!-- 種族 -->
-                <b-col cols="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
                   <div class="form-check px-0">
                     <label>種族</label>
                     <b-form-checkbox 
@@ -133,12 +151,12 @@
                   </div>
                 </b-col>
                 <!-- 種族 - 種族選擇 -->
-                <b-col cols="3" class="px-2" v-show="!cardCustomRaceEnabled">
+                <b-col cols="6" lg="3" class="px-2" v-show="!cardCustomRaceEnabled">
                   <label>&emsp;</label>
                   <b-form-select v-model="cardRace" :options="cardRaceOpts"></b-form-select>
                 </b-col>
                 <!-- 種族 - 自訂輸入 -->
-                <b-col cols="3" class="px-2" v-show="cardCustomRaceEnabled">
+                <b-col cols="6" lg="3" class="px-2" v-show="cardCustomRaceEnabled">
                   <label>&emsp;</label>
                   <b-form-input v-model="cardCustomRace" type="text" maxlength="8" placeholder="請輸入種族"></b-form-input>
                 </b-col>
@@ -147,7 +165,7 @@
               <!-- 靈擺、特殊召喚、等級 -->
               <b-row class="my-3">
                 <!-- 靈擺 -->
-                <b-col cols="4" class="px-2">
+                <b-col cols="6" lg="4" class="px-2">
                   <div class="form-check px-0">
                     <label>&emsp;</label>
                     <b-form-checkbox 
@@ -159,7 +177,7 @@
                 </b-col>
 
                 <!-- 特殊召喚 -->
-                <b-col cols="4" class="px-2" v-show="cardType==='Monster'">
+                <b-col cols="6" lg="4" class="px-2" v-show="cardType==='Monster'">
                   <div class="form-check px-0">
                     <label>&emsp;</label>
                     <b-form-checkbox 
@@ -171,7 +189,7 @@
                 </b-col>
 
                 <!-- 等級 -->
-                <b-col cols="4" class="px-2" v-show="cardType==='Monster' && !isLinkMonster">
+                <b-col cols="12" lg="4" class="px-2" v-show="cardType==='Monster' && !isLinkMonster">
                   <label>等級</label>
                   <b-form-select v-model="cardLevel" :options="cardLevelOpts"></b-form-select>
                 </b-col>
@@ -276,13 +294,12 @@
     <footer class="container-fluid mb-5 px-0 px-md-5">
       <b-row class="justify-content-center align-content-center">
         <b-col id="footer-panel" cols="12">
-          <div class="card-body text-center">
-            <a
-              class="text-white"
+          <div class="card-body text-center text-white">
+            Linziyou <a
+              class="text-white text-decoration-none"
               href="https://github.com/linziyou0601/yugioh-card-maker"
               data-size="large"
               aria-label="Star linziyou0601/yugioh-card-maker on GitHub"
-              style="text-decoration: none;"
             >
               <fa :icon="['fab', 'github']" /> GitHub
             </a>
@@ -298,10 +315,12 @@
 <script>
 import { mapMutations } from 'vuex'
 import langMeta from '../static/lang_meta.json'
+import ygoproData from '../static/ygo/card_data.json'
 export default {
   data() {
     return {
       langMeta,
+      ygoproData,
       pageScrolling: 0,
 
       cardLang: 'zh',
@@ -318,6 +337,9 @@ export default {
         { value: '2', text: 'UR' },
       ],
       titleColor: '#000000',
+
+      cardLoadYgoProEnabled: true,
+      cardKey: '',
 
       cardTitle: '超天新龍 異色眼革命龍',
       cardImg: null,
@@ -460,12 +482,18 @@ export default {
     },
     cardEff1Opts () {
       return this.cardEffOpts.filter((item, ind, arr) => {
-        return item.value !== '0' && item.value !== this.cardEff2
+        // 去掉「無」、去掉和Eff2重複的（除了value===1之外）
+        return item.value !== '0' && (item.value === '1' || item.value !== this.cardEff2)
       })
     },
     cardEff2Opts () {
       return this.cardEffOpts.filter((item, ind, arr) => {
-        return item.value !== this.cardEff1
+        // 去掉和Eff1重複的（除了value===1之外）
+        return item.value === '1' || item.value !== this.cardEff1
+      }).map((item, ind, arr) => {
+        const ret = Object.assign({}, item)
+        if (item.value === '1') ret.text = "效果"
+        return ret
       })
     },
   },
@@ -487,7 +515,11 @@ export default {
 
     // 卡片繪製 - 繪製前準備
     drawCard () {
-      const cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null;
+      let cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null;
+      if (this.cardLoadYgoProEnabled) {
+        const hasData = this.load_ygopro_data(this.cardKey);
+        if (hasData) cardImgUrl = `ygo/pics/${this.cardKey}.jpg`
+      }
       this.imgs = {
         template: `images/card/${this.cardTemplateText}.png`,
         holo: "images/pic/holo.png",
@@ -542,12 +574,12 @@ export default {
       this.drawCardInfo(ctx, langStr, offset, fontName)
       
       // 卡片密碼
-      /* if(this.cardLang==="zh" && isKey($('#cardKey').val())){
+      if (this.cardKey!=="") {
         ctx.fillStyle = (this.isXyzMonster && !this.Pendulum )? '#FFF': '#000'
         ctx.font = `22pt 'cardkey', 'MatrixBoldSmallCaps', ${fontName[2]}`
         ctx.textAlign = "left";
-        ctx.fillText(paddingLeft($('#cardKey').val(), 8), 54, 1405); // 卡片密碼
-      } */
+        ctx.fillText(this.cardKey.padStart(8, '0'), 54, 1405); // 卡片密碼
+      }
       ctx.fillStyle = '#000';
 
       // 防偽貼            
@@ -604,13 +636,13 @@ export default {
       ctx.fillStyle = '#000';
       if (this.cardType==="Monster") { // 怪獸卡
         // 怪獸屬性文字
-        const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +      // 種族
-        (this.Special? langStr.Sl + langStr.Special: "") +                                                      // 特殊召喚
-        (this.cardFace!=="Normal" && this.cardFace!=="Effect"? langStr.Sl + langStr.Face[this.cardFace]: "") +  // 卡面種類
-        (this.cardEff1>"1"? langStr.Sl + langStr.Eff[this.cardEff1]: "") +                                      // 功能1(效果)
-        (this.cardEff2>"1" && this.cardEff1!==this.cardEff2? langStr.Sl + langStr.Eff[this.cardEff2]: "") +     // 功能1(效果)
-        (this.Pendulum? langStr.Sl + langStr.Pendulum: "") +                                                    // 功能3(靈擺有無)
-        ((this.cardEff1>"1" || this.cardEff2>"1") && this.cardFace!=="Normal"? langStr.Sl + langStr.Effect: "") // 功能4(效果有無)
+        const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +             // 種族
+        (this.Special? langStr.Sl + langStr.Special: "") +                                                             // 特殊召喚
+        (this.cardFace!=="Normal" && this.cardFace!=="Effect"? langStr.Sl + langStr.Face[this.cardFace]: "") +         // 卡面種類
+        (this.cardEff1>"1"? langStr.Sl + langStr.Eff[this.cardEff1]: "") +                                             // 功能1(效果)
+        (this.cardEff2>"1" && this.cardEff1!==this.cardEff2? langStr.Sl + langStr.Eff[this.cardEff2]: "") +            // 功能1(效果)
+        (this.Pendulum? langStr.Sl + langStr.Pendulum: "") +                                                           // 功能3(靈擺有無)
+        (this.cardFace==="Effect" || (this.cardEff2>"0" && this.cardFace!=="Normal")? langStr.Sl + langStr.Effect: "") // 功能4(效果有無)
         
         // 怪獸屬性
         ctx.fillText(`${langStr.Ql}${typeText}${langStr.Qr}`, 65 + offset.oX, 1120 + offset.oY, 750);
@@ -746,6 +778,8 @@ export default {
       this.holo = true
       this.cardRare = "0"
       this.titleColor = "#000000"
+      this.cardLoadYgoProEnabled = true
+      this.cardKey = ""
       this.cardTitle = data.title
       this.cardImg = null
       this.cardType = "Monster"
@@ -770,6 +804,42 @@ export default {
       this.infoSize = data.size
       this.cardPendulumInfo = data.pInfo
       this.pendulumSize = data.pSize
+    },
+
+    // 載入YGOPRO2資料
+    load_ygopro_data(key) {
+      const data = ygoproData[key]
+      if (!data)
+        return false
+      this.cardLang = "zh"
+      this.cardRare = data.rare
+      this.titleColor = data.color
+      this.cardTitle = data.title
+      this.cardImg = null //
+      this.cardType = data.type[0][0]
+      this.cardFace = data.type[0][1]
+      if (data.attribute!=="Trap" && data.attribute!=="Spell")
+        this.cardAttr = data.attribute
+      this.cardEff1 = data.type[0][2]
+      this.cardEff2 = data.type[0][3]
+      this.cardCustomRaceEnabled = false
+      this.cardCustomRace = ""
+      this.cardRace = data.race
+      this.Pendulum = data.type[0][4]
+      this.Special = data.type[0][5]
+      this.cardLevel = data.level
+      this.cardBLUE = data.blue
+      this.cardRED = data.red
+      this.cardATK = data.atk
+      this.cardDEF = data.def
+      for (let i=1; i<=9; i++)
+        if (i!==5)
+          this.links[i].val = data[`link${i}`]
+      this.cardInfo = data.infoText
+      this.infoSize = data.size
+      this.cardPendulumInfo = data.pendulumText
+      this.pendulumSize = data.pSize
+      return true
     },
     
     // 頁面捲動時
@@ -882,6 +952,7 @@ body{
 header {
   font-family: 'en', 'zh';
   font-size: 1.5rem;
+  line-height: 1.2rem;
 }
 nav {
   background-color: #2f2f2f;
@@ -892,10 +963,10 @@ nav {
   color: #FFF;
 }
 
+/* -------------------- 卡片區樣式 -------------------- */
 .padding-transition {
   transition: all .5s linear;
 }
-
 #yugiohcard-wrap {
   transition: transform 0.1s ease;
   transform-style: preserve-3d;
@@ -909,19 +980,22 @@ nav {
 }
 
 /* -------------------- 輸入區樣式 -------------------- */
+/* 輸入區底色 */
 select, textarea, input, .custom-file-label{
 	background-color: #7777774A !important;
 	color: #ccc !important;
 	border: 0 !important;
 }
+/* 下拉選單icon */
 .custom-select {
   background-image: var(--chevron-down-svg-path);
 }
+/* 下拉區底色 */
 select option {
   background: #666666;
   color: #fff;
 }
-
+/* Checkbox顏色 */
 .checkbox-wrap {
   width: 100%;
 }
@@ -936,7 +1010,7 @@ select option {
   color: #FFF !important;
   background-color: #17a2b8 !important;
 }
-
+/* 檔案上傳鈕 */
 .custom-file-label::after {
   content: '✚' !important;
 	background-color: #787878 !important;
