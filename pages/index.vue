@@ -525,7 +525,11 @@ export default {
         link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
         link6: "images/pic/LINK6.png", link7: "images/pic/LINK7.png",
         link8: "images/pic/LINK8.png", link9: "images/pic/LINK9.png",
-        attr: `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp`,
+        attr: (
+          this.cardType==="Monster" ?
+          `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp` :
+          `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardType}.webp`
+        ),
         photo: cardImgUrl || "images/default.jpg",
         levelOrFace: (
           this.cardType!=="Monster" && this.cardFace!=="Normal" ?
