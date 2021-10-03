@@ -165,7 +165,7 @@
               <!-- 靈擺、特殊召喚、等級 -->
               <b-row class="my-3">
                 <!-- 靈擺 -->
-                <b-col cols="6" lg="4" class="px-2">
+                <b-col cols="6" lg="4" class="px-2" v-show="canPendulumEnabled">
                   <div class="form-check px-0">
                     <label>&emsp;</label>
                     <b-form-checkbox 
@@ -360,6 +360,10 @@ export default {
           { value: 'Xyz', text: '超量' },
           { value: 'Link', text: '連結' },
           { value: 'Token', text: '衍生物' },
+          { value: 'Slifer', text: '天空龍底色' },
+          { value: 'Ra', text: '翼神龍底色' },
+          { value: 'Obelisk', text: '巨神兵底色' },
+          { value: 'LDragon', text: '傳說之龍底色' },
         ],
         "Spell": [
           { value: 'Normal', text: '通常' },
@@ -463,11 +467,18 @@ export default {
   watch: {
     cardType() {
       this.cardFace = 'Normal'
+      if (this.cardType!=="Monster") this.Pendulum = false
+    },
+    cardFace() {
+      if (["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)) this.Pendulum = false
     }
   },
   computed: {
     cardTemplateText () {
-      return (this.cardType!=="Monster"? this.cardType : this.cardFace) + (this.Pendulum? "Pendulum": "")
+      let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardFace
+      if (this.Pendulum && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace))
+        templateUrl += "Pendulum"
+      return templateUrl
     },
     isXyzMonster () {
       return this.cardType==='Monster' && this.cardFace==='Xyz'
@@ -475,8 +486,8 @@ export default {
     isLinkMonster () {
       return this.cardType==='Monster' && this.cardFace==='Link'
     },
-    isLinkPendulumMonster () {
-      return this.Pendulum && this.isLinkMonster
+    canPendulumEnabled() {
+      return this.cardType==='Monster' && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)
     },
     cardEff1Opts () {
       return this.cardEffOpts.filter((item, ind, arr) => {
@@ -519,7 +530,7 @@ export default {
         if (hasData) cardImgUrl = `ygo/pics/${this.cardKey}.jpg`
       }
       this.imgs = {
-        template: `images/card/${this.cardTemplateText}.png`,
+        template: `images/card/${langMeta[this.cardLang].attrLang}/${this.cardTemplateText}.png`,
         holo: "images/pic/holo.png",
         link1: "images/pic/LINK1.png", link2: "images/pic/LINK2.png",
         link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
@@ -626,12 +637,12 @@ export default {
     drawCardInfo (ctx, langStr, offset, fontName) {
       const linkPosition = { 
         Link: {
-          X: [85,385,823,72, 0, 878,85,383,825], Y: [230,213,230,528, 0, 528,967,1022,967],
-          W: [93,235,93,51, 0, 55,93,235,93], H: [93,54,93,230, 0, 230,93,54,93]
+          X: [86,410,826,70, 0, 878,86,410,826], Y: [231,214,231,556, 0, 556,967,1020,967],
+          W: [86,177,86,52, 0, 52,86,177,86], H: [86,52,86,177, 0, 177,86,52,86]
         },
         LinkPendulum: {
-          X: [41,413,868,13, 0, 935,41,411,870], Y: [221,204,215,715, 0, 715,1308,1372,1308],
-          W: [86,180,86,52, 0, 52,90,180,90], H: [90,51,90,174, 0, 174,90,51,90]
+          X: [42,421,881,21, 0, 934,42,421,881], Y: [227,211,227,732, 0, 732,1319,1365,1319],
+          W: [75,155,75,46, 0, 46,75,155,75], H: [75,46,75,155, 0, 155,75,46,75]
         }
       }
       ctx.font = `${(this.cardType==="Monster" ? 25 : 40) - offset.sS}pt ${fontName[1]}`
@@ -640,28 +651,33 @@ export default {
         // 怪獸屬性文字
         const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +             // 種族
         (this.Special? langStr.Sl + langStr.Special: "") +                                                             // 特殊召喚
-        (this.cardFace!=="Normal" && this.cardFace!=="Effect"? langStr.Sl + langStr.Face[this.cardFace]: "") +         // 卡面種類
+        (!["Normal", "Effect", "Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)? 
+                                                               langStr.Sl + langStr.Face[this.cardFace]: "") +         // 卡面種類
         (this.cardEff1>"1"? langStr.Sl + langStr.Eff[this.cardEff1]: "") +                                             // 功能1(效果)
         (this.cardEff2>"1" && this.cardEff1!==this.cardEff2? langStr.Sl + langStr.Eff[this.cardEff2]: "") +            // 功能1(效果)
         (this.Pendulum? langStr.Sl + langStr.Pendulum: "") +                                                           // 功能3(靈擺有無)
         (this.cardFace==="Effect" || (this.cardEff2>"0" && this.cardFace!=="Normal")? langStr.Sl + langStr.Effect: "") // 功能4(效果有無)
         
         // 怪獸屬性
-        ctx.fillText(`${langStr.Ql}${typeText}${langStr.Qr}`, 65 + offset.oX, 1120 + offset.oY, 750);
+        ctx.fillText(`${langStr.Ql}${typeText}${langStr.Qr}`, 63 + offset.oX, 1120 + offset.oY, 750);
 
         // 怪獸ATK
-        ctx.font = `35pt 'MatrixBoldSmallCaps', ${fontName[2]}`
+        ctx.font = `33pt 'MatrixBoldSmallCaps', ${fontName[2]}`
         ctx.textAlign = "right";
-        if (this.cardATK.includes("∞") || this.cardATK.includes("∞"))
-          ctx.font = `Bold 34pt 'Times New Roman', ${fontName[2]}`
-        ctx.fillText(this.cardATK, 719+(this.isLinkPendulumMonster ? 5 : 0), 1355+(this.isLinkPendulumMonster ? 6 : 0), 100)
+        if (this.cardATK.includes("∞")) {
+          ctx.font = `Bold 32pt 'Times New Roman', ${fontName[2]}`
+        }
+        ctx.fillText(this.cardATK, 719, 1353, 95)
 
         // 怪獸DEF / LINK
+        ctx.font = `33pt 'MatrixBoldSmallCaps', ${fontName[2]}`
         if (this.isLinkMonster) {
-          this.cardDEF = Object.values(this.links).filter((item, ind, arr) => { return item.val }).length
-          ctx.font = `31pt 'link', 'MatrixBoldSmallCaps', ${fontName[2]}`
+          this.cardDEF = String(Object.values(this.links).filter((item, ind, arr) => item.val).length)
+          ctx.font = `28pt 'link', 'MatrixBoldSmallCaps', ${fontName[2]}`
+        } else if (this.cardDEF.includes("∞")) {
+          ctx.font = `Bold 32pt 'Times New Roman', ${fontName[2]}`
         }
-        ctx.fillText(this.cardDEF, 920, 1355+(this.isLinkPendulumMonster ? 6 : 0), 100);
+        ctx.fillText(this.cardDEF, 920 - (this.isLinkMonster? 3: 0), 1353 - (this.isLinkMonster? 1: 0), 95);
 
         // 怪獸等級 / 階級 / 連結
         ctx.textAlign = "left";
@@ -709,7 +725,7 @@ export default {
       ctx.textAlign = "left";
       ctx.textBaseline = "top";
       ctx.font = `${fontSize}pt ${fontName[2]}, ${fontName[3]}, ${fontName[4]}, ${fontName[5]}`;
-      this.wrapText(ctx, this.cardInfo, 78, 1095+offset.oY+(this.cardType==="Monster"? 30: 0), 825, fontSize+offset.lh)
+      this.wrapText(ctx, this.cardInfo, 75, 1095+offset.oY+(this.cardType==="Monster"? 30: 0), 825, fontSize+offset.lh)
     },
 
     // 卡色
