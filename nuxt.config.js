@@ -37,7 +37,7 @@ export default {
     script: [
       {
         hid: 'gtm-script1',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-0E5HQXQF08',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-K5M5TQKL3Y',
         defer: true
       },
       {
@@ -47,7 +47,7 @@ export default {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', 'G-0E5HQXQF08');
+          gtag('config', 'G-K5M5TQKL3Y');
         `,
         type: 'text/javascript',
         charset: 'utf-8'
