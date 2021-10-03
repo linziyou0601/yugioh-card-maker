@@ -17,7 +17,7 @@
             <b-spinner small variant="danger" type="grow" label="Small Spinning"></b-spinner>&nbsp;
             <b-spinner small variant="warning" type="grow" label="Small Spinning"></b-spinner>
           </div>
-          <div class="dialog-content mt-3 mb-1">請稍候</div>
+          <div class="dialog-content mt-3 mb-1">請稍候<br><small>（初次載入字型會耗時較久）</small></div>
         </b-col>
       </b-row>
     </b-modal>

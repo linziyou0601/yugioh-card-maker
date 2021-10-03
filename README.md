@@ -1,6 +1,6 @@
 # 遊戲王卡製造機 | yugioh-card-maker
 
-https://linziyou0601.github.io/yugioh-card-maker/
+https://yugioh-card.linziyou.info/
 
 ## 功能
 
