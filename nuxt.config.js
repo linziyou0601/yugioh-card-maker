@@ -72,7 +72,13 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+
+    'nuxt-font-loader',
   ],
+
+  fontLoader : { 
+    url : 'fonts/font-face.css' 
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

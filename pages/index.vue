@@ -893,49 +893,6 @@ export default {
 
 <style>
 /* font converted using font-converter.net. thank you! */
-@import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
-@font-face {
-	font-family: "MatrixBoldSmallCaps";
-	src:url("~static/fonts/MatrixBoldSmallCaps.ttf") format("truetype");
-	font-weight: bold;
-}
-@font-face {
-	font-family: "zh";
-	src:url("~static/fonts/zh.ttf") format("truetype");
-}
-@font-face {
-	font-family: "cn";
-	src:url("~static/fonts/cn.ttf") format("truetype");
-}
-@font-face {
-	font-family: "jp";
-	src:url("~static/fonts/jp.ttf") format("truetype");
-}
-@font-face {
-	font-family: "jp2";
-	src:url("~static/fonts/jp2.otf") format("opentype");
-}
-@font-face {
-	font-family: "en";
-	src:url("~static/fonts/en.ttf") format("truetype");
-}
-@font-face {
-	font-family: "en2";
-	src:url("~static/fonts/en2.ttf") format("truetype");
-}
-@font-face {
-	font-family: "en3";
-	src:url("~static/fonts/en3.ttf") format("truetype");
-}
-@font-face {
-	font-family: "link";
-	src:url("~static/fonts/link.ttf") format("truetype");
-}
-@font-face {
-	font-family: "cardkey";
-	src:url("~static/fonts/cardkey.ttf") format("truetype");
-	font-weight: bold;
-}
 
 .preloadfont {
 	font-family: YourFont;

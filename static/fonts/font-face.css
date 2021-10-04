@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
+@font-face {
+	font-family: "MatrixBoldSmallCaps";
+	src:url("MatrixBoldSmallCaps.ttf") format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: "zh";
+	src:url("zh.ttf") format("truetype");
+}
+@font-face {
+	font-family: "cn";
+	src:url("cn.ttf") format("truetype");
+}
+@font-face {
+	font-family: "jp";
+	src:url("jp.ttf") format("truetype");
+}
+@font-face {
+	font-family: "jp2";
+	src:url("jp2.otf") format("opentype");
+}
+@font-face {
+	font-family: "en";
+	src:url("en.ttf") format("truetype");
+}
+@font-face {
+	font-family: "en2";
+	src:url("en2.ttf") format("truetype");
+}
+@font-face {
+	font-family: "en3";
+	src:url("en3.ttf") format("truetype");
+}
+@font-face {
+	font-family: "link";
+	src:url("link.ttf") format("truetype");
+}
+@font-face {
+	font-family: "cardkey";
+	src:url("cardkey.ttf") format("truetype");
+	font-weight: bold;
+}
