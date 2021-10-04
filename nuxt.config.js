@@ -21,6 +21,7 @@ export default {
       lang: 'zh-tw'
     },
     meta: [
+      { 'http-equiv': "refresh", content:"0; url=https://yugioh-card.linziyou.info" },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
@@ -30,7 +31,6 @@ export default {
       { hid: 'og:description', name: 'og:description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
       { hid: 'og:site_name', name: 'og:site_name', content: '遊戲王 卡片製造機' },
       { hid: 'keywords', name: 'keywords', content: '遊戲王,卡片,梗圖,產生器' },
-      { 'http-equiv': "refresh", content:"0; url=https://yugioh-card.linziyou.info" },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
@@ -76,8 +76,17 @@ export default {
     'nuxt-font-loader',
   ],
 
+  
   fontLoader : { 
-    url : 'fonts/font-face.css' 
+    url: {
+      local: 'fonts/font-face.css',
+      google: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap',
+    },
+    prefetch : true,
+    preconnect : true,
+    preload: {
+      hid: 'my-font-preload',
+    },
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
