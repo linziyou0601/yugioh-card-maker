@@ -30,6 +30,7 @@ export default {
       { hid: 'og:description', name: 'og:description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
       { hid: 'og:site_name', name: 'og:site_name', content: '遊戲王 卡片製造機' },
       { hid: 'keywords', name: 'keywords', content: '遊戲王,卡片,梗圖,產生器' },
+      { 'http-equiv': "refresh", content:"0; url=https://yugioh-card.linziyou.info" },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
