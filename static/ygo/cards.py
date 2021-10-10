@@ -132,8 +132,8 @@ with sqlite3.connect('cards.db') as conn:
             ary = [3,2,1,5,0,4,8,7,6]
             b = bin(int(k['def']))[2:].zfill(9)
             for i in range(9):
-                if ary[i]!=0: k.update({linkToKey[f"link{ary[i]}"]: True if (b[i:i+1]=='1' and k["type"][0][1]=='6') else False})
-            if k["type"][0][1]=='6':
+                if ary[i]!=0: k.update({linkToKey[f"link{ary[i]}"]: True if (b[i:i+1]=='1' and k["type"][0][1]=='Link') else False})
+            if k["type"][0][1]=='Link':
                 k['def']=k['level']
                 k['level']=0
             #--處理攻守型別--#
@@ -158,7 +158,8 @@ with sqlite3.connect('cards.db') as conn:
             pinfoLen = len(info[1]) if len(info)==2 else 0
             size = list(filter(lambda x: infoLen>=x[0], sizeList["minfo" if k["type"][0][0]=="Monster" else "cinfo"]))[::-1][0][1]
             pSize = list(filter(lambda x: pinfoLen>=x[0], sizeList["pinfo"]))[::-1][0][1]
-            color = "#FFFFFF" if (k["type"][0][0]!="Monster" or (k["type"][0][0]=="Monster" and (k["type"][0][1]=="5" or k["type"][0][1]=="6"))) else "#000000"
+            whiteColorBool = k["type"][0][0]!="Monster" or (k["type"][0][0]=="Monster" and (k["type"][0][1]=="Xyz" or k["type"][0][1]=="Link"))
+            color = "#FFFFFF" if whiteColorBool else "#000000"
             k.update({"size": size, "pSize": pSize, "rare": 0, "holo": False, "color": color})
 
 data = list(filter(lambda x: x["id"] in exist, data))
