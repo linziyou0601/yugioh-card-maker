@@ -21,7 +21,7 @@ export default {
       lang: 'zh-tw'
     },
     meta: [
-      { 'http-equiv': "refresh", content:"0; url=https://yugioh-card.linziyou.info" },
+      // { 'http-equiv': "refresh", content:"0; url=https://yugioh-card.linziyou.info" },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
@@ -30,7 +30,7 @@ export default {
       { hid: 'og:title', name: 'og:title', content: '遊戲王 卡片製造機' },
       { hid: 'og:description', name: 'og:description', content: '遊戲王卡製造機，讓你製作個人化的卡片和梗圖！！' },
       { hid: 'og:site_name', name: 'og:site_name', content: '遊戲王 卡片製造機' },
-      { hid: 'keywords', name: 'keywords', content: '遊戲王,卡片,梗圖,產生器' },
+      { hid: 'keywords', name: 'keywords', content: '遊戲王,遊戲王卡,卡片,梗圖,製作,梗圖自製,DIY,產生器' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
