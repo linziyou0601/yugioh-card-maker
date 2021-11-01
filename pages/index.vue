@@ -19,13 +19,13 @@
             <div :class="{'padding-transition': true, 'pt-5': pageScrolling > 10}">
               <div class="panel-bg shadow p-3">
                 <div 
+                  id="yugiohcard-wrap"
                   ref="yugiohcard-wrap"
-                  id="yugiohcard-wrap" 
                   class="card-body"
                   @mousemove="move"
                   @mouseleave="leave"
                 >
-                  <canvas ref="yugiohcard" id="yugiohcard" class="cardbg img-fluid"></canvas>
+                  <canvas id="yugiohcard" ref="yugiohcard" class="cardbg img-fluid"></canvas>
                 </div>
               </div>
             </div>
@@ -121,18 +121,18 @@
                 </b-col>
 
                 <!-- 效果 -->
-                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
                   <label>效果</label>
                   <b-form-select v-model="cardEff1" :options="cardEff1Opts"></b-form-select>
                 </b-col>
-                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
                   <label>&emsp;</label>
                   <b-form-select v-model="cardEff2" :options="cardEff2Opts"></b-form-select>
                 </b-col>
               </b-row>
 
               <!-- 屬性、種族 -->
-              <b-row class="my-3" v-show="cardType==='Monster'">
+              <b-row v-show="cardType==='Monster'" class="my-3">
                 <!-- 屬性 -->
                 <b-col cols="12" lg="6" class="px-2">
                   <label>屬性</label>
@@ -140,7 +140,7 @@
                 </b-col>
 
                 <!-- 種族 -->
-                <b-col cols="6" lg="3" class="px-2" v-show="cardType==='Monster'">
+                <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
                   <div class="form-check px-0">
                     <label>種族</label>
                     <b-form-checkbox 
@@ -151,12 +151,12 @@
                   </div>
                 </b-col>
                 <!-- 種族 - 種族選擇 -->
-                <b-col cols="6" lg="3" class="px-2" v-show="!cardCustomRaceEnabled">
+                <b-col v-show="!cardCustomRaceEnabled" cols="6" lg="3" class="px-2">
                   <label>&emsp;</label>
                   <b-form-select v-model="cardRace" :options="cardRaceOpts"></b-form-select>
                 </b-col>
                 <!-- 種族 - 自訂輸入 -->
-                <b-col cols="6" lg="3" class="px-2" v-show="cardCustomRaceEnabled">
+                <b-col v-show="cardCustomRaceEnabled" cols="6" lg="3" class="px-2">
                   <label>&emsp;</label>
                   <b-form-input v-model="cardCustomRace" type="text" maxlength="8" placeholder="請輸入種族"></b-form-input>
                 </b-col>
@@ -165,7 +165,7 @@
               <!-- 靈擺、特殊召喚、等級 -->
               <b-row class="my-3">
                 <!-- 靈擺 -->
-                <b-col cols="6" lg="4" class="px-2" v-show="canPendulumEnabled">
+                <b-col v-show="canPendulumEnabled" cols="6" lg="4" class="px-2">
                   <div class="form-check px-0">
                     <label>&emsp;</label>
                     <b-form-checkbox 
@@ -177,7 +177,7 @@
                 </b-col>
 
                 <!-- 特殊召喚 -->
-                <b-col cols="6" lg="4" class="px-2" v-show="cardType==='Monster'">
+                <b-col v-show="cardType==='Monster'" cols="6" lg="4" class="px-2">
                   <div class="form-check px-0">
                     <label>&emsp;</label>
                     <b-form-checkbox 
@@ -189,14 +189,14 @@
                 </b-col>
 
                 <!-- 等級 -->
-                <b-col cols="12" lg="4" class="px-2" v-show="cardType==='Monster' && !isLinkMonster">
+                <b-col v-show="cardType==='Monster' && !isLinkMonster" cols="12" lg="4" class="px-2">
                   <label>等級</label>
                   <b-form-select v-model="cardLevel" :options="cardLevelOpts"></b-form-select>
                 </b-col>
               </b-row>
 
               <!-- 靈擺效果區 -->
-              <b-row class="my-3" v-show="Pendulum">
+              <b-row v-show="Pendulum" class="my-3">
                 <b-col cols="12">
                   <h4 class="text-light text-center">靈擺效果</h4>
                 </b-col>
@@ -230,19 +230,19 @@
               <!-- 攻守區 -->
               <b-row class="my-3">     
                 <!-- 攻擊力 -->
-                <b-col cols="4" class="px-2" v-show="cardType==='Monster'">
+                <b-col v-show="cardType==='Monster'" cols="4" class="px-2">
                   <label>攻擊力</label>
                   <b-form-input v-model="cardATK" type="text" maxlength="6"></b-form-input>
                 </b-col>
                 
                 <!-- 守備力 -->
-                <b-col cols="4" class="px-2" v-show="cardType==='Monster' && !isLinkMonster">
+                <b-col v-show="cardType==='Monster' && !isLinkMonster" cols="4" class="px-2">
                   <label>守備力</label>
                   <b-form-input v-model="cardDEF" type="text" maxlength="6"></b-form-input>
                 </b-col>
 
                 <!-- 連結區 -->
-                <b-col cols="4" class="px-2" v-show="isLinkMonster">
+                <b-col v-show="isLinkMonster" cols="4" class="px-2">
                   <label>連結</label>
                   <table>
                     <tr v-for="row in [0,1,2]" :key="row">
@@ -465,15 +465,6 @@ export default {
       imgs: {},
     }
   },
-  watch: {
-    cardType() {
-      this.cardFace = 'Normal'
-      if (this.cardType!=="Monster") this.Pendulum = false
-    },
-    cardFace() {
-      if (["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)) this.Pendulum = false
-    }
-  },
   computed: {
     cardTemplateText () {
       let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardFace
@@ -506,6 +497,15 @@ export default {
         return ret
       })
     },
+  },
+  watch: {
+    cardType() {
+      this.cardFace = 'Normal'
+      if (this.cardType!=="Monster") this.Pendulum = false
+    },
+    cardFace() {
+      if (["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)) this.Pendulum = false
+    }
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
@@ -778,7 +778,6 @@ export default {
 
     // 下載
     download_img () {
-      console.log('A')
       const canvas = this.$refs.yugiohcard
       if (canvas.msToBlob) { // for IE
         const blob = canvas.msToBlob();
