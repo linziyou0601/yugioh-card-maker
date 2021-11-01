@@ -309,25 +309,24 @@
     </footer>
 
     <!-- 底部固定廣告 -->
-    <div class="bottom-ad-placeholder" :style="`--adHeight: ${adCollapsed? 100: 0}px`"></div>
-    <div 
-      class="fixed-bottom-ad-btn px-3 shadow shadow-lg"
-      :style="`--adHeight: ${adCollapsed? 100: 0}px`"
-      @click="adCollapsed=!adCollapsed"
-    >
-      <fa :icon="['fas', `chevron-${adCollapsed? 'down': 'up'}`]" />
-    </div>
-    <div class="fixed-bottom-ad shadow shadow-lg" :style="`--adHeight: ${adCollapsed? 100: 0}px`" align="center">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095"
-          crossorigin="anonymous"></script>
-      <ins class="adsbygoogle"
-          style="display:block;height:100px;"
-          data-ad-client="ca-pub-7536040795321095"
-          data-ad-slot="6031958326"
-          data-full-width-responsive="true"></ins>
-      <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
+    <div :style="bottomAdAreaClass"></div>
+    <div class="fixed-bottom-ad" :style="bottomAdAreaClass">
+      <div  class="fixed-bottom-ad-btn px-3 shadow shadow-lg" @click="adCollapsed=!adCollapsed">
+        <fa :icon="['fas', `chevron-${adCollapsed? 'up': 'down'}`]" />
+      </div>
+      <div class="fixed-bottom-ad-content shadow shadow-lg" align="center">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095"
+            crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block;"
+            data-ad-client="ca-pub-7536040795321095"
+            data-ad-slot="6031958326"
+            data-ad-format="fluid"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
     </div>
 
     <LoadingDialog />
@@ -497,6 +496,13 @@ export default {
     }
   },
   computed: {
+    bottomAdAreaClass() {
+      return {
+        '--adHeight': (this.adCollapsed? 30: 120) + 'px',
+        'height': 'var(--adHeight)'
+      }
+    },
+
     cardTemplateText () {
       let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardFace
       if (this.Pendulum && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace))
@@ -1016,25 +1022,20 @@ select option {
 }
 
 /* */
-.bottom-ad-placeholder {
-  height: var(--adHeight);
+.fixed-bottom-ad {
+  transition: all .5s linear;
+  position: fixed;
+  bottom: 0;
   width: 100vw;
 }
 .fixed-bottom-ad-btn {
-  transition: all .5s linear;
-  position: fixed;
-  bottom: var(--adHeight);
+  display: inline;
   background: #444;
   color: #ccc;
   border-radius: 5px 5px 0 0;
   cursor: pointer;
 }
-.fixed-bottom-ad {
-  transition: all .5s linear;
-  position: fixed;
-  bottom: 0;
-  height: var(--adHeight);
-  width: 100vw;
+.fixed-bottom-ad-content {
   background: #444;
 }
 </style>
