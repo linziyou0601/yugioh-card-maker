@@ -291,6 +291,20 @@
     </main>
 
     <!-- 頁尾區 -->
+    <div align="center">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095"
+          crossorigin="anonymous"></script>
+      <!-- 文章頂部廣告 -->
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-7536040795321095"
+          data-ad-slot="2928947567"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
     <footer class="container-fluid mb-5 px-0 px-md-5">
       <b-row class="justify-content-center align-content-center">
         <b-col id="footer-panel" cols="12">
