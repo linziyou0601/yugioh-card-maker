@@ -291,20 +291,6 @@
     </main>
 
     <!-- 頁尾區 -->
-    <div align="center">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095"
-          crossorigin="anonymous"></script>
-      <!-- 文章頂部廣告 -->
-      <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-7536040795321095"
-          data-ad-slot="2928947567"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
-      <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    </div>
     <footer class="container-fluid mb-5 px-0 px-md-5">
       <b-row class="justify-content-center align-content-center">
         <b-col id="footer-panel" cols="12">
@@ -322,6 +308,28 @@
       </b-row>
     </footer>
 
+    <!-- 底部固定廣告 -->
+    <div class="bottom-ad-placeholder" :style="`--adHeight: ${adCollapsed? 100: 0}px`"></div>
+    <div 
+      class="fixed-bottom-ad-btn px-3 shadow shadow-lg"
+      :style="`--adHeight: ${adCollapsed? 100: 0}px`"
+      @click="adCollapsed=!adCollapsed"
+    >
+      <fa :icon="['fas', `chevron-${adCollapsed? 'down': 'up'}`]" />
+    </div>
+    <div class="fixed-bottom-ad shadow shadow-lg" :style="`--adHeight: ${adCollapsed? 100: 0}px`" align="center">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095"
+          crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+          style="display:block;height:100px;"
+          data-ad-client="ca-pub-7536040795321095"
+          data-ad-slot="6031958326"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
     <LoadingDialog />
   </div>
 </template>
@@ -333,6 +341,7 @@ import ygoproData from '../static/ygo/card_data.json'
 export default {
   data() {
     return {
+      adCollapsed: false,
       pageScrolling: 0,
 
       cardLang: 'zh',
@@ -1004,5 +1013,28 @@ select option {
   content: '✚' !important;
 	background-color: #787878 !important;
 	color: #FFF;
+}
+
+/* */
+.bottom-ad-placeholder {
+  height: var(--adHeight);
+  width: 100vw;
+}
+.fixed-bottom-ad-btn {
+  transition: all .5s linear;
+  position: fixed;
+  bottom: var(--adHeight);
+  background: #444;
+  color: #ccc;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+}
+.fixed-bottom-ad {
+  transition: all .5s linear;
+  position: fixed;
+  bottom: 0;
+  height: var(--adHeight);
+  width: 100vw;
+  background: #444;
 }
 </style>
