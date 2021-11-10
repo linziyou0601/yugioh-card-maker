@@ -39,29 +39,38 @@
               <!-- 語言、防偽、稀有、顏色 -->
               <b-row class="mb-3">
                 <!-- 語言 -->
+                <b-col class="px-2">
+                  <label>{{ ui[uiLang].ui_lang }}</label>
+                  <b-form-select v-model="uiLang" :options="uiLangOpts"></b-form-select>
+                </b-col>
+              </b-row>
+
+              <!-- 語言、防偽、稀有、顏色 -->
+              <b-row class="mb-3">
+                <!-- 語言 -->
                 <b-col cols="6" lg="3" class="px-2">
-                  <label>語言</label>
+                  <label>{{ ui[uiLang].card_lang }}</label>
                   <b-form-select v-model="cardLang" :options="cardLangOpts"></b-form-select>
                 </b-col>
                 <!-- 防偽貼 -->
                 <b-col cols="6" lg="3" class="px-2">
                   <div class="form-check px-0">
-                    <label>防偽貼</label>
+                    <label>{{ ui[uiLang].square_foil_stamp }}</label>
                     <b-form-checkbox 
                       v-model="holo" 
                       :class="{'checkbox-wrap': true, 'active': holo}" 
                       button
-                    >{{ holo ? '開' : '關' }}</b-form-checkbox>
+                    >{{ holo ? ui[uiLang].on : ui[uiLang].off }}</b-form-checkbox>
                   </div>
                 </b-col>
                 <!-- 防偽貼 -->
                 <b-col cols="6" lg="3" class="px-2">
-                  <label>稀有</label>
+                  <label>{{ ui[uiLang].rarity }}</label>
                   <b-form-select v-model="cardRare" :options="cardRareOpts"></b-form-select>
                 </b-col>
                 <!-- 卡名色 -->
                 <b-col cols="6" lg="3" class="px-2">
-                  <label>標題色</label>
+                  <label>{{ ui[uiLang].title_color }}</label>
                   <b-form-input v-model="titleColor" type="color"></b-form-input>
                 </b-col>
               </b-row>
@@ -70,24 +79,29 @@
               <b-row class="my-3">
                 <b-col cols="6" lg="4" class="px-2">
                   <div class="form-check px-0">
-                    <label>卡片密碼</label>
+                    <label>{{ ui[uiLang].card_secret }}</label>
                     <b-form-checkbox 
                       v-model="cardLoadYgoProEnabled" 
                       :class="{'checkbox-wrap': true, 'active': cardLoadYgoProEnabled}" 
                       button
-                    >自動填入資料</b-form-checkbox>
+                    >{{ ui[uiLang].auto_fill_card_data }}</b-form-checkbox>
                   </div>
                 </b-col>
                 <b-col cols="6" lg="8" class="px-2">
-                  <label><small>僅有2019/09前的資料</small></label>
-                  <b-form-input v-model="cardKey" type="number" maxlength="8" placeholder="請輸入卡片密碼"></b-form-input>
+                  <label><small>{{ ui[uiLang].card_secret_note }}</small></label>
+                  <b-form-input 
+                    v-model="cardKey" 
+                    type="number" 
+                    maxlength="8" 
+                    :placeholder="ui[uiLang].plz_input_card_secret"
+                  />
                 </b-col>
               </b-row>
 
               <!-- 卡片名稱 -->
               <b-row class="my-3">
                 <b-col class="px-2">
-                  <label>卡片名稱</label>
+                  <label>{{ ui[uiLang].card_name }}</label>
                   <b-form-input v-model="cardTitle"></b-form-input>
                 </b-col>
               </b-row>
@@ -98,10 +112,10 @@
                   <b-form-file
                     v-model="cardImg"
                     :state="Boolean(cardImg)"
-                    placeholder="上傳圖片"
+                    :placeholder="ui[uiLang].upload_image"
                     browse="✚"
                     accept="image/*"
-                    drop-placeholder="拖曳圖片至此..."
+                    :drop-placeholder="ui[uiLang].drag_and_drop"
                   ></b-form-file>
                 </b-col>
               </b-row>
@@ -110,19 +124,19 @@
               <b-row class="my-3">
                 <!-- 卡種 -->
                 <b-col cols="6" lg="3" class="px-2">
-                  <label>卡種</label>
+                  <label>{{ ui[uiLang].card_type }}</label>
                   <b-form-select v-model="cardType" :options="cardTypeOpts"></b-form-select>
                 </b-col>
 
                 <!-- 卡面 -->
                 <b-col cols="6" lg="3" class="px-2">
-                  <label>卡面</label>
+                  <label>{{ ui[uiLang].card_subtype }}</label>
                   <b-form-select v-model="cardFace" :options="cardFaceOpts[cardType]"></b-form-select>
                 </b-col>
 
                 <!-- 效果 -->
                 <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
-                  <label>效果</label>
+                  <label>{{ ui[uiLang].card_effect }}</label>
                   <b-form-select v-model="cardEff1" :options="cardEff1Opts"></b-form-select>
                 </b-col>
                 <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
@@ -135,19 +149,19 @@
               <b-row v-show="cardType==='Monster'" class="my-3">
                 <!-- 屬性 -->
                 <b-col cols="12" lg="6" class="px-2">
-                  <label>屬性</label>
+                  <label>{{ ui[uiLang].card_attribute }}</label>
                   <b-form-select v-model="cardAttr" :options="cardAttrOpts"></b-form-select>
                 </b-col>
 
                 <!-- 種族 -->
                 <b-col v-show="cardType==='Monster'" cols="6" lg="3" class="px-2">
                   <div class="form-check px-0">
-                    <label>種族</label>
+                    <label>{{ ui[uiLang].card_race_type }}</label>
                     <b-form-checkbox 
                       v-model="cardCustomRaceEnabled" 
                       :class="{'checkbox-wrap': true, 'active': cardCustomRaceEnabled}" 
                       button
-                    >自定義</b-form-checkbox>
+                    >{{ ui[uiLang].custom }}</b-form-checkbox>
                   </div>
                 </b-col>
                 <!-- 種族 - 種族選擇 -->
@@ -158,7 +172,12 @@
                 <!-- 種族 - 自訂輸入 -->
                 <b-col v-show="cardCustomRaceEnabled" cols="6" lg="3" class="px-2">
                   <label>&emsp;</label>
-                  <b-form-input v-model="cardCustomRace" type="text" maxlength="8" placeholder="請輸入種族"></b-form-input>
+                  <b-form-input 
+                    v-model="cardCustomRace"
+                    type="text"
+                    maxlength="8"
+                    :placeholder="ui[uiLang].plz_input_race_type"
+                  />
                 </b-col>
               </b-row>
 
@@ -172,7 +191,7 @@
                       v-model="Pendulum" 
                       :class="{'checkbox-wrap': true, 'active': Pendulum}" 
                       button
-                    >靈擺</b-form-checkbox>
+                    >{{ ui[uiLang].pendulum }}</b-form-checkbox>
                   </div>
                 </b-col>
 
@@ -184,13 +203,13 @@
                       v-model="Special" 
                       :class="{'checkbox-wrap': true, 'active': Special}" 
                       button
-                    >特殊召喚</b-form-checkbox>
+                    >{{ ui[uiLang].special_summon }}</b-form-checkbox>
                   </div>
                 </b-col>
 
                 <!-- 等級 -->
                 <b-col v-show="cardType==='Monster' && !isLinkMonster" cols="12" lg="4" class="px-2">
-                  <label>等級</label>
+                  <label>{{ ui[uiLang].lavel_and_rank }}</label>
                   <b-form-select v-model="cardLevel" :options="cardLevelOpts"></b-form-select>
                 </b-col>
               </b-row>
@@ -198,29 +217,29 @@
               <!-- 靈擺效果區 -->
               <b-row v-show="Pendulum" class="my-3">
                 <b-col cols="12">
-                  <h4 class="text-light text-center">靈擺效果</h4>
+                  <h4 class="text-light text-center">{{ ui[uiLang].pendulum_area }}</h4>
                 </b-col>
                 <b-col cols="12">
                   <b-row class="mb-3">
                     <b-col cols="4" class="px-2">
-                      <label>藍刻度</label>
+                      <label>{{ ui[uiLang].pendulum_blue }}</label>
                       <b-form-input v-model="cardBLUE" type="number" min="0" max="12"></b-form-input>
                     </b-col>
 
                     <b-col cols="4" class="px-2">
-                      <label>紅刻度</label>
+                      <label>{{ ui[uiLang].pendulum_red }}</label>
                       <b-form-input v-model="cardRED" type="number" min="0" max="12"></b-form-input>
                     </b-col>
 
                     <b-col cols="4" class="px-2">
-                      <label>文字大小</label>
+                      <label>{{ ui[uiLang].text_size }}</label>
                       <b-form-input v-model="pendulumSize" type="number"></b-form-input>
                     </b-col>
                   </b-row>
 
                   <b-row class="my-3">
                     <b-col class="px-2">
-                      <label>效果文字</label>
+                      <label>{{ ui[uiLang].card_info_text }}</label>
                       <b-form-textarea v-model="cardPendulumInfo" rows="5"></b-form-textarea>
                     </b-col>
                   </b-row>
@@ -231,19 +250,19 @@
               <b-row class="my-3">     
                 <!-- 攻擊力 -->
                 <b-col v-show="cardType==='Monster'" cols="4" class="px-2">
-                  <label>攻擊力</label>
+                  <label>{{ ui[uiLang].attack }}</label>
                   <b-form-input v-model="cardATK" type="text" maxlength="6"></b-form-input>
                 </b-col>
                 
                 <!-- 守備力 -->
                 <b-col v-show="cardType==='Monster' && !isLinkMonster" cols="4" class="px-2">
-                  <label>守備力</label>
+                  <label>{{ ui[uiLang].defence }}</label>
                   <b-form-input v-model="cardDEF" type="text" maxlength="6"></b-form-input>
                 </b-col>
 
                 <!-- 連結區 -->
                 <b-col v-show="isLinkMonster" cols="4" class="px-2">
-                  <label>連結</label>
+                  <label>{{ ui[uiLang].link }}</label>
                   <table>
                     <tr v-for="row in [0,1,2]" :key="row">
                       <td v-for="col in [1,2,3]" :key="col">
@@ -260,7 +279,7 @@
 
                 <!-- 文字大小 -->
                 <b-col cols="4" class="px-2">
-                  <label>文字大小</label>
+                  <label>{{ ui[uiLang].text_size }}</label>
                   <b-form-input v-model="infoSize" type="number"></b-form-input>
                 </b-col>
               </b-row>
@@ -268,7 +287,7 @@
               <!-- 卡片說明 -->
               <b-row class="my-3">
                 <b-col class="px-2">
-                  <label>卡片說明</label>
+                  <label>{{ ui[uiLang].card_info_text }}</label>
                   <b-form-textarea v-model="cardInfo" rows="5"></b-form-textarea>
                 </b-col>
               </b-row>
@@ -276,12 +295,12 @@
               <!-- 按鈕區 -->
               <b-row class="my-3">
                 <b-col class="px-2">
-                  <button type="button" class="my-2 btn btn-info" @click="doDrawCard">產生</button>&emsp;
-                  <button type="button" class="my-2 btn btn-success" @click="download_img">下載</button>
-                  <label style="color: #CCC;">&emsp;每1.5秒自動更新</label>
+                  <button type="button" class="my-2 btn btn-info" @click="doDrawCard">{{ ui[uiLang].generate }}</button>&emsp;
+                  <button type="button" class="my-2 btn btn-success" @click="download_img">{{ ui[uiLang].download }}</button>
+                  <label style="color: #CCC;">&emsp;{{ ui[uiLang].auto_gen_note }}</label>
                 </b-col>
                 <b-col cols="6" class="px-2 text-right">
-                  <button type="button" class="my-2 btn btn-danger" @click="load_default_data">預設資料</button>
+                  <button type="button" class="my-2 btn btn-danger" @click="load_default_data">{{ ui[uiLang].reset_to_default }}</button>
                 </b-col>
               </b-row>
             </div>
@@ -314,27 +333,32 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import langMeta from '../static/lang_meta.json'
+import ui from '../static/lang.ui.json'
+import cardMeta from '../static/lang.card_meta.json'
 import ygoproData from '../static/ygo/card_data.json'
+
 export default {
   data() {
     return {
       adCollapsed: false,
       pageScrolling: 0,
 
+      uiLang: 'zh',
+      ui,
+
       cardLang: 'zh',
-      cardLangOpts: [
-        { value: 'zh', text: '正體中文' },
-        { value: 'jp', text: '日本語' },
-        { value: 'en', text: 'English' },
-      ],
+      cardLangOpts: {
+        'zh': '正體中文 (T.Chinese)',
+        'jp': '日本語 (Japanese)',
+        'en': 'English',
+      },
       holo: true,
       cardRare: '0',
-      cardRareOpts: [
-        { value: '0', text: 'N' },
-        { value: '1', text: 'R' },
-        { value: '2', text: 'UR' },
-      ],
+      cardRareOpts: {
+        '0': 'N',
+        '1': 'R',
+        '2': 'UR',
+      },
       titleColor: '#000000',
 
       cardLoadYgoProEnabled: true,
@@ -342,105 +366,19 @@ export default {
 
       cardTitle: '超天新龍 異色眼革命龍',
       cardImg: null,
-
       cardType: 'Monster',
-      cardTypeOpts: [
-        { value: 'Monster', text: '怪獸' },
-        { value: 'Spell', text: '魔法' },
-        { value: 'Trap', text: '陷阱' },
-      ],
-
       cardFace: 'Normal',
-      cardFaceOpts: {
-        "Monster": [
-          { value: 'Normal', text: '通常' },
-          { value: 'Effect', text: '效果' },
-          { value: 'Fusion', text: '融合' },
-          { value: 'Ritual', text: '儀式' },
-          { value: 'Synchro', text: '同步' },
-          { value: 'Xyz', text: '超量' },
-          { value: 'Link', text: '連結' },
-          { value: 'Token', text: '衍生物' },
-          { value: 'Slifer', text: '天空龍底色' },
-          { value: 'Ra', text: '翼神龍底色' },
-          { value: 'Obelisk', text: '巨神兵底色' },
-          { value: 'LDragon', text: '傳說之龍底色' },
-        ],
-        "Spell": [
-          { value: 'Normal', text: '通常' },
-          { value: 'Continuous', text: '永續' },
-          { value: 'Field', text: '場地' },
-          { value: 'Equip', text: '裝備' },
-          { value: 'Quick', text: '速攻' },
-          { value: 'Ritual', text: '儀式' },
-        ],
-        "Trap": [
-          { value: 'Normal', text: '通常' },
-          { value: 'Continuous', text: '永續' },
-          { value: 'Counter', text: '反擊' },
-        ]
-      },
-
       cardEff1: '1',
       cardEff2: '0',
-      cardEffOpts: [
-        { value: '0', text: '無' },
-        { value: '1', text: '一般' },
-        { value: '2', text: '卡通' },
-        { value: '3', text: '靈魂' },
-        { value: '4', text: '聯合' },
-        { value: '5', text: '二重' },
-        { value: '6', text: '反轉' },
-        { value: '7', text: '協調' },
-      ],
-
       cardAttr: 'LIGHT',
-      cardAttrOpts: [
-        { value: 'DIVINE', text: '神' },
-        { value: 'EARTH', text: '地' },
-        { value: 'WATER', text: '水' },
-        { value: 'FIRE', text: '炎' },
-        { value: 'WIND', text: '風' },
-        { value: 'LIGHT', text: '光' },
-        { value: 'DARK', text: '闇' },
-      ],
-
       cardCustomRaceEnabled: false,
       cardCustomRace: '',
       cardRace: '15',
-      cardRaceOpts: [
-        { value: '0', text: '惡魔' },
-        { value: '1', text: '不死' },
-        { value: '2', text: '海龍' },
-        { value: '3', text: '雷' },
-        { value: '4', text: '岩石' },
-        { value: '5', text: '機械' },
-        { value: '6', text: '恐龍' },
-        { value: '7', text: '獸' },
-        { value: '8', text: '昆蟲' },
-        { value: '9', text: '魚' },
-        { value: '10', text: '植物' },
-        { value: '11', text: '獸戰士' },
-        { value: '12', text: '戰士' },
-        { value: '13', text: '鳥獸' },
-        { value: '14', text: '天使' },
-        { value: '15', text: '龍' },
-        { value: '16', text: '爬蟲類' },
-        { value: '17', text: '水' },
-        { value: '18', text: '炎' },
-        { value: '19', text: '魔法師' },
-        { value: '20', text: '幻龍' },
-        { value: '21', text: '網域' },
-        { value: '22', text: '超能' },
-        { value: '23', text: '幻神獸' },
-        { value: '24', text: '創造神' },
-      ],
 
       Pendulum: true,
       Special: true,
       cardLevel: '12',
       cardLevelOpts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-
       cardBLUE: 12,
       cardRED: 12,
       pendulumSize: 23,
@@ -466,6 +404,99 @@ export default {
     }
   },
   computed: {
+    uiLangOpts() {
+      return Object.fromEntries(Object.keys(this.ui).map(key=> [key, this.ui[key].name || key]))
+    },
+    cardTypeOpts() {
+      return {
+        'Monster': this.ui[this.uiLang].monster_card,
+        'Spell': this.ui[this.uiLang].spell_card,
+        'Trap': this.ui[this.uiLang].trap_card,
+      }
+    },
+    cardFaceOpts() {
+      return {
+        "Monster": {
+          'Normal': this.ui[this.uiLang].m_card.normal,
+          'Effect': this.ui[this.uiLang].m_card.effect,
+          'Fusion': this.ui[this.uiLang].m_card.fusion,
+          'Ritual': this.ui[this.uiLang].m_card.ritual,
+          'Synchro': this.ui[this.uiLang].m_card.synchro,
+          'Xyz': this.ui[this.uiLang].m_card.xyz,
+          'Link': this.ui[this.uiLang].m_card.link,
+          'Token': this.ui[this.uiLang].m_card.token,
+          'Slifer': this.ui[this.uiLang].m_card.slifer,
+          'Ra': this.ui[this.uiLang].m_card.ra,
+          'Obelisk': this.ui[this.uiLang].m_card.obelisk,
+          'LDragon': this.ui[this.uiLang].m_card.ldragon,
+        },
+        "Spell": {
+          'Normal': this.ui[this.uiLang].st_card.normal,
+          'Continuous': this.ui[this.uiLang].st_card.continuous,
+          'Field': this.ui[this.uiLang].st_card.field,
+          'Equip': this.ui[this.uiLang].st_card.equip,
+          'Quick': this.ui[this.uiLang].st_card.quick,
+          'Ritual': this.ui[this.uiLang].st_card.ritual,
+        },
+        "Trap": {
+          'Normal': this.ui[this.uiLang].st_card.normal,
+          'Continuous': this.ui[this.uiLang].st_card.continuous,
+          'Counter': this.ui[this.uiLang].st_card.counter,
+        }
+      }
+    },
+    cardEffOpts() {
+      return [
+        { value: '0', text: this.ui[this.uiLang].card_effect_opts.none },
+        { value: '1', text: this.ui[this.uiLang].card_effect_opts.normal },
+        { value: '2', text: this.ui[this.uiLang].card_effect_opts.toon },
+        { value: '3', text: this.ui[this.uiLang].card_effect_opts.spirit },
+        { value: '4', text: this.ui[this.uiLang].card_effect_opts.union },
+        { value: '5', text: this.ui[this.uiLang].card_effect_opts.gemini },
+        { value: '6', text: this.ui[this.uiLang].card_effect_opts.flip },
+        { value: '7', text: this.ui[this.uiLang].card_effect_opts.tuner },
+      ]
+    },
+    cardAttrOpts() {
+      return [
+        { value: 'DIVINE', text: this.ui[this.uiLang].card_attr_opts.divine },
+        { value: 'EARTH', text: this.ui[this.uiLang].card_attr_opts.earth },
+        { value: 'WATER', text: this.ui[this.uiLang].card_attr_opts.water },
+        { value: 'FIRE', text: this.ui[this.uiLang].card_attr_opts.fire },
+        { value: 'WIND', text: this.ui[this.uiLang].card_attr_opts.wind },
+        { value: 'LIGHT', text: this.ui[this.uiLang].card_attr_opts.light },
+        { value: 'DARK', text: this.ui[this.uiLang].card_attr_opts.dark },
+      ]
+    },
+    cardRaceOpts() {
+      return {
+        '0': this.ui[this.uiLang].card_race_type_opts.fiend,
+        '1': this.ui[this.uiLang].card_race_type_opts.zombie,
+        '2': this.ui[this.uiLang].card_race_type_opts.sea_serpent,
+        '3': this.ui[this.uiLang].card_race_type_opts.thunder,
+        '4': this.ui[this.uiLang].card_race_type_opts.rock,
+        '5': this.ui[this.uiLang].card_race_type_opts.machine,
+        '6': this.ui[this.uiLang].card_race_type_opts.dinosaur,
+        '7': this.ui[this.uiLang].card_race_type_opts.beast,
+        '8': this.ui[this.uiLang].card_race_type_opts.insect,
+        '9': this.ui[this.uiLang].card_race_type_opts.fish,
+        '10': this.ui[this.uiLang].card_race_type_opts.plant,
+        '11': this.ui[this.uiLang].card_race_type_opts.beast_warrior,
+        '12': this.ui[this.uiLang].card_race_type_opts.warrior,
+        '13': this.ui[this.uiLang].card_race_type_opts.winged_beast,
+        '14': this.ui[this.uiLang].card_race_type_opts.fairy,
+        '15': this.ui[this.uiLang].card_race_type_opts.dragon,
+        '16': this.ui[this.uiLang].card_race_type_opts.reptile,
+        '17': this.ui[this.uiLang].card_race_type_opts.aqua,
+        '18': this.ui[this.uiLang].card_race_type_opts.pyro,
+        '19': this.ui[this.uiLang].card_race_type_opts.spellcaster,
+        '20': this.ui[this.uiLang].card_race_type_opts.wyrm,
+        '21': this.ui[this.uiLang].card_race_type_opts.cyberse,
+        '22': this.ui[this.uiLang].card_race_type_opts.psychic,
+        '23': this.ui[this.uiLang].card_race_type_opts.divine_beast,
+        '24': this.ui[this.uiLang].card_race_type_opts.creator_god,
+      }
+    },
     cardTemplateText () {
       let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardFace
       if (this.Pendulum && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace))
@@ -493,12 +524,18 @@ export default {
         return item.value === '1' || item.value !== this.cardEff1
       }).map((item, ind, arr) => {
         const ret = Object.assign({}, item)
-        if (item.value === '1') ret.text = "效果"
+        if (item.value === '1') ret.text = this.ui[this.uiLang].m_card.effect
         return ret
       })
     },
   },
   watch: {
+    uiLang() {
+      if (this.cardLangOpts[this.uiLang]) this.cardLang = this.uiLang
+    },
+    cardLang() {
+      if (this.cardKey==='') this.load_default_data()
+    },
     cardType() {
       this.cardFace = 'Normal'
       if (this.cardType!=="Monster") this.Pendulum = false
@@ -525,13 +562,14 @@ export default {
 
     // 卡片繪製 - 繪製前準備
     drawCard () {
-      let cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null;
+      let cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null
+      const attrLang = cardMeta[this.cardLang].attrLang
       if (this.cardLoadYgoProEnabled) {
         const hasData = this.load_ygopro_data(this.cardKey);
         if (hasData) cardImgUrl = `ygo/pics/${this.cardKey}.jpg`
       }
       this.imgs = {
-        template: `images/card/${langMeta[this.cardLang].attrLang}/${this.cardTemplateText}.png`,
+        template: `images/card/${attrLang}/${this.cardTemplateText}.png`,
         holo: "images/pic/holo.png",
         link1: "images/pic/LINK1.png", link2: "images/pic/LINK2.png",
         link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
@@ -539,8 +577,8 @@ export default {
         link8: "images/pic/LINK8.png", link9: "images/pic/LINK9.png",
         attr: (
           this.cardType==="Monster" ?
-          `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardAttr}.webp` :
-          `images/attr/${langMeta[this.cardLang].attrLang}/${this.cardType}.webp`
+          `images/attr/${attrLang}/${this.cardAttr}.webp` :
+          `images/attr/${attrLang}/${this.cardType}.webp`
         ),
         photo: cardImgUrl || "images/default.jpg",
         levelOrFace: (
@@ -574,7 +612,7 @@ export default {
       canvas.width = 1000
       canvas.height = 1450
 
-      const langStr = langMeta[this.cardLang]
+      const langStr = cardMeta[this.cardLang]
       const offset = langStr.offset
       const fontName = langStr.fontName
 
@@ -792,7 +830,7 @@ export default {
 
     // 載入預設
     load_default_data () {
-      const data = langMeta[this.cardLang].Default
+      const data = cardMeta[this.cardLang].Default
       this.holo = true
       this.cardRare = "0"
       this.titleColor = "#000000"
@@ -920,7 +958,7 @@ body{
               linear-gradient(to bottom right, #000000BB, #66666699, #000000BB),
               linear-gradient(to bottom left, #111111BB, #11111199, #111111BB);
   background-blend-mode: multiply;
-	font-family: 'Noto Sans TC', 'arial', "微軟正黑體";
+	font-family: 'Noto Sans JP', 'Noto Sans TC', 'Noto Sans SC', 'arial', "微軟正黑體";
 }
 
 /* -------------------- 區塊樣式 -------------------- */

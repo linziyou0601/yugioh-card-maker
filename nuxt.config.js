@@ -1,13 +1,29 @@
 // only add `router.base = '/<repository_name>/'` if `DEPLOY_ENV` is `GH_PAGES`
-const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  router: {
-    base: ''
+const gaTags = process.env.DEPLOY_ENV === 'GH_PAGES' ? [
+  {
+    hid: 'gtm-script1',
+    src: 'https://www.googletagmanager.com/gtag/js?id=G-WWZYYWN8W7',
+    defer: true
+  },
+  {
+    hid: 'gtm-script2',
+    innerHTML: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-WWZYYWN8W7');
+    `,
+    type: 'text/javascript',
+    charset: 'utf-8'
+  },
+  {
+    async: true,
+    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095'
   }
-} : {}
+] : []
 
 export default {
-  ...routerBase,
-
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -36,27 +52,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
     ],
     script: [
-      {
-        hid: 'gtm-script1',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-WWZYYWN8W7',
-        defer: true
-      },
-      {
-        hid: 'gtm-script2',
-        innerHTML: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-WWZYYWN8W7');
-        `,
-        type: 'text/javascript',
-        charset: 'utf-8'
-      },
-      {
-        async: true,
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7536040795321095'
-      }
+      ...gaTags
     ]
   },
 
@@ -84,7 +80,7 @@ export default {
   fontLoader : { 
     url: {
       local: 'fonts/font-face.css',
-      google: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap',
+      google: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Noto+Sans+SC:wght@100;300;400;500;700;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap',
     },
     prefetch : true,
     preconnect : true,
