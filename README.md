@@ -23,4 +23,4 @@ https://yugioh-card.linziyou.info/
 
 ## Badge
 
-![GitHub last commit](https://img.shields.io/github/last-commit/linziyou0601/yugioh-card-maker?style=for-the-badge) ![](https://img.shields.io/badge/author-linziyou0601-red.svg?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/linziyou0601/yugioh-card-maker?style=for-the-badge) ![](https://img.shields.io/badge/author-linziyou0601-red.svg?style=for-the-badge) ![](https://img.shields.io/badge/language-vue-blue.svg?style=for-the-badge)
