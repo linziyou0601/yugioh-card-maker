@@ -131,7 +131,7 @@
                 <!-- 卡面 -->
                 <b-col cols="6" lg="3" class="px-2">
                   <label>{{ ui[uiLang].card_subtype }}</label>
-                  <b-form-select v-model="cardFace" :options="cardFaceOpts[cardType]"></b-form-select>
+                  <b-form-select v-model="cardSubtype" :options="cardSubtypeOpts[cardType]"></b-form-select>
                 </b-col>
 
                 <!-- 效果 -->
@@ -345,13 +345,9 @@ export default {
 
       uiLang: 'zh',
       ui,
-
       cardLang: 'zh',
-      cardLangOpts: {
-        'zh': '正體中文 (T.Chinese)',
-        'jp': '日本語 (Japanese)',
-        'en': 'English',
-      },
+      cardMeta,
+
       holo: true,
       cardRare: '0',
       cardRareOpts: {
@@ -360,21 +356,18 @@ export default {
         '2': 'UR',
       },
       titleColor: '#000000',
-
       cardLoadYgoProEnabled: true,
       cardKey: '',
-
-      cardTitle: '超天新龍 異色眼革命龍',
+      cardTitle: '',
       cardImg: null,
       cardType: 'Monster',
-      cardFace: 'Normal',
-      cardEff1: '1',
-      cardEff2: '0',
+      cardSubtype: 'Normal',
+      cardEff1: 'normal',
+      cardEff2: 'none',
       cardAttr: 'LIGHT',
       cardCustomRaceEnabled: false,
       cardCustomRace: '',
-      cardRace: '15',
-
+      cardRace: 'dragon',
       Pendulum: true,
       Special: true,
       cardLevel: '12',
@@ -382,10 +375,10 @@ export default {
       cardBLUE: 12,
       cardRED: 12,
       pendulumSize: 23,
-      cardPendulumInfo: "①：自己不是龍族怪獸不能靈擺召喚。這個效果不會被無效化。②：以自己墓地1隻龍族的融合．同步．超量怪獸為對象才能發動。這張卡破壞，那隻怪獸特殊召喚。",
+      cardPendulumInfo: '',
 
-      cardATK: '?',
-      cardDEF: '?',
+      cardATK: '',
+      cardDEF: '',
       links: {
         1: {val: false, symbol: '◤'},
         2: {val: false, symbol: '▲'},
@@ -397,8 +390,7 @@ export default {
         9: {val: false, symbol: '◢'},
       },
       infoSize: '22',
-
-      cardInfo: "這張卡不能通常召喚。從手牌的靈擺召喚或者釋放自己場上的龍族的融合．同步．超量怪獸各1隻的場合才能特殊召喚。①：丟棄手牌的這張卡，支付500生命值才能發動。從牌組把1隻8星以下的龍族靈擺怪獸加入手牌。②：這張卡的攻擊力·守備力上升對方一半的生命值。③：1回合1次，支付一半生命值才能發動。這張卡以外的雙方的場上．墓地的卡全部回到持有者牌組。",
+      cardInfo: '',
 
       imgs: {},
     }
@@ -407,6 +399,9 @@ export default {
     uiLangOpts() {
       return Object.fromEntries(Object.keys(this.ui).map(key=> [key, this.ui[key].name || key]))
     },
+    cardLangOpts() {
+      return Object.fromEntries(Object.keys(this.cardMeta).map(key=> [key, this.cardMeta[key].name || key]))
+    },
     cardTypeOpts() {
       return {
         'Monster': this.ui[this.uiLang].monster_card,
@@ -414,7 +409,7 @@ export default {
         'Trap': this.ui[this.uiLang].trap_card,
       }
     },
-    cardFaceOpts() {
+    cardSubtypeOpts() {
       return {
         "Monster": {
           'Normal': this.ui[this.uiLang].m_card.normal,
@@ -446,16 +441,16 @@ export default {
       }
     },
     cardEffOpts() {
-      return [
-        { value: '0', text: this.ui[this.uiLang].card_effect_opts.none },
-        { value: '1', text: this.ui[this.uiLang].card_effect_opts.normal },
-        { value: '2', text: this.ui[this.uiLang].card_effect_opts.toon },
-        { value: '3', text: this.ui[this.uiLang].card_effect_opts.spirit },
-        { value: '4', text: this.ui[this.uiLang].card_effect_opts.union },
-        { value: '5', text: this.ui[this.uiLang].card_effect_opts.gemini },
-        { value: '6', text: this.ui[this.uiLang].card_effect_opts.flip },
-        { value: '7', text: this.ui[this.uiLang].card_effect_opts.tuner },
-      ]
+      return {
+        'none': this.ui[this.uiLang].card_effect_opts.none,
+        'normal': this.ui[this.uiLang].card_effect_opts.normal,
+        'toon': this.ui[this.uiLang].card_effect_opts.toon,
+        'spirit': this.ui[this.uiLang].card_effect_opts.spirit,
+        'union': this.ui[this.uiLang].card_effect_opts.union,
+        'gemini': this.ui[this.uiLang].card_effect_opts.gemini,
+        'flip': this.ui[this.uiLang].card_effect_opts.flip,
+        'tuner': this.ui[this.uiLang].card_effect_opts.tuner,
+      }
     },
     cardAttrOpts() {
       return [
@@ -470,63 +465,64 @@ export default {
     },
     cardRaceOpts() {
       return {
-        '0': this.ui[this.uiLang].card_race_type_opts.fiend,
-        '1': this.ui[this.uiLang].card_race_type_opts.zombie,
-        '2': this.ui[this.uiLang].card_race_type_opts.sea_serpent,
-        '3': this.ui[this.uiLang].card_race_type_opts.thunder,
-        '4': this.ui[this.uiLang].card_race_type_opts.rock,
-        '5': this.ui[this.uiLang].card_race_type_opts.machine,
-        '6': this.ui[this.uiLang].card_race_type_opts.dinosaur,
-        '7': this.ui[this.uiLang].card_race_type_opts.beast,
-        '8': this.ui[this.uiLang].card_race_type_opts.insect,
-        '9': this.ui[this.uiLang].card_race_type_opts.fish,
-        '10': this.ui[this.uiLang].card_race_type_opts.plant,
-        '11': this.ui[this.uiLang].card_race_type_opts.beast_warrior,
-        '12': this.ui[this.uiLang].card_race_type_opts.warrior,
-        '13': this.ui[this.uiLang].card_race_type_opts.winged_beast,
-        '14': this.ui[this.uiLang].card_race_type_opts.fairy,
-        '15': this.ui[this.uiLang].card_race_type_opts.dragon,
-        '16': this.ui[this.uiLang].card_race_type_opts.reptile,
-        '17': this.ui[this.uiLang].card_race_type_opts.aqua,
-        '18': this.ui[this.uiLang].card_race_type_opts.pyro,
-        '19': this.ui[this.uiLang].card_race_type_opts.spellcaster,
-        '20': this.ui[this.uiLang].card_race_type_opts.wyrm,
-        '21': this.ui[this.uiLang].card_race_type_opts.cyberse,
-        '22': this.ui[this.uiLang].card_race_type_opts.psychic,
-        '23': this.ui[this.uiLang].card_race_type_opts.divine_beast,
-        '24': this.ui[this.uiLang].card_race_type_opts.creator_god,
+        'fiend': this.ui[this.uiLang].card_race_type_opts.fiend,
+        'zombie': this.ui[this.uiLang].card_race_type_opts.zombie,
+        'sea_serpent': this.ui[this.uiLang].card_race_type_opts.sea_serpent,
+        'thunder': this.ui[this.uiLang].card_race_type_opts.thunder,
+        'rock': this.ui[this.uiLang].card_race_type_opts.rock,
+        'machine': this.ui[this.uiLang].card_race_type_opts.machine,
+        'dinosaur': this.ui[this.uiLang].card_race_type_opts.dinosaur,
+        'beast': this.ui[this.uiLang].card_race_type_opts.beast,
+        'insect': this.ui[this.uiLang].card_race_type_opts.insect,
+        'fish': this.ui[this.uiLang].card_race_type_opts.fish,
+        'plant': this.ui[this.uiLang].card_race_type_opts.plant,
+        'beast_warrior': this.ui[this.uiLang].card_race_type_opts.beast_warrior,
+        'warrior': this.ui[this.uiLang].card_race_type_opts.warrior,
+        'winged_beast': this.ui[this.uiLang].card_race_type_opts.winged_beast,
+        'fairy': this.ui[this.uiLang].card_race_type_opts.fairy,
+        'dragon': this.ui[this.uiLang].card_race_type_opts.dragon,
+        'reptile': this.ui[this.uiLang].card_race_type_opts.reptile,
+        'aqua': this.ui[this.uiLang].card_race_type_opts.aqua,
+        'pyro': this.ui[this.uiLang].card_race_type_opts.pyro,
+        'spellcaster': this.ui[this.uiLang].card_race_type_opts.spellcaster,
+        'wyrm': this.ui[this.uiLang].card_race_type_opts.wyrm,
+        'cyberse': this.ui[this.uiLang].card_race_type_opts.cyberse,
+        'psychic': this.ui[this.uiLang].card_race_type_opts.psychic,
+        'divine_beast': this.ui[this.uiLang].card_race_type_opts.divine_beast,
+        'creator_god': this.ui[this.uiLang].card_race_type_opts.creator_god,
       }
     },
     cardTemplateText () {
-      let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardFace
-      if (this.Pendulum && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace))
+      let templateUrl = this.cardType!=="Monster"? this.cardType : this.cardSubtype
+      if (this.Pendulum && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardSubtype))
         templateUrl += "Pendulum"
       return templateUrl
     },
+    isEffectMonster () {
+      return this.cardSubtype==="Effect" || (this.cardEff2!=="none" && this.cardEff2!=="normal" && this.cardSubtype!=="Normal")
+    },
     isXyzMonster () {
-      return this.cardType==='Monster' && this.cardFace==='Xyz'
+      return this.cardType==='Monster' && this.cardSubtype==='Xyz'
     },
     isLinkMonster () {
-      return this.cardType==='Monster' && this.cardFace==='Link'
+      return this.cardType==='Monster' && this.cardSubtype==='Link'
     },
     canPendulumEnabled() {
-      return this.cardType==='Monster' && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)
+      return this.cardType==='Monster' && !["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardSubtype)
     },
     cardEff1Opts () {
-      return this.cardEffOpts.filter((item, ind, arr) => {
-        // 去掉「無」、去掉和Eff2重複的（除了value===1之外）
-        return item.value !== '0' && (item.value === '1' || item.value !== this.cardEff2)
-      })
+      return Object.fromEntries(Object.keys(this.cardEffOpts).filter(key => {
+        // 去掉「none」、去掉和Eff2重複的（除了value===normal之外）
+        return key !== 'none' && (key === 'normal' || key !== this.cardEff2)
+      }).map(key => [key, this.cardEffOpts[key]]))
     },
     cardEff2Opts () {
-      return this.cardEffOpts.filter((item, ind, arr) => {
-        // 去掉和Eff1重複的（除了value===1之外）
-        return item.value === '1' || item.value !== this.cardEff1
-      }).map((item, ind, arr) => {
-        const ret = Object.assign({}, item)
-        if (item.value === '1') ret.text = this.ui[this.uiLang].m_card.effect
-        return ret
-      })
+      return Object.fromEntries(Object.keys(this.cardEffOpts).filter(key => {
+        // 去掉和Eff1重複的（除了value===normal之外）
+        return key === 'normal' || key !== this.cardEff1
+      }).map(key => {
+        return [key, (key === 'normal'? this.ui[this.uiLang].m_card.effect: this.cardEffOpts[key])]
+      }))
     },
   },
   watch: {
@@ -537,16 +533,17 @@ export default {
       if (this.cardKey==='') this.load_default_data()
     },
     cardType() {
-      this.cardFace = 'Normal'
+      this.cardSubtype = 'Normal'
       if (this.cardType!=="Monster") this.Pendulum = false
     },
-    cardFace() {
-      if (["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)) this.Pendulum = false
+    cardSubtype() {
+      if (["Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardSubtype)) this.Pendulum = false
     }
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
     this.fireLoadingDialog()
+    this.load_default_data()
     setInterval(this.drawCard, 1500)
   },
   beforeDestroy () {
@@ -563,13 +560,13 @@ export default {
     // 卡片繪製 - 繪製前準備
     drawCard () {
       let cardImgUrl = this.cardImg? URL.createObjectURL(this.cardImg): null
-      const attrLang = cardMeta[this.cardLang].attrLang
+      const templateLang = this.cardMeta[this.cardLang]._templateLang
       if (this.cardLoadYgoProEnabled) {
         const hasData = this.load_ygopro_data(this.cardKey);
         if (hasData) cardImgUrl = `ygo/pics/${this.cardKey}.jpg`
       }
       this.imgs = {
-        template: `images/card/${attrLang}/${this.cardTemplateText}.png`,
+        template: `images/card/${templateLang}/${this.cardTemplateText}.png`,
         holo: "images/pic/holo.png",
         link1: "images/pic/LINK1.png", link2: "images/pic/LINK2.png",
         link3: "images/pic/LINK3.png", link4: "images/pic/LINK4.png",
@@ -577,13 +574,13 @@ export default {
         link8: "images/pic/LINK8.png", link9: "images/pic/LINK9.png",
         attr: (
           this.cardType==="Monster" ?
-          `images/attr/${attrLang}/${this.cardAttr}.webp` :
-          `images/attr/${attrLang}/${this.cardType}.webp`
+          `images/attr/${templateLang}/${this.cardAttr}.webp` :
+          `images/attr/${templateLang}/${this.cardType}.webp`
         ),
         photo: cardImgUrl || "images/default.jpg",
-        levelOrFace: (
-          this.cardType!=="Monster" && this.cardFace!=="Normal" ?
-          `images/pic/${this.cardFace}.webp` :
+        levelOrSubtype: (
+          this.cardType!=="Monster" && this.cardSubtype!=="Normal" ?
+          `images/pic/${this.cardSubtype}.webp` :
           `images/pic/${this.isXyzMonster ? 'Rank' : 'Level'}.webp`
         ),
       }
@@ -612,9 +609,9 @@ export default {
       canvas.width = 1000
       canvas.height = 1450
 
-      const langStr = cardMeta[this.cardLang]
-      const offset = langStr.offset
-      const fontName = langStr.fontName
+      const langStr = this.cardMeta[this.cardLang]
+      const offset = langStr._offset
+      const fontName = langStr._fontName
 
       // 繪製底圖
       this.drawCardImg(ctx)
@@ -688,17 +685,17 @@ export default {
       ctx.fillStyle = '#000';
       if (this.cardType==="Monster") { // 怪獸卡
         // 怪獸屬性文字
-        const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +             // 種族
-        (this.Special? langStr.Sl + langStr.Special: "") +                                                             // 特殊召喚
-        (!["Normal", "Effect", "Slifer", "Ra", "Obelisk", "LDragon"].includes(this.cardFace)? 
-                                                               langStr.Sl + langStr.Face[this.cardFace]: "") +         // 卡面種類
-        (this.cardEff1>"1"? langStr.Sl + langStr.Eff[this.cardEff1]: "") +                                             // 功能1(效果)
-        (this.cardEff2>"1" && this.cardEff1!==this.cardEff2? langStr.Sl + langStr.Eff[this.cardEff2]: "") +            // 功能1(效果)
-        (this.Pendulum? langStr.Sl + langStr.Pendulum: "") +                                                           // 功能3(靈擺有無)
-        (this.cardFace==="Effect" || (this.cardEff2>"0" && this.cardFace!=="Normal")? langStr.Sl + langStr.Effect: "") // 功能4(效果有無)
+        const cardSubtypeFilter = ["Normal", "Effect", "Slifer", "Ra", "Obelisk", "LDragon"]
+        const typeText = (this.cardCustomRaceEnabled? this.cardCustomRace : langStr.Race[this.cardRace]) +        // 種族
+                         (this.Special? langStr.M_SPECIAL: "") +                                                  // 特殊召喚
+                         (!cardSubtypeFilter.includes(this.cardSubtype)? langStr.Subtype[this.cardSubtype]: "") + // 卡面種類
+                         (langStr.Effect[this.cardEff1]) +                                                        // 功能1(效果)
+                         (this.cardEff1!==this.cardEff2? langStr.Effect[this.cardEff2]: "") +                     // 功能2(效果)
+                         (this.Pendulum? langStr.M_PENDULUM: "") +                                                // 功能3(靈擺有無)
+                         (this.isEffectMonster? langStr.M_EFFECT: "")                                             // 功能4(效果有無)
         
         // 怪獸屬性
-        ctx.fillText(`${langStr.Ql}${typeText}${langStr.Qr}`, 63 + offset.oX, 1120 + offset.oY, 750);
+        ctx.fillText(`${langStr.QUOTE_L}${typeText}${langStr.QUOTE_R}`, 63 + offset.oX, 1120 + offset.oY, 750);
 
         // 怪獸ATK
         ctx.font = `33pt 'MatrixBoldSmallCaps', ${fontName[2]}`
@@ -722,7 +719,7 @@ export default {
         ctx.textAlign = "left";
         if (!this.isLinkMonster) { // 非連結怪獸
           for(let i=1; i<=this.cardLevel; i++)
-            ctx.drawImage(this.imgs.levelOrFace, (this.isXyzMonster? (122+(i-1)*63): (820-(i-1)*63)), 181, 58, 58);
+            ctx.drawImage(this.imgs.levelOrSubtype, (this.isXyzMonster? (122+(i-1)*63): (820-(i-1)*63)), 181, 58, 58);
         } else {                   // 連結怪獸
           const linkStr = this.Pendulum? "LinkPendulum": "Link";
           // 連結圖片
@@ -735,11 +732,11 @@ export default {
         }
       } else {                         // 魔罠卡
         // 卡種
-        const typeText = (this.cardType==="Spell"? langStr.Spell: langStr.Trap) + (this.cardFace==='Normal'? "": langStr.Sp)
+        const typeText = (this.cardType==="Spell"? langStr.Spell: langStr.Trap) + (this.cardSubtype==='Normal'? "": langStr.Sp)
         ctx.textAlign = "right";
-        ctx.fillText(`${langStr.Ql}${typeText}${langStr.Qr}`, 920+offset.sX1, 222+offset.sY1); // 魔罠卡
-        if (this.cardFace!=='Normal')
-          ctx.drawImage(this.imgs.levelOrFace, 820+offset.sX2, 178+offset.sY2, 58, 58);        // 魔罠子類別
+        ctx.fillText(`${langStr.QUOTE_L}${typeText}${langStr.QUOTE_R}`, 920+offset.sX1, 222+offset.sY1); // 魔罠卡
+        if (this.cardSubtype!=='Normal')
+          ctx.drawImage(this.imgs.levelOrSubtype, 820+offset.sX2, 178+offset.sY2, 58, 58);        // 魔罠子類別
       }
     },
 
@@ -748,7 +745,7 @@ export default {
       // 畫符號
       ctx.textAlign = "center";
       ctx.font = "55pt 'MatrixBoldSmallCaps'";
-      ctx.fillText(this.cardBLUE, 106-((['Xyz', 'Link', 'Token'].includes(this.cardFace) || this.cardType!=="Monster")? 5: 0 ), 1040, 60); 
+      ctx.fillText(this.cardBLUE, 106-((['Xyz', 'Link', 'Token'].includes(this.cardSubtype) || this.cardType!=="Monster")? 5: 0 ), 1040, 60); 
       ctx.fillText(this.cardRED, 895, 1040, 60);
       // 畫文字
       const fontSize = Number(this.pendulumSize)
@@ -830,7 +827,7 @@ export default {
 
     // 載入預設
     load_default_data () {
-      const data = cardMeta[this.cardLang].Default
+      const data = this.cardMeta[this.cardLang].Default
       this.holo = true
       this.cardRare = "0"
       this.titleColor = "#000000"
@@ -839,13 +836,13 @@ export default {
       this.cardTitle = data.title
       this.cardImg = null
       this.cardType = "Monster"
-      this.cardFace = "Normal"
+      this.cardSubtype = "Normal"
       this.cardAttr = "LIGHT"
-      this.cardEff1 = "1"
-      this.cardEff2 = "0"
+      this.cardEff1 = "normal"
+      this.cardEff2 = "none"
       this.cardCustomRaceEnabled = false
       this.cardCustomRace = ""
-      this.cardRace = "15"
+      this.cardRace = "dragon"
       this.Pendulum = true
       this.Special = true
       this.cardLevel = "12"
@@ -872,17 +869,17 @@ export default {
       this.titleColor = data.color
       this.cardTitle = data.title
       this.cardImg = null //
-      this.cardType = data.type[0][0]
-      this.cardFace = data.type[0][1]
+      this.cardType = data.type[0]
+      this.cardSubtype = data.type[1]
       if (data.attribute!=="Trap" && data.attribute!=="Spell")
         this.cardAttr = data.attribute
-      this.cardEff1 = data.type[0][2]
-      this.cardEff2 = data.type[0][3]
+      this.cardEff1 = data.type[2]
+      this.cardEff2 = data.type[3]
       this.cardCustomRaceEnabled = false
       this.cardCustomRace = ""
       this.cardRace = data.race
-      this.Pendulum = data.type[0][4]
-      this.Special = data.type[0][5]
+      this.Pendulum = data.type[4]
+      this.Special = data.type[5]
       this.cardLevel = data.level
       this.cardBLUE = data.blue
       this.cardRED = data.red
