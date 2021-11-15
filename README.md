@@ -29,7 +29,7 @@ https://yugioh-card.linziyou.info/
 - You can just copy and paste the exists language data and modify the necessary part
 - The description of the json is as follows:
 
-```json
+```javascript
 {
     "en": {     // langage key; If the key is in the ui language, it will automatically switch when the ui language changes
         "name": "English",              // language name
