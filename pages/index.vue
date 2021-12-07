@@ -499,7 +499,7 @@ export default {
       return templateUrl
     },
     isEffectMonster () {
-      return this.cardSubtype==="Effect" || (this.cardEff2!=="none" && this.cardEff2!=="normal" && this.cardSubtype!=="Normal")
+      return this.cardSubtype==="Effect" || (this.cardEff2!=="none" && this.cardSubtype!=="Normal")
     },
     isXyzMonster () {
       return this.cardType==='Monster' && this.cardSubtype==='Xyz'
