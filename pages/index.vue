@@ -732,7 +732,7 @@ export default {
         }
       } else {                         // 魔罠卡
         // 卡種
-        const typeText = (this.cardType==="Spell"? langStr.Spell: langStr.Trap) + (this.cardSubtype==='Normal'? "": langStr.Sp)
+        const typeText = (this.cardType==="Spell"? langStr.Spell: langStr.Trap) + (this.cardSubtype==='Normal'? "": langStr.SEP)
         ctx.textAlign = "right";
         ctx.fillText(`${langStr.QUOTE_L}${typeText}${langStr.QUOTE_R}`, 920+offset.sX1, 222+offset.sY1); // 魔罠卡
         if (this.cardSubtype!=='Normal')
